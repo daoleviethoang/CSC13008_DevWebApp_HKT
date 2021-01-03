@@ -15,8 +15,7 @@ app.use(express.urlencoded({
   extended: true
 }));
 app.use('/design', express.static('design'));
-app.use(express.static('views/vwAccounts/Login_v4/'));
-app.use('./views/vwAccounts/colorlib-regform-1', express.static('./views/vwAccounts/colorlib-regform-1'));
+
 app.get('/', function (req, res) {
   // res.send('Hello World!');
   res.render('index');
@@ -49,6 +48,8 @@ app.get('/blog', function(req, res){
 // app.use('/admin/categories/', require('./controllers/category.route'));
 // app.use('/admin/products/', require('./controllers/product.route'));
 app.use('/account/', require('./controllers/account.route'));
+
+
 
 const PORT = 3000;
 app.listen(PORT, function () {

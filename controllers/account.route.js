@@ -4,7 +4,7 @@ const productModel = require('../models/product.model');
 const router = express.Router();
 
 router.get('/register', async function (req, res, next) {
-  res.render('../views/vwAccounts/colorlib-regform-1/index.hbs', {
+  res.render('vwAccounts/register.hbs', {
     layout: false
   });
 })
@@ -14,7 +14,7 @@ router.post('/register', async function (req, res, next) {
 })
 
 router.get('/login', async function (req, res, next) {
-  res.render('../views/vwAccounts/Login_v4/login', {
+  res.render('vwAccounts/login', {
     layout: false
   });
 });
