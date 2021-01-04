@@ -1,0 +1,41 @@
+const db = require('../utils/db');
+
+// const list = [
+//   { CatID: 1, CatName: 'Laptop' },
+//   { CatID: 2, CatName: 'Phone' },
+//   { CatID: 3, CatName: 'Quần áo' },
+//   { CatID: 4, CatName: 'Giày dép' },
+//   { CatID: 5, CatName: 'Trang sức' },
+//   { CatID: 6, CatName: 'Khác' },
+// ];
+
+module.exports = {
+  async all() {
+    const sql = 'select * from students';
+    const [rows, fields] = await db.load(sql);
+    return rows;
+  },
+
+  async single(id) {
+    const sql = `select * from users where id = ${id}`;
+    const [rows, fields] = await db.load(sql);
+    if (rows.length === 0)
+      return null;
+
+    return rows[0];
+  },
+
+  async add(student) {
+    const [result, fields] = await db.add(student, 'students');
+    // console.log(result);
+    return result;
+  },
+
+  async countNumber() {
+    const sql = `select count(*) as total from Students`;
+    const [rows, fields] = await db.load(sql);
+    
+    return rows[0].total;
+
+  },
+};

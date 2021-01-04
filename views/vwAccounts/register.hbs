@@ -10,7 +10,7 @@
     <meta name="keywords" content="Colorlib Templates">
 
     <!-- Title Page-->
-    <title>Au Register Forms by Colorlib</title>
+    <title>Register</title>
 
     <!-- Icons font CSS-->
     <link href="/design/colorlib-regform-1/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
@@ -35,20 +35,32 @@
                     <h2 class="title">Registration Info</h2>
                     <form method="POST">
                         <div class="input-group">
-                            <input class="input--style-1" type="text" placeholder="NAME" name="name">
+                            <input class="input--style-1" type="text" id = "txtUsername" placeholder="USERNAME" name="username">
+                        </div>
+                        <div class="input-group">
+                            <input class="input--style-1" type="password" id = "txtPassword" placeholder="PASSWORD" name="password">
+                        </div>
+                        <div class="input-group">
+                            <input class="input--style-1" type="password" id = "txtConfirm" placeholder="CONFIRM" name="confirm">
+                        </div>
+                        <div class="input-group">
+                            <input class="input--style-1" type="text" id = "txtName" placeholder="NAME" name="name">
+                        </div>
+                        <div class="input-group">
+                            <input type="email" class="form-control" id="txtEmail" placeholder="Email: name@example.com" name = "email">
                         </div>
                         <div class="row row-space">
                             <div class="col-2">
                                 <div class="input-group">
-                                    <input class="input--style-1 js-datepicker" type="text" placeholder="BIRTHDATE" name="birthday">
+                                    <input class="input--style-1 js-datepicker" id = "txtBirthday" type="text" placeholder="BIRTHDAY" name="dob">
                                     <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="input-group">
                                     <div class="rs-select2 js-select-simple select--no-search">
-                                        <select name="gender">
-                                            <option disabled="disabled" selected="selected">GENDER</option>
+                                        <select class="custom-select custom-select-sm" id = "txtGender" selected="selected" name="gender">
+                                            <option selected>Gender</option>
                                             <option>Male</option>
                                             <option>Female</option>
                                             <option>Other</option>
@@ -69,22 +81,20 @@
                                 <div class="select-dropdown"></div>
                             </div>
                         </div> --}}
-                        <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <div class="rs-select2 js-select-simple select--no-search">
-                                        <select name="gender">
-                                            <option disabled="disabled" selected="selected">TYPE</option>
-                                            <option>STUDENT</option>
-                                            <option>TEACHER</option>
-                                        </select>
-                                        <div class="select-dropdown"></div>
-                                    </div>
+                       <div class="col-2">
+                            <div class="input-group">
+                                <div class="rs-select2 js-select-simple select--no-search">
+                                    <select class="custom-select custom-select-sm" id = "txtType" selected="selected" name="type">
+                                        <option selected>Type</option>
+                                        <option>Student</option>
+                                        <option>Teacher</option>
+                                    </select>
+                                    <div class="select-dropdown"></div>
                                 </div>
                             </div>
                         </div>
                         <div class="p-t-20">
-                            <button class="btn btn--radius btn--green" type="submit">Submit</button>
+                            <button class="btn btn--radius btn--green" type="submit">Register</button>
                         </div>
                     </form>
                 </div>

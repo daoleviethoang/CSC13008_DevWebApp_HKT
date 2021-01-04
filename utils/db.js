@@ -22,5 +22,7 @@ module.exports = {
   patch(new_data, condition, table_name) {
     const sql = `update ${table_name} set ? where ?`;
     return promisePool.query(sql, [new_data, condition]);
-  }
+  },
+
+
 };
