@@ -39,9 +39,8 @@ router.post('/register', async function (req, res, next) {
       uid: id
     }
 
-    
     await studentModel.add(student);
-    console.log(student);
+    // console.log(student);
   }
   const user = {
     username: req.body.username,
@@ -49,7 +48,7 @@ router.post('/register', async function (req, res, next) {
     permission: per,
     uid: id
   }
-  console.log(user);
+  // console.log(user);
   await userModel.add(user);
   res.render('vwAccounts/register');
 })
