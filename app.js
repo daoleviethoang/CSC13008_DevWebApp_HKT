@@ -14,6 +14,12 @@ require('./middlewares/locals.mdw')(app);
 require('./middlewares/view.mdw')(app);
 require('./middlewares/routes.mdw')(app);
 
+app.use(function (err, req, res, next) {                        //render khi có lỗi trong code
+  console.error(err.stack);
+  res.render('500', {
+    layout: false
+  })
+})
 
 const PORT = 3000;
 app.listen(PORT, function () {

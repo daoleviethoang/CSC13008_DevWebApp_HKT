@@ -100,7 +100,7 @@ router.post('/login', async function (req, res, next) {
   if (ret === false){
     return res.render('vwAccounts/login',{
       layout:false,
-      err_message: 'Invallid username'
+      err_message: 'Invalid username'
     });
   }
 

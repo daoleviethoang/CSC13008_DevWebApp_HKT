@@ -3,12 +3,15 @@ const categoryModel = require('../models/category.model');
 
 const router = express.Router();
 
-router.get('/', async function (req, res) {
-  const list = await categoryModel.all();
-  res.render('vwCategories/index', {
-    categories: list,
-    empty: list.length === 0
-  });
+router.get('/', async function (req, res, next) {
+
+    const list = await categoryModel.all();
+    res.render('vwCategories/index', {
+      categories: list,
+      empty: list.length === 0
+    });
+
+  
 })
 
 router.get('/edit', async function (req, res) {
