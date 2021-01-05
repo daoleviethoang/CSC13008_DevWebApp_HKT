@@ -3,7 +3,7 @@
     "host": "localhost",
     "port": 3306,
     "user": "root",
-    "password": "gangnamsai1506",
+    "password": "shinji",
     "database": "qlkh",
     "waitForConnections": true,
     "connectionLimit": 50,

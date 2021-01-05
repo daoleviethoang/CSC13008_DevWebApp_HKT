@@ -2,7 +2,6 @@ const express = require('express');
 const morgan = require('morgan');
 const exphbs = require('express-handlebars');
 const hbs_sections = require('express-handlebars-sections');
-
 const app = express();
 
 app.use(morgan('dev'));
@@ -37,6 +36,10 @@ app.get('/about', function (req, res) {
 
 app.get('/teacher', function(req, res){
   res.render('teacher');
+})
+
+app.get('/about', function(req, res){
+  res.render('about');
 })
 
 app.get('/pricing', function(req, res){

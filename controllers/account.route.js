@@ -11,7 +11,7 @@ const router = express.Router();
 
 
 router.get('/register', async function (req, res, next) {
-  res.render('vwAccounts/register.hbs', {
+  res.render('vwAccounts/register', {
     layout: false
   });
 })
