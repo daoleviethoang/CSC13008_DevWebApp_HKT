@@ -98,8 +98,25 @@
 									</ul>
 								</li>
 								<li><a href="/contact.html">Contact</a></li>
-								<li class="btn-cta"><a href="#"><span>Login</span></a></li>
-								<li class="btn-cta"><a href="#"><span>Create a Course</span></a></li>
+								{{#if auth}}
+								<li class="has-dropdown">
+									<a href="#" style="font-size: larger;">
+										<i class="icon-head"></i> 
+										<strong>
+											{{authUser.username}}
+										</strong>
+									</a>
+									<ul class="dropdown">
+										<li><a href="#">Profile</a></li>
+										<form id = "frmLogout" action="/account/logout" method="POST"></form>
+											<li><a href="javascript: $('#frmLogout').submit();">Sign out</a></li>
+										
+									</ul>
+								</li>
+								{{else}}
+								<li class="btn-cta"><a href="account/login"><span>Login</span></a></li>
+								<li class="btn-cta"><a href="account/register"><span>Create Account</span></a></li>
+								{{/if}}
 							</ul>
 						</div>
 					</div>
@@ -108,9 +125,9 @@
 			</div>
 		</nav>
 
-<div>	
-	{{{body}}}
-</div>
+		<div>
+			{{{body}}}
+		</div>
 
 		<div>
 			<footer id="fh5co-footer" role="contentinfo" style="background-image: url(/design/images/img_bg_4.jpg);">

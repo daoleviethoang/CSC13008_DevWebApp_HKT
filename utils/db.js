@@ -22,5 +22,10 @@ module.exports = {
   patch(new_data, condition, table_name) {
     const sql = `update ${table_name} set ? where ?`;
     return promisePool.query(sql, [new_data, condition]);
+  },
+  largest_ID(idName,table_name){
+    const sql = `	select max(${idName}) as largestID from ${table_name}`;
+    return promisePool.query(sql);
+    
   }
 };
