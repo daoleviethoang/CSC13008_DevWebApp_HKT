@@ -33,7 +33,7 @@ module.exports = {
 
   async countNumber() {
     const [result, fields] = await db.count('users');
-    console.log(result);
+    // console.log(result);
     return result[0];
   },
 };
