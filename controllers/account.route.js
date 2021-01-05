@@ -1,3 +1,4 @@
+// TODO: check invalid username
 const express = require('express');
 const bcryptjs = require('bcryptjs');
 const moment = require('moment');
@@ -26,11 +27,11 @@ router.post('/register', async function (req, res, next) {
   let UID = "";
   
   if (req.body.gender === "Male") gender = 1;
-  else if (req.body.gender === "Feale") gender = 2;
+  else if (req.body.gender === "Female") gender = 2;
   else gender = 3;
   if(req.body.userType === 'STUDENT') {
     permission = studentModel.STUDENT_PROPERTIES.permission;
-    UID = `St${await studentModel.largest_ID()}`;
+    UID = `St${await studentModel.largest_ID() + 1}`;
     user_Detail = {
       name:req.body.fullname,
       email:req.body.email,
@@ -42,7 +43,7 @@ router.post('/register', async function (req, res, next) {
   }
   else if (req.body.userType === 'TEACHER'){
     permission = teacherModel.TEACHER_PROPERTIES.permission;
-    UID = `Tea${await teacherModel.largest_ID()}`;
+    UID = `Tea${await teacherModel.largest_ID() + 1}`;
     console.log(UID);
     user_Detail = {
       name:req.body.fullname,
@@ -66,7 +67,7 @@ router.post('/register', async function (req, res, next) {
 
 
 
-
+//not use yet
 router.get('/is-available', async function (req, res) {
   const username = req.query.user;
   const user = await userModel.singleByUserName(username);
