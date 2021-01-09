@@ -2,7 +2,7 @@ const db = require('../utils/db');
 
 const TEACHER_PROPERTIES = {
     table_name:"teachers",
-    permission:1,
+    permission:2,
     pk: "TeaID"
   };
 module.exports = {
@@ -20,6 +20,15 @@ module.exports = {
       return null;
 
     return rows[0];
+  },
+
+  async singleFromUID(UID){
+    const sql = `select * from ${TEACHER_PROPERTIES.table_name} where UID = '${UID}'`;
+    const [rows, fields] = await db.load(sql);
+    if (rows.length === 0)
+    return null;
+
+  return rows[0];
   },
 
   async add(student) {

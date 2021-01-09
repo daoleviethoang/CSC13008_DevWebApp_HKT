@@ -5,7 +5,7 @@ module.exports = function(app){
       }
       res.locals.auth = req.session.auth;
       res.locals.authUser = req.session.authUser;
-      console.log(`logged in: ${req.session.auth}`);
+      console.log(req.session.auth);
       next();
   });
 }

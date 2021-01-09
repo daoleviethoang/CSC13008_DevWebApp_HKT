@@ -8,6 +8,7 @@ app.use(express.urlencoded({
   extended: true
 }));
 app.use('/design', express.static('design'));
+app.use('/video', express.static('video'));
 
 require('./middlewares/session.mdw')(app);
 require('./middlewares/locals.mdw')(app);

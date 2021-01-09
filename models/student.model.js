@@ -1,4 +1,5 @@
 const db = require('../utils/db');
+const { singleFromUID } = require('./teacher.model');
 
 const STUDENT_PROPERTIES = {
   table_name:"students",
@@ -22,7 +23,14 @@ module.exports = {
 
     return rows[0];
   },
+  async singleFromUID(UID) {
+    const sql = `select * from ${STUDENT_PROPERTIES.table_name} where UID = '${UID}'`;
+    const [rows, fields] = await db.load(sql);
+    if (rows.length === 0)
+      return null;
 
+    return rows[0];
+  },
   async add(student) {
     const [result, fields] = await db.add(student, 'students');
     return result;

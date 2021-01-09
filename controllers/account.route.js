@@ -88,25 +88,45 @@ router.get('/login', async function (req, res) {
 router.post('/login', async function (req, res, next) {
   console.log(req.body);
   const user = await userModel.singleByUserName(req.body.username);
-  console.log(user);  
+
   if (user === null){
     return res.render('vwAccounts/login',{
       layout:false,
       err_message: 'Invalid username'
     });
   }
-
   const ret = bcryptjs.compareSync(req.body.password,user.password);
   if (ret === false){
     return res.render('vwAccounts/login',{
       layout:false,
-      err_message: 'Invalid username'
+      err_message: 'Invalid password'
     });
   }
+  let userDetail;
+
+  if (user.permission === teacherModel.TEACHER_PROPERTIES.permission){
+    const teacher =  await teacherModel.singleFromUID(user.UID);
+    userDetail = {
+      username: user.username,
+      Name:teacher.Name,
+      ID:  teacher.TeaID,
+      permission: teacherModel.TEACHER_PROPERTIES.permission 
+    }
+  }
+  if (user.permission === studentModel.STUDENT_PROPERTIES.permission){
+    const student =  await studentModel.singleFromUID(user.UID);
+    userDetail = {
+      username: user.username,
+      Name:student.Name,
+      ID:  student.TeaID,
+      permission: studentModel.STUDENT_PROPERTIES.permission
+    }
+  }
+
 
   req.session.auth = true;
-  req.session.authUser = user;
-
+  req.session.authUser = userDetail;
+  console.log(userDetail);
   const url = '/';
   res.redirect(url)
 })

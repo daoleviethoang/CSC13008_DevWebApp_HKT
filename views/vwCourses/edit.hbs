@@ -1,0 +1,186 @@
+{{#section 'css'}}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+  integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+  integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
+{{/section}}
+
+{{#section 'js'}}
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
+
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+<script>
+  tinymce.init({
+    selector: '#txtFullDes'
+  });
+</script>
+{{/section}}
+
+<div class="w-75 mx-auto">
+  <div class="border">
+    <h2 class="ml-3 mt-3 s">Basic setting up</h2>
+    <form class="w-75 mx-auto mt-3" action="/course/edit/{{this.Course.courseID}}/basic" method="POST">
+      <div class="form-group">
+        <label for="Coursename">
+          <h3>Course Name</h3>
+        </label>
+        <input type="text" class="form-control" id="textCoursename" name='CourseName'
+          value="{{this.Course.courseName}}">
+      </div>
+
+      <div class="form-group">
+        <label for="exampleFormControlSelect1">
+          <h3>Category</h3>
+        </label>
+        <select class="form-control" id="exampleFormControlSelect2" name="CategoryID">
+          {{#each this.Categories}}
+          {{#if this.Categories.iscurrentCategory}}
+          <option value={{CategoryID}} selected="selected">{{Name}}</option>
+          {{else}}
+          <option value={{CategoryID}}>{{Name}}</option>
+          {{/if}}
+          {{/each}}
+        </select>
+      </div>
+
+      <div class="form-group" id="Subcategory">
+        <label for="exampleFormControlSelect1">
+          <h3> Subcategory</h3>
+        </label>
+        <select class="form-control" id="SelectSubCategoryID" name="SubCategoryID">
+          {{#each this.Categories}}
+          <optgroup label="{{Name}}">
+            {{#each subcategories}}
+            {{#if isCurrentSubcategory}}
+            <option value={{subcategory.SubCategoryID}} selected="selected">{{subcategory.Name}}</option>
+            {{else}}
+            <option value={{subcategory.SubCategoryID}}>{{subcategory.Name}}</option>
+            {{/if}}
+            {{/each}}
+          </optgroup>
+          {{/each}}
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="Coursename">
+          <h3>Short description</h3>
+        </label>
+        <input type="text" class="form-control" id="txtTinyDes" name="TinyDes" value="{{this.Course.tinyDes}}">
+      </div>
+
+      <div class="form-group">
+        <label for="Coursename">
+          <h3>Full description</h3>
+        </label>
+        <textarea id="txtFullDes" name="FullDes">{{this.Course.fullDes}}</textarea>
+      </div>
+
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Price</span>
+        </div>
+        <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" step="0.1" name="Price"
+          value="{{this.Course.Price}}">
+        <div class="input-group-append">
+          <span class="input-group-text">$</span>
+        </div>
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Coupon</span>
+        </div>
+        <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" step="0.1">
+        <div class="input-group-append">
+          <span class="input-group-text">$</span>
+        </div>
+      </div>
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="customCheck1" name="IsFinished" {{#if
+          this.Course.IsFinished}}checked="yes" {{/if}}>
+
+        <label class="custom-control-label" for="customCheck1">Has this courses is all finished yet?</label>
+      </div>
+      <div class="w-50 mx-auto">
+        <button type="submit" class="btn btn-primary w-100">Save</button>
+      </div>
+    </form>
+  </div>
+
+  <div>
+    {{#each this.Course.allSection}}
+    <div class="accordion mt-5 mb-5" id="accordionExample">
+      <div class="card">
+
+        <form action="/course/edit/{{courseID}}/{{CourseSectionID}}/updatesection" method="POST">
+          <div class="card-header w-100 d-flex justify-content-between" id="heading{{CourseSectionID}}">
+            <div>
+              <h2 class="mb-0">
+                <input class="btn btn-link btn-block text-left" type="text" data-toggle="collapse"
+                  data-target="#collapse{{CourseSectionID}}" aria-expanded="true"
+                  aria-controls="collapse{{CourseSectionID}}" value="{{Name}}" name = "SectionName" required='required'>
+              </h2>
+            </div>
+            <div>
+              <button type="submit" class="btn btn-primary">Update section name</button>
+            </div>
+          </div>
+        </form>
+        <div id="collapse{{CourseSectionID}}" class="collapse show" aria-labelledby="heading{{CourseSectionID}}"
+          data-parent="#accordionExample">
+          <div class="card-body">
+            {{#each allVideo}}
+            <div class="card w-100 mt-3 mb -3">
+              <div class="card-body">
+                <form method="POST" action='/course/edit/{{courseID}}/updatevideo/{{CourseSectionID}}/{{videoid}}'>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Video title</label>
+                    <input type="text" class="form-control" name="videotitle" value="{{videoname}}" required="required">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Video link</label>
+                    <input type="text" class="form-control" name="videolink" value="{{link}} " required="required">
+                  </div>
+                  <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+              </div>
+            </div>
+            {{/each}}
+            <!--add new video form -->
+            <form action="/course/edit/{{courseID}}/addvideo/" method="POST">
+              <div class="input-group mb-3 mt-4 w-50">
+                <input type="hidden" class="form-control" value="{{CourseSectionID}}" name="CourseSectionID">
+                <input type="text" class="form-control" placeholder="New video title" aria-describedby="basic-addon2"
+                  name="newvideoname" required="required">
+                <div class="input-group-append">
+                  <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    Add new video
+                  </button>
+                </div>
+              </div>
+            </form>
+            <!--add new video form -->
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+    <form action="/course/edit/{{this.Course.courseID}}/addsection/" method="POST">
+      <div class="input-group mb-3 mt-4 w-50">
+        <input type="text" class="form-control" placeholder="New section title" aria-label="Recipient's username"
+          aria-describedby="basic-addon2" name="newsectionname" required="required">
+        <div class="input-group-append">
+          <button type="submit" class="btn btn-primary">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            Add new section
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

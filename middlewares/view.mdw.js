@@ -7,6 +7,7 @@ module.exports = function (app) {
     defaultLayout: 'bs4.hbs',
     helpers: {
       section: hbs_sections(),
+
     }
   }));
   app.set('view engine', 'hbs');

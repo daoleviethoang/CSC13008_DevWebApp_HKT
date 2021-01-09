@@ -49,7 +49,7 @@
 
 	<!-- Modernizr JS -->
 	<script src="/design/js/modernizr-2.6.2.min.js"></script>
-
+	{{{_sections.css}}}
 </head>
 
 <body>
@@ -78,8 +78,7 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-xs-2">
-							<div id="fh5co-logo"><a href="/"><i
-										class="icon-study"></i>Educ<span>.</span></a></div>
+							<div id="fh5co-logo"><a href="/"><i class="icon-study"></i>Educ<span>.</span></a></div>
 						</div>
 						<div class="col-xs-10 text-right menu-1">
 							<ul>
@@ -101,16 +100,16 @@
 								{{#if auth}}
 								<li class="has-dropdown">
 									<a href="#" style="font-size: larger;">
-										<i class="icon-head"></i> 
+										<i class="icon-head"></i>
 										<strong>
 											{{authUser.username}}
 										</strong>
 									</a>
 									<ul class="dropdown">
 										<li><a href="#">Profile</a></li>
-										<form id = "frmLogout" action="/account/logout" method="POST"></form>
-											<li><a href="javascript: $('#frmLogout').submit();">Sign out</a></li>
-										
+										<form id="frmLogout" action="/account/logout" method="POST"></form>
+										<li><a href="javascript: $('#frmLogout').submit();">Sign out</a></li>
+
 									</ul>
 								</li>
 								{{else}}
@@ -125,7 +124,7 @@
 			</div>
 		</nav>
 
-		<div>
+		<div class='mx-auto'>
 			{{{body}}}
 		</div>
 
@@ -203,7 +202,7 @@
 	<div class="gototop js-top">
 		<a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
 	</div>
-
+	{{{_sections.js}}}
 	<!-- jQuery -->
 	<script src="/design/js/jquery.min.js"></script>
 	<!-- jQuery Easing -->
@@ -245,6 +244,7 @@
 			enableUtc: false
 		});
 	</script>
+
 </body>
 
 </html>

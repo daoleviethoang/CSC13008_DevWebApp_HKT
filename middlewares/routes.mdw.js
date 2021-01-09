@@ -3,9 +3,7 @@ module.exports = function (app) {
         res.render('index');
     });
 
-    app.get('/courses', function (req, res) {
-        res.render('courses');
-    })
+
 
     app.get('/about', function (req, res) {
         res.render('about');
@@ -33,7 +31,9 @@ module.exports = function (app) {
     })
 
     app.use('/account/', require('./../controllers/account.route'));
+    app.use('/course/', require('./../controllers/course.route'));
 
+    
     app.get('/err', function (req, res) {
         throw new Error('Error!');
       });
