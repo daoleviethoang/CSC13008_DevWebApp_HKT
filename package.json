@@ -18,8 +18,10 @@
     "express-handlebars-sections": "^1.0.1",
     "express-mysql-session": "^2.1.5",
     "express-session": "^1.17.1",
+    "hbs": "^4.1.1",
     "moment": "^2.29.1",
     "morgan": "^1.10.0",
+    "mysql": "^2.18.1",
     "mysql2": "^2.2.5",
     "package.json": "^2.0.1"
   }
