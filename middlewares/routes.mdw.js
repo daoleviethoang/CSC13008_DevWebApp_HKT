@@ -24,6 +24,7 @@ module.exports = function(app) {
     app.use('/account/', require('./../controllers/account.route'));
     app.use('/course/', require('./../controllers/course.route'));
     app.use('/home/', require('./../controllers/home.route'));
+    app.use('/products/', require('./../controllers/product-fe.route'));
 
     app.get('/err', function(req, res) {
         throw new Error('Error!');

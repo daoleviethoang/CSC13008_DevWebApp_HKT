@@ -5,6 +5,8 @@ module.exports = {
     const sql = 'select * from products';
     const [rows, fields] = await db.load(sql);
     return rows;
-  }
+  },
+
+
 };
 

@@ -10,6 +10,12 @@ module.exports = {
     const [rows, fields] = await db.load(sql);
     return rows;
   },
+  
+  async allByCat(subCatId) {
+    const sql = `select * from courses where SubCategoryID=${subCatId}`;
+    const [rows, fields] = await db.load(sql);
+    return rows;
+  },
 
   async single(courseID){
     const sql = `select * from courses where  CoursesID = ${courseID}`;

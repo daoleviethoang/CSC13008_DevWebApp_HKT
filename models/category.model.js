@@ -1,7 +1,5 @@
 const db = require('../utils/db');
 
-
-
 module.exports = {
   async all() {
     const sql = 'select * from categories';
