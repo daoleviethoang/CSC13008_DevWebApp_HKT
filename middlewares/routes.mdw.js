@@ -1,6 +1,6 @@
 module.exports = function(app) {
     app.get('/', function(req, res) {
-        res.render('bs4');
+        res.render('index');
     });
 
     app.get('/about', function(req, res) {
@@ -16,7 +16,9 @@ module.exports = function(app) {
         res.render('contact');
     })
 
-
+    app.get('/teacher', function(req, res) {
+        res.render('teacher');
+    })
     app.get('/blog', function(req, res) {
         res.render('blog');
     })
@@ -24,7 +26,7 @@ module.exports = function(app) {
     app.use('/account/', require('./../controllers/account.route'));
     app.use('/course/', require('./../controllers/course.route'));
     app.use('/home/', require('./../controllers/home.route'));
-    app.use('/products/', require('./../controllers/product-fe.route'));
+    app.use('/courses/', require('./../controllers/product-fe.route'));
 
     app.get('/err', function(req, res) {
         throw new Error('Error!');

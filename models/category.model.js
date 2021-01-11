@@ -4,7 +4,16 @@ module.exports = {
   async all() {
     const sql = 'select * from categories';
     const [rows, fields] = await db.load(sql);
-    console.log(rows);
+    return rows;
+  },
+
+  async allSubCategories() {
+    const sql = `
+      select sc.*, count(c.CoursesID) as ProductCount
+      from subcategories sc left join courses c on sc.SubCategoryID = c.SubCategoryID
+      group by sc.SubCategoryID, sc.Name
+    `;
+    const [rows, fields] = await db.load(sql);
     return rows;
   },
 

@@ -1,5 +1,5 @@
 const { raw } = require("mysql");
-const teacherModel = require("../models/teacher.model");
+const categoryModel = require("../models/category.model");
 
 module.exports = function(app) {
     app.use(function(req, res, next) {
@@ -9,6 +9,10 @@ module.exports = function(app) {
         res.locals.auth = req.session.auth;
         res.locals.authUser = req.session.authUser;
         console.log(req.session.authUser);
+        next();
+    });
+    app.use(async function (req, res, next) {
+        res.locals.lcCategories = await categoryModel.allSubCategories();
         next();
     });
 }

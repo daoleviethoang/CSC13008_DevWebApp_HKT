@@ -28,7 +28,7 @@ module.exports = {
 
     async countNumber() {
         const [result, fields] = await db.count('users');
-        console.log(result);
+
         return result[0].total;
     },
     async singleByUserName(username) {

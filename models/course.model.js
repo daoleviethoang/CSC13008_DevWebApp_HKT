@@ -89,7 +89,7 @@ module.exports = {
       VideoID: VideoID
     };
     const [result, field] = await db.patch(videoEntity,condition,'video');
-    console.log(result);
+
     return result;
   },
 

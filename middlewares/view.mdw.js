@@ -1,9 +1,7 @@
 const exphbs = require('express-handlebars');
 const hbs_sections = require('express-handlebars-sections')
-const hbs = require('hbs');
 
-
-
+const numeral = require('numeral');
 
 module.exports = function(app) {
     app.set('view engine', 'hbs');
@@ -14,6 +12,9 @@ module.exports = function(app) {
         defaultLayout: 'bs4.hbs',
         helpers: {
             section: hbs_sections(),
+            format_number(val) {
+                return numeral(val).format('0,0[.]00 $');
+            }
         }
     }));
 }

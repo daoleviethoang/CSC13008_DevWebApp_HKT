@@ -47,7 +47,7 @@ module.exports = {
     },
     async largest_ID() {
         const [result, fields] = await db.largest_ID(TEACHER_PROPERTIES.pk, TEACHER_PROPERTIES.table_name);
-        console.log(typeof(result[0].largestID));
+
         return result[0].largestID;
     }
 

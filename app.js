@@ -15,13 +15,8 @@ app.use('/video', express.static('video'));
 
 require('./middlewares/session.mdw')(app);
 require('./middlewares/locals.mdw')(app);
-//require('./middlewares/view.mdw')(app);
-const PartialPath = path.join(__dirname, "./views/partials");
+require('./middlewares/view.mdw')(app);
 
-
-app.set("view engine", "hbs");
-hbs.registerPartials(PartialPath); ///Header and Footer register
-app.use(home); //home
 require('./middlewares/routes.mdw')(app);
 
 
