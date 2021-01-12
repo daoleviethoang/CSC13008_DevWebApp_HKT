@@ -23,5 +23,27 @@ controller.getTopProduct = async() => {
     }
     return topProduct;
 };
+controller.getBestViewCourse = async() => {
+
+    let productsArray = await courseModel.getBestView();
+
+    let topProduct = [];
+    for (let i = 0; i < 3; i++) {
+        let row = [];
+        for (let j = 0; j < 4; j++) {
+            row.push(productsArray[i * 4 + j]);
+        }
+        topProduct.push(row);
+    }
+    return topProduct;
+};
+controller.getHighlightCourse = async() => {
+    let productsArray = await courseModel.getHighlightCourse();
+    return productsArray;
+};
+controller.getHighlightCategories = async() => {
+    let productsArray = await courseModel.getBestRegisterWeek();
+    return productsArray;
+};
 
 module.exports = controller;

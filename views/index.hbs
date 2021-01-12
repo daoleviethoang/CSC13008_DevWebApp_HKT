@@ -1,4 +1,4 @@
-<div style="padding: 3em;">
+<div style="padding: 4em;">
 	<aside id="fh5co-hero">
 		<div class="flexslider">
 			<ul class="slides">
@@ -53,7 +53,52 @@
 </div>
 <hr />
 
-<div style="padding: 3em;">
+<div style="padding: 4em;">
+	<div class="row animate-box" style="height: 50px">
+		<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
+			<h3>Khóa Học Nổi Bật Nhất Tuần Qua</h3>
+		</div>
+	</div>
+	<div id="carouselId" class="carousel slide" data-ride="carousel" data-interval="2000">
+		<div class="carousel-inner" role="listbox">
+			<div class="item active">
+				<div class="row">
+					{{#each highlightCourse}}
+					<div class="col-md-3 col-sm-6 text-center animate-box">
+						<div class="card h-100">
+							<img src="/design/images/course_{{this.CoursesID}}.jpg" alt="{{this.Name}}"
+								title="{{this.Name}}" class="card-img-top">
+							<div class="card-body">
+								<h6 class="card-title">{{this.Name}}</h6>
+								<h5 class="card-title text-danger">{{format_number this.Price}}</h5>
+								<p
+									style="vertical-align: middle;text-align: center; margin: 0 15px; max-width:240px; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+									{{this.TinyDes}}</p>
+							</div>
+							<div class="card-footer text-muted">
+								<a class="btn btn-sm btn-outline-primary" href="/courses/detail/{{this.CoursesID}}"
+									role="button">
+									<i class="fa fa-eye" aria-hidden="true"></i>
+									Details
+								</a>
+								{{!-- {{#if ../auth}} lấy auth của hiện tại --}}
+								<a data-id="{{this.CoursesID}}" class="btn btn-sm btn-outline-success addItem"
+									href="javascript:;" role="button">
+									<i class="fa fa-cart-plus" aria-hidden="true"></i>
+									Add to cart
+								</a>
+								{{!-- {{/if}} --}}
+							</div>
+						</div>
+					</div>
+					{{/each}}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div style="padding: 4em;">
 	<div class="row animate-box" style="height: 50px">
 		<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
 			<h3>Khóa Học Được Xem Nhiều Nhất</h3>
@@ -68,7 +113,7 @@
 		<div class="carousel-inner" role="listbox">
 			<div class="item active">
 				<div class="row">
-					{{#each topProducts.[0]}}
+					{{#each bestViewCourse.[0]}}
 					<div class="col-md-3 col-sm-6 text-center animate-box">
 						<div class="card h-100">
 							<img src="/design/images/course_{{this.CoursesID}}.jpg" alt="{{this.Name}}"
@@ -76,7 +121,9 @@
 							<div class="card-body">
 								<h6 class="card-title">{{this.Name}}</h6>
 								<h5 class="card-title text-danger">{{format_number this.Price}}</h5>
-								<p style="vertical-align: middle;text-align: center; margin: 0 15px; max-width:240px; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{{this.TinyDes}}</p>
+								<p
+									style="vertical-align: middle;text-align: center; margin: 0 15px; max-width:240px; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+									{{this.TinyDes}}</p>
 							</div>
 							<div class="card-footer text-muted">
 								<a class="btn btn-sm btn-outline-primary" href="/courses/detail/{{this.CoursesID}}"
@@ -99,7 +146,7 @@
 			</div>
 			<div class="item">
 				<div class="row">
-					{{#each topProducts.[1]}}
+					{{#each bestViewCourse.[1]}}
 					<div class="col-md-3 col-sm-6 text-center animate-box">
 						<div class="card h-100">
 							<img src="/design/images/course_{{this.CoursesID}}.jpg" alt="{{this.Name}}"
@@ -107,7 +154,9 @@
 							<div class="card-body">
 								<h6 class="card-title">{{this.Name}}</h6>
 								<h5 class="card-title text-danger">{{format_number this.Price}}</h5>
-								<p style="vertical-align: middle;text-align: center; margin: 0 15px; max-width:240px; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{{this.TinyDes}}</p>
+								<p
+									style="vertical-align: middle;text-align: center; margin: 0 15px; max-width:240px; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+									{{this.TinyDes}}</p>
 							</div>
 							<div class="card-footer text-muted">
 								<a class="btn btn-sm btn-outline-primary" href="/courses/detail/{{this.CoursesID}}"
@@ -130,7 +179,7 @@
 			</div>
 			<div class="item">
 				<div class="row">
-					{{#each topProducts.[2]}}
+					{{#each bestViewCourse.[2]}}
 					<div class="col-md-3 col-sm-6 text-center animate-box">
 						<div class="card h-100">
 							<img src="/design/images/course_{{this.CoursesID}}.jpg" alt="{{this.Name}}"
@@ -138,7 +187,9 @@
 							<div class="card-body">
 								<h6 class="card-title">{{this.Name}}</h6>
 								<h5 class="card-title text-danger">{{format_number this.Price}}</h5>
-								<p style="vertical-align: middle;text-align: center; margin: 0 15px; max-width:240px; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{{this.TinyDes}}</p>
+								<p
+									style="vertical-align: middle;text-align: center; margin: 0 15px; max-width:240px; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+									{{this.TinyDes}}</p>
 							</div>
 							<div class="card-footer text-muted">
 								<a class="btn btn-sm btn-outline-primary" href="/courses/detail/{{this.CoursesID}}"
@@ -172,12 +223,13 @@
 </div>
 
 
-<div style="padding: 3em;">
+<div style="padding: 4em;">
 	<div class="row animate-box" style="height: 50px">
 		<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
 			<h3>Khóa Học Mới Nhất</h3>
 		</div>
 	</div>
+	
 	<div id="carouselId" class="carousel slide" data-ride="carousel" data-interval="2000">
 		<ol class="carousel-indicators">
 			<li data-target="#carouselId" data-slide-to="0" class="active"></li>
@@ -195,7 +247,9 @@
 							<div class="card-body">
 								<h6 class="card-title">{{this.Name}}</h6>
 								<h5 class="card-title text-danger">{{format_number this.Price}}</h5>
-								<p style="vertical-align: middle;text-align: center; margin: 0 15px; max-width:240px; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{{this.TinyDes}}</p>
+								<p
+									style="vertical-align: middle;text-align: center; margin: 0 15px; max-width:240px; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+									{{this.TinyDes}}</p>
 							</div>
 							<div class="card-footer text-muted">
 								<a class="btn btn-sm btn-outline-primary" href="/courses/detail/{{this.CoursesID}}"
@@ -226,7 +280,9 @@
 							<div class="card-body">
 								<h6 class="card-title">{{this.Name}}</h6>
 								<h5 class="card-title text-danger">{{format_number this.Price}}</h5>
-								<p style="vertical-align: middle;text-align: center; margin: 0 15px; max-width:240px; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{{this.TinyDes}}</p>
+								<p
+									style="vertical-align: middle;text-align: center; margin: 0 15px; max-width:240px; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+									{{this.TinyDes}}</p>
 							</div>
 							<div class="card-footer text-muted">
 								<a class="btn btn-sm btn-outline-primary" href="/courses/detail/{{this.CoursesID}}"
@@ -257,7 +313,9 @@
 							<div class="card-body">
 								<h6 class="card-title">{{this.Name}}</h6>
 								<h5 class="card-title text-danger">{{format_number this.Price}}</h5>
-								<p style="vertical-align: middle;text-align: center; margin: 0 15px; max-width:240px; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{{this.TinyDes}}</p>
+								<p
+									style="vertical-align: middle;text-align: center; margin: 0 15px; max-width:240px; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+									{{this.TinyDes}}</p>
 							</div>
 							<div class="card-footer text-muted">
 								<a class="btn btn-sm btn-outline-primary" href="/courses/detail/{{this.CoursesID}}"
@@ -289,66 +347,32 @@
 		</a>
 	</div>
 </div>
-<div id="fh5co-course-categories" style="padding: 3em;">
-	<div class="container">
+
+
+<div style="padding: 4em;">
 		<div class="row animate-box">
-			<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-				<h3>Khóa Học Được Xem Nhiều Nhất</h3>
+		<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
+				<h3>Lĩnh Vực Được Đăng Kí Học Nhiều Nhất Tuần Qua</h3>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-3 col-sm-6 text-center animate-box">
-				<div class="services">
-					<span class="icon">
-						<i class="icon-photo"></i>
-					</span>
+			{{#each highlightCategories}}
+			<div class="col-md-6 animate-box">
+				<div class="course">
+					<a href="#" class="course-img" style="background-image: url(/design/images/subcategories_{{this.SubCategoryID}}.jpg);">
+					</a>
 					<div class="desc">
-						<h3><a href="#">Art &amp; Media</a></h3>
+						<h3><a href="#">{{this.Name}}</a></h3>
 						<p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem
-							provident. Odit ab aliquam dolor eius.</p>
+							provident. Odit ab aliquam dolor eius molestias accusamus alias autem provident. Odit ab
+							aliquam dolor eius.</p>
+						<span><a href="#" class="btn btn-primary btn-sm btn-course">Take A Course</a></span>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-3 col-sm-6 text-center animate-box">
-				<div class="services">
-					<span class="icon">
-						<i class="icon-home-outline"></i>
-					</span>
-					<div class="desc">
-						<h3><a href="#">Real Estate</a></h3>
-						<p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem
-							provident. Odit ab aliquam dolor eius.</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-3 col-sm-6 text-center animate-box">
-				<div class="services">
-					<span class="icon">
-						<i class="icon-bubble3"></i>
-					</span>
-					<div class="desc">
-						<h3><a href="#">Language</a></h3>
-						<p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem
-							provident. Odit ab aliquam dolor eius.</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-3 col-sm-6 text-center animate-box">
-				<div class="services">
-					<span class="icon">
-						<i class="icon-world"></i>
-					</span>
-					<div class="desc">
-						<h3><a href="#">Web &amp; Programming</a></h3>
-						<p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem
-							provident. Odit ab aliquam dolor eius.</p>
-					</div>
-				</div>
-			</div>
+			{{/each}}
 		</div>
-	</div>
 </div>
-
 
 <div id="fh5co-gallery" class="fh5co-bg-section">
 	<div class="row text-center">
@@ -369,73 +393,6 @@
 		</div>
 	</div>
 </div>
-
-<div id="fh5co-course">
-	<div class="container">
-		<div class="row animate-box">
-			<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-				<h2>Top categories</h2>
-				<p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident.
-					Odit ab aliquam dolor eius.</p>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-6 animate-box">
-				<div class="course">
-					<a href="#" class="course-img" style="background-image: url(/design/images/project-1.jpg);">
-					</a>
-					<div class="desc">
-						<h3><a href="#">Web Master</a></h3>
-						<p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem
-							provident. Odit ab aliquam dolor eius molestias accusamus alias autem provident. Odit ab
-							aliquam dolor eius.</p>
-						<span><a href="#" class="btn btn-primary btn-sm btn-course">Take A Course</a></span>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-6 animate-box">
-				<div class="course">
-					<a href="#" class="course-img" style="background-image: url(/design/images/project-2.jpg);">
-					</a>
-					<div class="desc">
-						<h3><a href="#">Business &amp; Accounting</a></h3>
-						<p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem
-							provident. Odit ab aliquam dolor eius molestias accusamus alias autem provident. Odit ab
-							aliquam dolor eius.</p>
-						<span><a href="#" class="btn btn-primary btn-sm btn-course">Take A Course</a></span>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-6 animate-box">
-				<div class="course">
-					<a href="#" class="course-img" style="background-image: url(/design/images/project-3.jpg);">
-					</a>
-					<div class="desc">
-						<h3><a href="#">Science &amp; Technology</a></h3>
-						<p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem
-							provident. Odit ab aliquam dolor eius molestias accusamus alias autem provident. Odit ab
-							aliquam dolor eius.</p>
-						<span><a href="#" class="btn btn-primary btn-sm btn-course">Take A Course</a></span>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-6 animate-box">
-				<div class="course">
-					<a href="#" class="course-img" style="background-image: url(/design/images/project-4.jpg);">
-					</a>
-					<div class="desc">
-						<h3><a href="#">Health &amp; Psychology</a></h3>
-						<p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem
-							provident. Odit ab aliquam dolor eius molestias accusamus alias autem provident. Odit ab
-							aliquam dolor eius.</p>
-						<span><a href="#" class="btn btn-primary btn-sm btn-course">Take A Course</a></span>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
 
 <div id="fh5co-counter" class="fh5co-counters" style="background-image: url(/design/images/img_bg_4.jpg);"
 	data-stellar-background-ratio="0.5">

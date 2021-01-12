@@ -15,20 +15,16 @@ router.get('/', async(req, res) => {
     // Nên làm kiều này nè 
 
     let topProducts = await controller.getTopProduct();
-    //console.log(`topProducts: ${JSON.stringify(topProducts, null, 4)}`)
-    console.log(topProducts)
-    res.render("index", { //doi xiu tui cahy thu
-            //sao no ko loat data ta hic tu nha tui chay cai nua
-            topProducts: topProducts
-        }) //ong xem duoc luon ak, ong zo link thu duoc k
-        // const result = await courseModel.getNewCourses();
-        // console.log(result);
-        // res.render('index', {
-        //     courses: result
-        //duoc rui ha DUong tui chay thu
-        // Điền tên layout vô nữa là dc
-        // Khoan, chưa xong đâu. Ông điền đủ view và layout vô trước đi đã
-
+    let bestViewCourse = await controller.getBestViewCourse();
+    let highlightCourse = await controller.getHighlightCourse();
+    let highlightCategories = await controller.getHighlightCategories();
+    console.log(highlightCategories)
+    res.render("index", {
+        topProducts: topProducts,
+        bestViewCourse: bestViewCourse,
+        highlightCourse: highlightCourse,
+        highlightCategories: highlightCategories
+    })
 })
 
 router.post('/', async function(req, res) {

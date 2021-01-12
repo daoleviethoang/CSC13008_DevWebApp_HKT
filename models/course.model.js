@@ -115,5 +115,21 @@ module.exports = {
         const sql = 'SELECT * FROM `courses` ORDER BY DateCreated DESC LIMIT 12';
         const [rows, fields] = await db.load(sql);
         return rows;
+    },
+    async getBestView() {
+        const sql = 'SELECT * FROM `courses` ORDER BY AccessNumber DESC LIMIT 12';
+        const [rows, fields] = await db.load(sql);
+        return rows;
+    },
+    async getHighlightCourse() {
+        const sql = 'SELECT * FROM (SELECT * FROM courses WHERE WEEK(courses.DateCreated) = WEEK(CURDATE())) AS A ORDER BY nRegister DESC LIMIT 4';
+        const [rows, fields] = await db.load(sql);
+        return rows;
+    },
+    async getBestRegisterWeek() {
+        //const sql = 'SELECT * FROM (SELECT * FROM courses WHERE WEEK(courses.DateCreated) = WEEK(CURDATE())) AS A ORDER BY nRegister DESC LIMIT 4';
+        const sql = 'SELECT SubCategoryID, Name, sum FROM (SELECT * FROM subcategories) AS TBA INNER JOIN (SELECT * FROM (SELECT SubCategoryID as sID, Sum(nRegister) as sum FROM (	SELECT * FROM (SELECT * FROM courses WHERE WEEK(courses.DateCreated) = WEEK(CURDATE())) AS A) AS D GROUP BY SubCategoryID) AS TB1 ORDER BY sum DESC) AS TBB ON TBA.SubCategoryID = TBB.sID ORDER BY sum DESC';
+        const [rows, fields] = await db.load(sql);
+        return rows;
     }
 }
