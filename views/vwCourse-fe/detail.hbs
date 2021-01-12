@@ -1,0 +1,37 @@
+{{#with course}}
+<div class="card col-sm-7">
+  <h4 class="card-header">
+    {{Name}}
+  </h4>
+  <div class="card-body">
+      {{!-- size ảnh --}}
+    <img src="/imgs/Courses/{{CoursesID}}/main.jpg" alt="{{Name}}">                                         
+    <p class="card-text mt-3">Price: <span class="text-danger font-weight-bold">{{format_number Price}}</span></p>
+    <p class="card-text">
+      {{{FullDes}}}
+    </p>
+    {{!-- khi nào handle cart --}}
+        {{!-- {{#if ../auth}} --}}
+        {{!-- gửi tới cart/add khi nhấn + --}}
+        {{!-- <form action="/cart/add" method="POST"> --}}
+        {{!-- <div class="row form-group">                                                                       --}}
+            {{!-- <div class="col-sm-4"> --}}
+            {{!-- <div class="input-group"> --}}
+                {{!-- <input type="hidden" value="{{ProID}}" name="id"> --}}
+                {{!-- <input type="text" class="form-control" name="quantity" placeholder="Quantity" value="1"> --}}
+                {{!-- <div class="input-group-append"> --}}
+                {{!-- <button class="btn btn-outline-primary" type="submit"> --}}
+                    {{!-- <i class="fa fa-plus" aria-hidden="true"></i> --}}
+                {{!-- </button> --}}
+                {{!-- </div> --}}
+            {{!-- </div> --}}
+            {{!-- </div> --}}
+        {{!-- </div> --}}
+        {{!-- </form> --}}
+        {{!-- {{/if}}  --}}
+  </div>
+  <div class="card-footer text-muted">
+    <small>Last updated: {{LastUpdate}}</small>
+  </div>
+</div>
+{{/with}}

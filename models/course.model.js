@@ -2,7 +2,7 @@ const db = require('../utils/db');
 const fs = require('fs');
 const { single } = require('./category.model');
 const { patch } = require('../utils/db');
-
+const { paginate } = require('./../config/default.json');
 
 module.exports = {
     async all() {
@@ -11,14 +11,20 @@ module.exports = {
         return rows;
     },
 
-    async allByCat(subCatId) {
-        const sql = `select * from courses where SubCategoryID=${subCatId}`;
+    async countBySubCat(subCatId) {
+        const sql = `select count(*) as total from courses where SubCategoryID=${subCatId}`;
+        const [rows, fields] = await db.load(sql);
+        return rows[0].total;
+    },
+
+    async pageByCat(subCatId, offset) {
+        const sql = `select * from courses where SubCategoryID=${subCatId} limit ${paginate.limit} offset ${offset}`;
         const [rows, fields] = await db.load(sql);
         return rows;
     },
 
     async single(courseID) {
-        const sql = `select * from courses where  CoursesID = ${courseID}`;
+        const sql = `select * from courses where CoursesID = ${courseID}`;
         const [row, fields] = await db.load(sql);
         if (row.length === 0) {
             return null;

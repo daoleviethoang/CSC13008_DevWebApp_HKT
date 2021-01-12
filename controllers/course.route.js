@@ -198,5 +198,13 @@ router.post('/edit/:CourseID/:CourseSection/updatesection', async function(req, 
     res.redirect(req.headers.referer);
 });
 
+router.get('/', async function (req, res, next) {           //chuyển đến trang chứa toàn bộ các courses
+    const list = await courseModel.all();
+    res.render('vwCourses/index', {
+      products: list,
+      empty: list.length === 0
+    });
+  })
+
 
 module.exports = router;
