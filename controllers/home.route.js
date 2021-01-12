@@ -12,7 +12,6 @@ const courseModel = require('../models/course.model');
 var controller = require("../models/IndexController");
 
 router.get('/', async(req, res) => {
-    // Nên làm kiều này nè 
 
     let topProducts = await controller.getTopProduct();
     let bestViewCourse = await controller.getBestViewCourse();
@@ -27,11 +26,11 @@ router.get('/', async(req, res) => {
     })
 })
 
-router.post('/', async function(req, res) {
-    console.log("asdasdas")
-    res.redirect("/")
-        // res.render('/')
-})
+// router.post('/', async function(req, res) {
+//     console.log("asdasdas")
+//     res.redirect("/")
+//         // res.render('/')
+// })
 
 // router.post('/', async function(req, res) {
 //     res.render('index')

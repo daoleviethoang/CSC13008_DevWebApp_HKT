@@ -31,7 +31,11 @@ module.exports = {
         }
         return row[0];
     },
-
+    async increAccessNumber(value, courseID) {
+        const sql = `UPDATE courses SET AccessNumber = ${value} WHERE CoursesID = ${courseID}`;
+        console.log(sql);
+        await db.load(sql);
+    },
     async getCategoryAndSub(CourseID) {
         const sql = `select subcategories.SubCategoryID,categories.CategoryID from courses join subcategories on courses.SubCategoryID =  subcategories.SubCategoryID 
       join categories on subcategories.CategoryID =  categories.CategoryID where courses.CoursesID = ${CourseID}`;

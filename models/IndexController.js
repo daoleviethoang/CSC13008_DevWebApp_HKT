@@ -45,5 +45,4 @@ controller.getHighlightCategories = async() => {
     let productsArray = await courseModel.getBestRegisterWeek();
     return productsArray;
 };
-
 module.exports = controller;
