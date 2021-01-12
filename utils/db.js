@@ -27,5 +27,5 @@ module.exports = {
         const sql = `	select max(${idName}) as largestID from ${table_name}`;
         return promisePool.query(sql);
 
-    }
+    },
 };

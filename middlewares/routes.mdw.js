@@ -1,12 +1,11 @@
 module.exports = function(app) {
-    app.get('/', function(req, res) {
-        res.render('index');
-    });
+    // app.get('/', function(req, res) {
+    //     res.render('index');
+    // });
 
     app.get('/about', function(req, res) {
         res.render('about');
     })
-
 
     app.get('/pricing', function(req, res) {
         res.render('pricing');
@@ -25,7 +24,7 @@ module.exports = function(app) {
 
     app.use('/account/', require('./../controllers/account.route'));
     app.use('/course/', require('./../controllers/course.route'));
-    app.use('/home/', require('./../controllers/home.route'));
+    app.use('/', require('./../controllers/home.route'));
     app.use('/courses/', require('./../controllers/product-fe.route'));
 
     app.get('/err', function(req, res) {

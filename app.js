@@ -5,7 +5,6 @@ const morgan = require('morgan');
 const hbs_sections = require('express-handlebars-sections');
 const app = express();
 const path = require('path');
-
 app.use(morgan('dev'));
 app.use(express.urlencoded({
     extended: true
