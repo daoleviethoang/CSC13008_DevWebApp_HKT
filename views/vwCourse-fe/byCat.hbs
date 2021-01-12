@@ -57,7 +57,7 @@
 
 <body>
 
-<div class="card">
+<div class="card col-sm-7" >
   <div class="card-header d-flex justify-content-between">
     <div class="card">
       <div class="card-header d-flex justify-content-between">
@@ -74,23 +74,23 @@
       <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
     {{else}}
       <div class="row">
-        {{#each this.products}}
+        {{#each this.course}}
         <div class="col-sm-4 mb-3">
           <div class="card h-100">
-            {{!-- <img src="/public/imgs/sp/{{ProID}}/main_thumbs.jpg" alt="{{Name}}" title="{{Name}}"
-              class="card-img-top"> --}}
+            <img src="/imgs/Courses/{{CoursesID}}/main_thumbs.jpg" alt="{{Name}}" title="{{Name}}"
+              class="card-img-top">
             <div class="card-body">
-              <h6 class="card-title">{{Name}}</h6>
-              <h5 class="card-title text-danger">{{format_number Price}}</h5>
+              <h4 class="card-title"><b>{{Name}}</b></h4>
+              <h5 class="card-title text-danger"><b>{{format_number Price}}</b></h5>
               <p class="card-text">{{TinyDes}}</p>
             </div>
             <div class="card-footer text-muted">
-              <a class="btn btn-sm btn-outline-primary" href="/products/detail/{{ProID}}" role="button">
+              <a class="btn btn-sm btn-outline-primary" href="/courses/detail/{{CoursesID}}" role="button">
                 <i class="fa fa-eye" aria-hidden="true"></i>
                 Details
               </a>
               {{!-- {{#if ../auth}}                                                 lấy auth của hiện tại --}}
-              <a data-id="{{ProID}}" class="btn btn-sm btn-outline-success addItem" href="javascript:;" role="button">
+              <a data-id="{{CoursesID}}" class="btn btn-sm btn-outline-success addItem" href="javascript:;" role="button">
                 <i class="fa fa-cart-plus" aria-hidden="true"></i>
                 Add to cart
               </a>

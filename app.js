@@ -12,6 +12,7 @@ app.use(express.urlencoded({
 }));
 app.use('/design', express.static('design'));
 app.use('/video', express.static('video'));
+app.use('/imgs', express.static('imgs'));       //lấy hình ảnh
 
 require('./middlewares/session.mdw')(app);
 require('./middlewares/locals.mdw')(app);
