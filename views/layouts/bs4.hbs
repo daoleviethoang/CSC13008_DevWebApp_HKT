@@ -109,7 +109,6 @@
 									{{/each}}
 								</ul>
 							</li>
-							<li class=""><a href="/about">About</a></li>
 							<li><a href="/contact">Contact</a></li>
 
 							{{#if auth}}
@@ -122,9 +121,7 @@
 							<li class="has-dropdown">
 								<a href="#" style="font-size: larger;">
 									<i class="fa fa-user mb-2" aria-hidden="true"></i>
-									<strong>
-										{{authUser.username}}
-									</strong>
+									{{authUser.username}}
 								</a>
 								<ul class="dropdown">
 									<li><a href="#">Profile</a></li>
@@ -133,9 +130,9 @@
 								</ul>
 							</li>
 							{{else}}
-							<a href="account/login"><button type="button"
+							<a href="/account/login"><button type="button"
 									class="btn btn-outline-info border rounded">Login</button></a>
-							<a href="account/register"><button type="button" class="btn btn-info rounded">Sign
+							<a href="/account/register"><button type="button" class="btn btn-info rounded">Sign
 									up</button></a>
 							{{/if}}
 

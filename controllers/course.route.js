@@ -10,14 +10,14 @@ const { truncate } = require('fs');
 const studentModel = require('../models/student.model');
 
 
-router.get('/create/1', function(req, res, next) {
-        res.render('vwCourses/create_1', {
-            layout: false,
-        })
+router.get('/create/1', function (req, res, next) {
+    res.render('vwCourses/create_1', {
+        layout: false,
     })
-    //Lay quyen student: studentModel.STUDENT_PROPERTIES.permission
-    //teacher: teacherModel.TEACHER_PROPERTIES.permission
-router.post('/create/1', function(req, res, next) {
+})
+//Lay quyen student: studentModel.STUDENT_PROPERTIES.permission
+//teacher: teacherModel.TEACHER_PROPERTIES.permission
+router.post('/create/1', function (req, res, next) {
     res.redirect(url.format({
         pathname: '/course/create/2/',
         query: {
@@ -25,7 +25,7 @@ router.post('/create/1', function(req, res, next) {
         }
     }));
 })
-router.get('/create/2', async function(req, res, next) {
+router.get('/create/2', async function (req, res, next) {
     const courseName = req.query.courseName;
     const allCategories = await categoryModel.all();
     res.render('vwCourses/create_2', {
@@ -35,7 +35,7 @@ router.get('/create/2', async function(req, res, next) {
     })
 })
 
-router.post('/create/2', function(req, res, next) {
+router.post('/create/2', function (req, res, next) {
     console.log(req.body);
     res.redirect(url.format({
         pathname: '/course/create/3/',
@@ -46,7 +46,7 @@ router.post('/create/2', function(req, res, next) {
     }));
 })
 
-router.get('/create/3', async function(req, res, next) {
+router.get('/create/3', async function (req, res, next) {
     const courseName = req.query.courseName;
     const categoryID = req.query.categoryID;
     const allSubCategories = await subcategoryModel.all(categoryID);
@@ -58,7 +58,7 @@ router.get('/create/3', async function(req, res, next) {
     })
 })
 
-router.post('/create/3', async function(req, res, next) {
+router.post('/create/3', async function (req, res, next) {
 
     console.log(res.locals.authUser);
     const course = {
@@ -72,7 +72,7 @@ router.post('/create/3', async function(req, res, next) {
 })
 
 
-router.get('/edit/:courseID', async function(req, res, next) {
+router.get('/edit/:courseID', async function (req, res, next) {
     const detailcourse = await courseModel.single(req.params.courseID);
     const cateandsub = await courseModel.getCategoryAndSub(detailcourse.CoursesID);
     const allSection = await courseModel.getAllSection(req.params.courseID);
@@ -131,7 +131,7 @@ router.get('/edit/:courseID', async function(req, res, next) {
 })
 
 
-router.post('/edit/:courseID/addvideo/', async function(req, res, next) {
+router.post('/edit/:courseID/addvideo/', async function (req, res, next) {
     const courseID = req.params.courseID
     const video = {
         CourseSectionID: req.body.CourseSectionID,
@@ -143,7 +143,7 @@ router.post('/edit/:courseID/addvideo/', async function(req, res, next) {
 });
 
 
-router.post('/edit/:courseID/addsection/', async function(req, res, next) {
+router.post('/edit/:courseID/addsection/', async function (req, res, next) {
     const coursesection = {
         CourseID: req.params.courseID,
         Name: req.body.newsectionname
@@ -154,7 +154,7 @@ router.post('/edit/:courseID/addsection/', async function(req, res, next) {
 });
 
 
-router.post('/edit/:CourseID/updatevideo/:CourseSectionID/:VideoID', async function(req, res, next) {
+router.post('/edit/:CourseID/updatevideo/:CourseSectionID/:VideoID', async function (req, res, next) {
     const video = {
         Name: req.body.videotitle,
         CourseSectionID: req.params.CourseSectionID
@@ -168,7 +168,7 @@ router.post('/edit/:CourseID/updatevideo/:CourseSectionID/:VideoID', async funct
     res.redirect(req.headers.referer);
 });
 
-router.post('/edit/:CourseID/basic', async function(req, res, next) {
+router.post('/edit/:CourseID/basic', async function (req, res, next) {
     console.log(req.body);
     const CourseID = req.params.CourseID;
     let IsFinished = 0;
@@ -187,7 +187,7 @@ router.post('/edit/:CourseID/basic', async function(req, res, next) {
     res.redirect(req.headers.referer);
 });
 
-router.post('/edit/:CourseID/:CourseSection/updatesection', async function(req, res, next) {
+router.post('/edit/:CourseID/:CourseSection/updatesection', async function (req, res, next) {
     const CourseSection = {
         CourseID: req.params.CourseID,
         Name: req.body.SectionName,
@@ -201,10 +201,23 @@ router.post('/edit/:CourseID/:CourseSection/updatesection', async function(req, 
 router.get('/', async function (req, res, next) {           //chuyển đến trang chứa toàn bộ các courses
     const list = await courseModel.all();
     res.render('vwCourses/index', {
-      products: list,
-      empty: list.length === 0
+        products: list,
+        empty: list.length === 0
     });
-  })
+})
+
+router.get('/learning', async function (req, res, next) {           //chuyển đến trang chứa toàn bộ các courses
+    const list = await courseModel.all();
+    res.render('vwCourses/mylearning', {
+    });
+})
+
+router.get('/learning/paidCourse', async function (req, res, next) {           //chuyển đến trang chứa toàn bộ các courses
+    const list = await courseModel.all();
+    res.render('vwCourses/paidCourse', {
+    });
+})
+
 
 
 module.exports = router;

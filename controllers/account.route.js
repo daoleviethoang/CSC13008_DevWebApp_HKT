@@ -112,15 +112,15 @@ router.post('/login', async function(req, res, next) {
     }
     if (user.permission === studentModel.STUDENT_PROPERTIES.permission) {
         const student = await studentModel.singleFromUID(user.UID);
+        console.log(student)
         userDetail = {
             username: user.username,
             Name: student.Name,
-            ID: student.StID,
+            ID: student.StuID,
             permission: studentModel.STUDENT_PROPERTIES.permission
         }
     }
-
-
+    console.log(userDetail)
     req.session.auth = true;
     req.session.authUser = userDetail;
     const url = '/';
