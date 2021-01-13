@@ -84,6 +84,15 @@ body { font-size: 18px; }
   <!-- Modernizr JS -->
   <script src="/design/js/modernizr-2.6.2.min.js"></script>
   {{{_sections.css}}}
+  {{#section 'js'}}
+    <script>
+        $('.addItem').on('click', function () {
+        const id = $(this).data('id');
+        $('#txtCourseId').val(id);
+        $('#frmAddItem').submit();
+      });
+    </script>
+  {{/section}}
 </head>
 
 <body>
@@ -104,7 +113,11 @@ body { font-size: 18px; }
         <h5 class="card-title">Không có dữ liệu!</h5>
         <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
         {{else}}
-        <div class="col">
+        <form action="/cart/add" method="POST" id="frmAddItem">
+          <input id="txtCourseId" type="hidden" name="id">
+          <input type="hidden" value="1" name="quantity">
+        </form>
+        <div class="row">
           {{#each this.course}}
           <div class="row">
             <div class="col-3">
