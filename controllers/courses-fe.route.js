@@ -1,4 +1,5 @@
 const express = require('express');
+const categoryModel = require('../models/category.model');
 const courseModel = require('../models/course.model');
 const { paginate } = require('./../config/default.json');
 
@@ -25,9 +26,14 @@ router.get('/bySubCat/:id', async function(req, res, next) { //dành cho khách
     console.log(page_numbers);
     const offset = (page - 1) * paginate.limit;
     const list = await courseModel.pageByCat(subCatId, offset); //lấy course theo subCatID, offset
+
+    subCatName = await categoryModel.singleSubCatName(subCatId);
+    console.log(subCatName);
     res.render('vwCourse-fe/byCat', {
         course: list,
-        empty: list.length === 0
+        page_numbers,
+        empty: list.length === 0,
+        subCatName
     });
 })
 
