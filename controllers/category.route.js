@@ -46,4 +46,8 @@ router.post('/patch', async function(req, res) {
     res.redirect('/admin/categories');
 })
 
+router.get('/categories/:id', async function(req, res) {
+    console.log(req);
+    res.render('vwCategories/index');
+})
 module.exports = router;
