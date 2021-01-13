@@ -218,9 +218,53 @@ router.get('/learning/paidCourse', async function (req, res, next) {           /
     });
 })
 
-router.get('/learn', async function (req, res, next) {           //chuyển đến trang để học
-    const list = await courseModel.all();
-    res.render('vwCourses/paidCourse', {
+router.get('/learn/:CourseID', async function (req, res, next) {           //chuyển đến trang để học
+
+    const detailcourse = await courseModel.single(req.params.CourseID);
+    console.log(detailcourse)
+    const cateandsub = await courseModel.getCategoryAndSub(detailcourse.CoursesID);
+    console.log(cateandsub)
+    const allSection = await courseModel.getAllSection(req.params.CourseID);
+    const course = {
+        CategoryID: cateandsub.CategoryID,
+        SubCategoriesID: cateandsub.SubCategoryID,
+        courseName: detailcourse.Name,
+        courseID: detailcourse.CoursesID,
+        tinyDes: detailcourse.TinyDes,
+        fullDes: detailcourse.FullDes,
+        Price: detailcourse.Price,
+        IsFinished: detailcourse.IsFinished === 1,
+        LastUpdate: detailcourse.LastUpdate,
+        allSection: []
+    }
+    for (var i = 0; i < allSection.length; i++) {
+        let section = {
+            CourseSectionID: allSection[i].CourseSectionID,
+            courseID: detailcourse.CoursesID,
+            Name: allSection[i].Name,
+            allVideo: []
+        };
+        let allVideo = await courseModel.getAllVideofSection(allSection[i].CourseSectionID);
+        for (var j = 0; j < allVideo.length; j++) {
+            let video = {
+                link: await courseModel.getLinkVideo(req.params.CourseID, allSection[i].CourseSectionID, allVideo[j].VideoId),
+                videoIndex:j + 1,
+                videoname: allVideo[j].Name,
+                videoid: allVideo[j].VideoId,
+                courseID: detailcourse.CoursesID,
+                CourseSectionID: allSection[i].CourseSectionID,
+            }
+            console.log(video);
+            section.allVideo.push(video);
+        }
+        course.allSection.push(section);
+    }
+
+
+
+    res.render('vwCourses/learn', {
+        Course:course,
+        CurVideo: "https://www.youtube.com/embed/-MfGnmeWrBw"
     });
 })
 

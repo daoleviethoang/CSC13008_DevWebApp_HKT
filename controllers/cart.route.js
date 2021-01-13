@@ -28,7 +28,9 @@ router.post('/add', async function (req, res) {                                 
   }
 
   cartModel.add(req.session.cart, item);
-  res.redirect(req.headers.referer);                                                    //giữ nguyên trang hiện tại
+  await req.session.save(err => {
+    res.redirect(`/courses/detail/${req.body.id}` );                                                    //giữ nguyên trang hiện tại
+  })
 })
 
 router.post('/remove', async function (req, res) {
