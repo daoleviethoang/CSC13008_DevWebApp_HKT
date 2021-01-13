@@ -19,6 +19,14 @@ module.exports = {
           return;
         }
       }
+    },
+    checkItem(cart, id){
+      for (i = cart.length - 1; i >= 0; i--) {
+        if (id === cart[i].id) {
+          return true;
+        }
+      }
+      return false;
     }
   };
   

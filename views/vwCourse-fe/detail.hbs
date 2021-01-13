@@ -1,3 +1,7 @@
+{{!-- <script type='text/javascript'>
+  if(check)     
+    $('#BtnSubmit').hide();
+</script> --}}
 {{#with course}}
 <div class="card col-sm-7">
   <h4 class="card-header">
@@ -19,9 +23,12 @@
             <div class="input-group">
                 <input type="hidden" value="{{CoursesID}}" name="id">
                 <div class="input-group-append">
-                <button class="btn btn-outline-primary" type="submit">
+                {{#if../check}}
+                {{else}}
+                <button class="btn btn-outline-primary" type="submit" id = "BtnSubmit">
                     <i class="fa fa-plus" aria-hidden="true"></i>
                 </button>
+                {{/if}}
                 </div>
             </div>
             </div>
