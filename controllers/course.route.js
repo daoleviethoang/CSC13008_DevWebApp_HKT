@@ -218,6 +218,10 @@ router.get('/learning/paidCourse', async function (req, res, next) {           /
     });
 })
 
-
+router.get('/learn', async function (req, res, next) {           //chuyển đến trang để học
+    const list = await courseModel.all();
+    res.render('vwCourses/paidCourse', {
+    });
+})
 
 module.exports = router;

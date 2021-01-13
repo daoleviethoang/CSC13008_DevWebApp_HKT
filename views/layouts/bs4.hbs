@@ -115,13 +115,16 @@
 							<li><a href="">My learning </a></li>
 							{{/if}}
 
-							<li class="icon-shopping-cart h2 mr-4 "></li>
+							
+							<a href="/cart" style="color: gray;"><li class="icon-shopping-cart h2 mr-4 "></li></a>
+
+
 							{{#if auth}}
 							<li class="icon-heart-outline h2"></li>
 							<li class="has-dropdown">
 								<a href="#" style="font-size: larger;">
 									<i class="fa fa-user mb-2" aria-hidden="true"></i>
-									{{authUser.username}}
+										{{authUser.username}}
 								</a>
 								<ul class="dropdown">
 									<li><a href="#">Profile</a></li>
