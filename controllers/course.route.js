@@ -218,16 +218,22 @@ router.get('/learning/paidCourse', async function (req, res, next) {           /
     });
 })
 
-router.get('/learn/:CourseID', async function (req, res, next) {           //chuyển đến trang để học
+
+
+router.get('/learn/:CourseID/:VideoID', async function (req, res, next) {           //chuyển đến trang để học
 
     const detailcourse = await courseModel.single(req.params.CourseID);
-    console.log(detailcourse)
     const cateandsub = await courseModel.getCategoryAndSub(detailcourse.CoursesID);
-    console.log(cateandsub)
     const allSection = await courseModel.getAllSection(req.params.CourseID);
+
+    const categoryname = await courseModel.getCategeryName(cateandsub.CategoryID)
+    const subcategoryname = await courseModel.getSubCategeryName(cateandsub.SubCategoryID)
+    let curVideoLink = "";
     const course = {
         CategoryID: cateandsub.CategoryID,
+        Categoryname: categoryname,
         SubCategoriesID: cateandsub.SubCategoryID,
+        Subcategoryname: subcategoryname,
         courseName: detailcourse.Name,
         courseID: detailcourse.CoursesID,
         tinyDes: detailcourse.TinyDes,
@@ -254,18 +260,24 @@ router.get('/learn/:CourseID', async function (req, res, next) {           //chu
                 courseID: detailcourse.CoursesID,
                 CourseSectionID: allSection[i].CourseSectionID,
             }
-            console.log(video);
+
+            if(video.videoid == req.params.VideoID){
+                curVideoLink = video.link;
+            }
             section.allVideo.push(video);
         }
         course.allSection.push(section);
     }
 
-
+    console.log(curVideoLink);
 
     res.render('vwCourses/learn', {
         Course:course,
-        CurVideo: "https://www.youtube.com/embed/-MfGnmeWrBw"
+        CurVideo: curVideoLink
     });
+})
+router.get('/learn/:CourseID', async function (req, res, next) {           //chuyển đến trang để học
+    // cần tabble process trước
 })
 
 module.exports = router;
