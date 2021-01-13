@@ -5,6 +5,7 @@ const { paginate } = require('./../config/default.json');
 
 const router = express.Router();
 
+
 router.get('/bySubCat/:id', async function(req, res, next) { //dành cho khách
     const subCatId = +req.params.id;
 
@@ -15,7 +16,6 @@ router.get('/bySubCat/:id', async function(req, res, next) { //dành cho khách
     const total = await courseModel.countBySubCat(subCatId); //lấy số lg course
     let nPages = Math.floor(total / paginate.limit);
     if (total % paginate.limit > 0) nPages++;
-
     const page_numbers = []; //chứa những page có thể có
     for (i = 1; i <= nPages; i++) {
         page_numbers.push({ //mỗi tp trong bảng có giá trị từng trang: value, isCurrentPage
@@ -23,17 +23,19 @@ router.get('/bySubCat/:id', async function(req, res, next) { //dành cho khách
             isCurrentPage: i === +page
         });
     }
-    console.log(page_numbers);
+    //console.log(page_numbers);
     const offset = (page - 1) * paginate.limit;
     const list = await courseModel.pageByCat(subCatId, offset); //lấy course theo subCatID, offset
-
-    subCatName = await categoryModel.singleSubCatName(subCatId);
+    console.log(list);
+    let subCatName = await categoryModel.singleSubCatName(subCatId);
+    //nameTeacher = await courseModel.getTeacherOfCourse()
     console.log(subCatName);
+
     res.render('vwCourse-fe/byCat', {
         course: list,
         page_numbers,
         empty: list.length === 0,
-        subCatName
+        subCatName: subCatName
     });
 })
 
