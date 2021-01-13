@@ -20,7 +20,12 @@
 	<meta name="twitter:image" content="" />
 	<meta name="twitter:url" content="" />
 	<meta name="twitter:card" content="" />
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+		integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 	<link rel="stylesheet" href="/design/css/index.css" />
 
@@ -36,7 +41,8 @@
 	<link rel="stylesheet" href="/design/css/magnific-popup.css">
 
 	<!-- Owl Carousel  -->
-	{{!-- <link rel="stylesheet" href="/design/css/owl.carousel.min.css"> --}}
+	{{!--
+	<link rel="stylesheet" href="/design/css/owl.carousel.min.css"> --}}
 	<link rel="stylesheet" href="/design/css/owl.theme.default.min.css">
 
 	<!-- Flexslider  -->
@@ -54,6 +60,7 @@
 
 	{{{_sections.css}}}
 </head>
+
 <body>
 
 
@@ -78,62 +85,79 @@
 				</div>
 			</div>
 
-			<div class="top-menu">
-				<div class="container">
-					<div class="row">
-						<div class="col-xs-2">
-							<div id="fh5co-logo"><a href="/"><i class="icon-study"></i> Academy<span></span></a></div>
-						</div>
-						<div class="col-xs-6" style="width:46%">
-							<div style="width: 250%;">
-								<form action="/home/about" method="POST">
-									<input type="text" class="searchTerm" style="width:37%" placeholder="What are you searching for?">
-									<button type="submit" class="searchButton"><i class="icon-search3"></i></button>
-								</form>
-							</div>
-						</div>
-						<div class="col-xs-1 text-right menu-1" style="width: 37%;">
-							<ul>
-								<li class="has-dropdown">
-									<a href="#">Courses</a>
-									<ul class="dropdown">
-										{{#each lcCategories}}
-											<li><a href="/courses/bySubCat/{{SubCategoryID}}">{{Name}}</a></li>
-										{{/each}}
-									</ul>
-								</li>
-								<li class=""><a href="/about">About</a></li>
-								<li><a href="/contact">Contact</a></li>
-								{{#if auth}}
-								<li class="nav-item">
-									<a class="nav-link" href="/cart">
-										<i class="fa fa-shopping-cart" aria-hidden="true"></i>
-										Shopping cart: {{cartSummary}} item(s)
-									</a>
-								</li>
-								<li class="has-dropdown">
-									<a href="#" style="font-size: larger;">
-										<i class="icon-head"></i>
-										<strong>
-											{{authUser.username}}
-										</strong>
-									</a>
-									<ul class="dropdown">
-										<li><a href="#">Profile</a></li>
-										<form id="frmLogout" action="/account/logout" method="POST"></form>
-										<li><a href="javascript: $('#frmLogout').submit();">Sign out</a></li>
-
-									</ul>
-								</li>
-								{{else}}
-								<li class="btn-cta"><a href="/account/login"><span>Login</span></a></li>
-								<li class="btn-cta"><a href="/account/register"><span>Create Account</span></a></li>
-								{{/if}}
-							</ul>
+			<div style="height: fit-content;">
+				<div class="row mt-4">
+					<div class="col-sm-2">
+						<div id="fh5co-logo" class="ml-5"><a href="/"><i class="icon-study"></i>
+								Academy<span></span></a></div>
+					</div>
+					<div class="col-sm-5">
+						<div>
+							<form action="/home/about" method="POST">
+								<input type="text" class="searchTerm w-100" placeholder="What are you searching for?">
+								<button type="submit" class="searchButton"><i class="icon-search3"></i></button>
+							</form>
 						</div>
 					</div>
+					<div class="col-sm-5 menu-1 w-100">
+						<ul class="ml-5">
+							<li class="has-dropdown">
+								<a href="#">Courses</a>
+								<ul class="dropdown">
+									{{#each lcCategories}}
+									<li><a href="/courses/bySubCat/{{SubCategoryID}}">{{Name}}</a></li>
+									{{/each}}
+								</ul>
+							</li>
+							<li><a href="/contact">Contact</a></li>
 
+							{{#if auth}}
+							<li><a href="">My learning </a></li>
+							{{/if}}
+
+							
+							<a href="/cart" style="color: gray;"><li class="icon-shopping-cart h2 mr-4 "></li></a>
+
+
+							{{#if auth}}
+							<li class="icon-heart-outline h2"></li>
+							<li class="has-dropdown">
+								<a href="#" style="font-size: larger;">
+									<i class="fa fa-user mb-2" aria-hidden="true"></i>
+										{{authUser.username}}
+								</a>
+								<ul class="dropdown">
+									<li><a href="#">Profile</a></li>
+									<form id="frmLogout" action="/account/logout" method="POST"></form>
+									<li><a href="javascript: $('#frmLogout').submit();">Sign out</a></li>
+								</ul>
+							</li>
+							{{else}}
+							<a href="/account/login"><button type="button"
+									class="btn btn-outline-info border rounded">Login</button></a>
+							<a href="/account/register"><button type="button" class="btn btn-info rounded">Sign
+									up</button></a>
+							{{/if}}
+
+						</ul>
+						{{!--
+						<li><a href="/contact">Contact</a></li>
+						{{#if auth}}
+						<li class="nav-item">
+							<a class="nav-link" href="/cart">
+								<i class="fa fa-shopping-cart" aria-hidden="true"></i>
+								Shopping cart: {{cartSummary}} item(s)
+							</a>
+						</li>
+
+						{{else}}
+						<li class="btn-cta"><a href="account/login"><span>Login</span></a></li>
+						<li class="btn-cta"><a href="account/register"><span>Create Account</span></a></li>
+						{{/if}}
+						</ul> --}}
+					</div>
 				</div>
+
 			</div>
 		</nav>
 
@@ -257,6 +281,8 @@
 		});
 	</script>
 	{{{_sections.js}}}
+
+
 </body>
 
 </html>

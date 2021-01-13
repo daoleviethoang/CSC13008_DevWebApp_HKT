@@ -45,7 +45,10 @@ module.exports = {
     const [result, fields] = await db.largest_ID(STUDENT_PROPERTIES.pk,STUDENT_PROPERTIES.table_name);
 
     return result[0].largestID;
-
+  },
+  async getPaidCourse(){
+    const [result, fields] = await db.largest_ID(STUDENT_PROPERTIES.pk,STUDENT_PROPERTIES.table_name);
+    
   }
 
 };
