@@ -17,6 +17,15 @@ module.exports = {
     return rows;
   },
 
+  async singleSubCatName(subCatID) {
+    const sql = `select Name from subcategories where SubCategoryID = ${subCatID}`;
+    const [rows, fields] = await db.load(sql);
+    if (rows.length === 0)
+      return null;
+
+    return rows[0];
+  },
+
   async single(id) {
     const sql = `select * from categories where CatID = ${id}`;
     const [rows, fields] = await db.load(sql);
