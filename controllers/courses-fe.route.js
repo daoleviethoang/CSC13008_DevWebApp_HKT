@@ -1,4 +1,5 @@
 const express = require('express');
+const cartModel = require('../models/cart.model');
 const categoryModel = require('../models/category.model');
 const courseModel = require('../models/course.model');
 const { paginate } = require('./../config/default.json');
@@ -47,10 +48,12 @@ router.get('/detail/:id', async function(req, res, next) { //trang chứa detail
     if (course === null) {
         return res.redirect('/');
     }
-
+    const check = cartModel.checkItem(req.session.cart, couId);                                                       //nếu có trong cart => true
+    console.log(check);
+    
     res.render('vwCourse-fe/detail', {
-        course
-
+        course,
+        check
     });
 })
 
