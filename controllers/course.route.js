@@ -8,6 +8,7 @@ const courseModel = require('../models/course.model');
 const userModel = require('../models/user.model');
 const { truncate } = require('fs');
 const studentModel = require('../models/student.model');
+const { getTeacherOfCourse } = require('../models/course.model');
 
 
 router.get('/create/1', function (req, res, next) {
@@ -228,6 +229,7 @@ router.get('/learn/:CourseID/:VideoID', async function (req, res, next) {       
 
     const categoryname = await courseModel.getCategeryName(cateandsub.CategoryID)
     const subcategoryname = await courseModel.getSubCategeryName(cateandsub.SubCategoryID)
+    const teacher = (await getTeacherOfCourse(req.params.CourseID))[0];
     let curVideoLink = "";
     const course = {
         CategoryID: cateandsub.CategoryID,
@@ -240,7 +242,8 @@ router.get('/learn/:CourseID/:VideoID', async function (req, res, next) {       
         fullDes: detailcourse.FullDes,
         Price: detailcourse.Price,
         IsFinished: detailcourse.IsFinished === 1,
-        LastUpdate: detailcourse.LastUpdate,
+        LastUpdate: detailcourse.LastUpdate.toString(),
+        teacher:teacher,
         allSection: []
     }
     for (var i = 0; i < allSection.length; i++) {
@@ -269,7 +272,7 @@ router.get('/learn/:CourseID/:VideoID', async function (req, res, next) {       
         course.allSection.push(section);
     }
 
-    console.log(curVideoLink);
+    console.log(course);
 
     res.render('vwCourses/learn', {
         Course:course,
