@@ -157,16 +157,17 @@
           {{#each this.course}}
           <div class="row">
             <div class="col-3">
-              <img style=" border-radius: 8px; border: 1px solid darkgrey;"
+              <a  href = "/courses/detail/{{CoursesID}}">
+                <img style=" border-radius: 8px; border: 1px solid darkgrey;"
                 src="/imgs/Courses/{{CoursesID}}/main_thumbs.jpg" alt="{{Name}}" title="{{Name}}" class="card-img-top">
+              </a>
             </div>
             <div class="col-8">
               <div class="card-body">
-                <h5 class="card-title"><b>{{Name}}</b></h5>
+                <h5 class="card-title"><a href = "/courses/detail/{{CoursesID}}"><b>{{Name}}</b></a></h5>
                 <p class="card-text" style="margin-bottom:0%; color:black">{{TinyDes}}</p>
                 <p class="card-text" style="font-size: 13px;">{{name}}</p>
                 <div><span class="stars-container stars-10">★★★★★</span></div>
-
               </div>
             </div>
             <div class="col-1" style="text-align: center; padding-top: 20px;">
