@@ -18,7 +18,11 @@ module.exports = {
     },
 
     async pageByCat(subCatId, offset) {
-        const sql = `select * from courses where SubCategoryID=${subCatId} limit ${paginate.limit} offset ${offset}`;
+        const sql = `SELECT *
+        FROM (SELECT * FROM teachers) TB1
+                    INNER JOIN
+                    (SELECT * FROM courses) TB2
+                    ON TB1.TeaID = TB2.TeaID where SubCategoryID=${subCatId} limit ${paginate.limit} offset ${offset}`;
         const [rows, fields] = await db.load(sql);
         return rows;
     },
@@ -133,6 +137,16 @@ module.exports = {
     async getBestRegisterWeek() {
         //const sql = 'SELECT * FROM (SELECT * FROM courses WHERE WEEK(courses.DateCreated) = WEEK(CURDATE())) AS A ORDER BY nRegister DESC LIMIT 4';
         const sql = 'SELECT SubCategoryID, Name, sum FROM (SELECT * FROM subcategories) AS TBA INNER JOIN (SELECT * FROM (SELECT SubCategoryID as sID, Sum(nRegister) as sum FROM (	SELECT * FROM (SELECT * FROM courses WHERE WEEK(courses.DateCreated) = WEEK(CURDATE())) AS A) AS D GROUP BY SubCategoryID) AS TB1 ORDER BY sum DESC) AS TBB ON TBA.SubCategoryID = TBB.sID ORDER BY sum DESC';
+        const [rows, fields] = await db.load(sql);
+        return rows;
+    },
+    async getTeacherOfCourse(CourseID) {
+        const sql = `SELECT TB1.name
+        FROM (SELECT * FROM teachers) TB1
+                    INNER JOIN
+                    (SELECT * FROM courses) TB2
+                    ON TB1.TeaID = TB2.TeaID
+        WHERE TB2.CoursesID = ${CourseID}`;
         const [rows, fields] = await db.load(sql);
         return rows;
     }

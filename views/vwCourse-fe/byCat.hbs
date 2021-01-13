@@ -25,6 +25,44 @@
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
+<style>
+body { font-size: 18px; }
+
+.stars-container {
+  position: relative;
+  display: inline-block;
+  color: transparent;
+}
+
+.stars-container:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: '★★★★★';
+  color: lightgray;
+}
+
+.stars-container:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: '★★★★★';
+  color: gold;
+  overflow: hidden;
+}
+
+.stars-0:after { width: 0%; }
+.stars-10:after { width: 10%; }
+.stars-20:after { width: 20%; }
+.stars-30:after { width: 30%; }
+.stars-40:after { width: 40%; }
+.stars-50:after { width: 50%; }
+.stars-60:after { width: 60%; }
+.stars-70:after { width: 70%; }
+.stars-80:after { width: 80%; }
+.stars-90:after { width: 90%; }
+.stars-100:after { width: 100; }
+</style>
 
   <!-- Animate.css -->
   <link rel="stylesheet" href="/design/css/animate.css">
@@ -58,27 +96,12 @@
 </head>
 
 <body>
-
-  {{!-- <div class="container">
-    <div class="row">
-      <div class="col-xs-2">
-        <img src="/design/images/course_1.jpg" alt="name" title="name" class="card-img-top">
-      </div>
-      <div class="col-xs-6">
-        <div style="width: 1300px;">
-          <h1>aaaaaaaaaaaaaaaaa</h1>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  --}}
   <hr class="my-4">
   <div>
     <div class="container">
       <div class="container">
         <div >
-          <h4 style="margin: 0 0 10px 0;"><b>Web Development Courses</b> </h4>
+          <h4 style="margin: 0 0 10px 0;"><b>{{{this.subCatName.Name}}}</b> </h4>
         </div>
         <div class="alert alert-dark" role="alert" style="margin: 0 0 0px 0;">
           <h5 style="margin: 0px 0 0px 0px;"> <i class="fa fa-bell" aria-hidden="true"></i><b>Courses to get you started</b></h5>
@@ -103,24 +126,11 @@
             </div>
             <div class="col-8">
               <div class="card-body">
-                <h4 class="card-title"><b>{{Name}}</b></h4>
-                <h5 class="card-title text-danger"><b>{{format_number Price}}</b></h5>
-                <p
-                  style="overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; max-width:240px;">
-                  {{this.TinyDes}}
-                </p>
-              </div>
-              <div class="card-footer text-muted">
-                <a class="btn btn-sm btn-outline-primary" href="/courses/detail/{{CoursesID}}" role="button">
-                  <i class="fa fa-eye" aria-hidden="true"></i>
-                  Details
-                </a>
-                {{#if ../auth}}                               
-                  <a data-id="{{CoursesID}}" class="btn btn-sm btn-outline-success addItem" href="javascript:;" role="button">
-                    <i class="fa fa-cart-plus" aria-hidden="true"></i>
-                    Add to cart
-                  </a>
-                {{/if}}
+                <h5 class="card-title"><b>{{Name}}</b></h5>
+                <p class="card-text" style="margin-bottom:0%; color:black" >{{TinyDes}}</p>
+                <p class="card-text" style="font-size: 13px;" >{{name}}</p>
+<div><span class="stars-container stars-10">★★★★★</span></div>
+
               </div>
             </div>
             <div class="col-1" style="text-align: center; padding-top: 20px;">
@@ -132,9 +142,9 @@
         </div>
         <nav>
           <ul class="pagination">
-            {{!-- <li class="page-item disabled">
+            <li class="page-item disabled">
               <span class="page-link">Previous</span>
-            </li> --}}
+            </li>
             {{#each this.page_numbers}}
             {{#if isCurrentPage}}
             <li class="page-item active">
@@ -146,9 +156,9 @@
             </li>
             {{/if}}
             {{/each}}
-            {{!-- <li class="page-item">
+            <li class="page-item">
               <a class="page-link" href="#">Next</a>
-            </li> --}}
+            </li>
           </ul>
         </nav>
         {{/if}}
