@@ -131,6 +131,7 @@ router.post('/logout', async function(req, res) {
     req.session.auth = false;
     req.session.authUser = null;
     req.session.retUrl = null;
+    req.session.cart=[];
 
     const url = req.headers.referer || '/';
     res.redirect(url);
