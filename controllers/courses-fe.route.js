@@ -25,12 +25,17 @@ router.get('/bySubCat/:id', async function(req, res, next) { //dành cho khách
     }
     //console.log(page_numbers);
     const offset = (page - 1) * paginate.limit;
-    const list = await courseModel.pageByCat(subCatId, offset); //lấy course theo subCatID, offset
-    console.log(list);
+    var list = await courseModel.pageByCat(subCatId, offset); //lấy course theo subCatID, offset
     let subCatName = await categoryModel.singleSubCatName(subCatId);
     //nameTeacher = await courseModel.getTeacherOfCourse()
-    console.log(subCatName);
-
+    //console.log(subCatName);
+    for (var i = 0 in list) {
+        if (list[i].T != null) {
+            var rating = ((Math.round(list[i].T * 2) / 2).toFixed(1)) * 10;
+            Object.assign(list[i], { rat: "" + rating });
+        }
+        console.log(list[i]);
+    }
     res.render('vwCourse-fe/byCat', {
         course: list,
         page_numbers,
