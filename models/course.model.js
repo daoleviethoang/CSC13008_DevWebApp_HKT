@@ -149,5 +149,6 @@ module.exports = {
         WHERE TB2.CoursesID = ${CourseID}`;
         const [rows, fields] = await db.load(sql);
         return rows;
-    }
+    },
+
 }
