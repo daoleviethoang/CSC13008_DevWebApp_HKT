@@ -10,6 +10,7 @@ const { truncate } = require('fs');
 const studentModel = require('../models/student.model');
 const { getTeacherOfCourse } = require('../models/course.model');
 const processModel = require('../models/process.model');
+const { paginate } = require('./../config/default.json');
 
 
 router.get('/create/1', function (req, res, next) {
@@ -208,21 +209,54 @@ router.get('/', async function (req, res, next) {           //chuyển đến tr
     });
 })
 
-router.get('/storage', async function (req, res, next) {           //chuyển đến trang chứa toàn bộ các courses
-    const list = await courseModel.all();
-    res.render('vwCourses/paidCourse', {
-    });
-})
-
 router.get('/storage/paidCourse', async function (req, res, next) {           //chuyển đến trang chứa toàn bộ các courses
-    const list = await courseModel.all();
+
+    //pagination
+    const page = req.query.page || 1; //lấy giá trị page require
+    if (page < 1) page = 1;
+
+    const total = await courseModel.getPaidCourse(req.session.authUser.ID, 20000);//lấy số lg course
+    let nPages = Math.floor(total / paginate.limit);
+    if (total % paginate.limit > 0) nPages++;
+    const page_numbers = []; //chứa những page có thể có
+    for (i = 1; i <= nPages; i++) {
+        page_numbers.push({ //mỗi tp trong bảng có giá trị từng trang: value, isCurrentPage
+            value: i,
+            isCurrentPage: i === +page
+        });
+    }
+
+    const offset = (page - 1) * paginate.limit;
+
+    const paidCoursesID = await courseModel.getPaidCourse(req.session.authUser.ID,offset);
+    const paidCourseDetail = [];
+    for (const row of paidCoursesID) {
+        const courseID = row.CoursesID;
+        const paidCourse = await courseModel.single(courseID);
+        const paidCourseTeacher = await courseModel.getTeacherOfCourse(courseID);
+        const paidCourseRating = await courseModel.getCourseRating(courseID) || 0;
+        const paidSale = await courseModel.getCourseSale(courseID);
+        const course = {
+            Name: paidCourse.Name,
+            CoursesID: paidCourse.CoursesID,
+            TinyDes: paidCourse.TinyDes,
+            Price: paidCourse.Price,
+            namegv: paidCourseTeacher.name,
+            Rating: paidCourseRating,
+            Sale: paidSale
+        };
+        paidCourseDetail.push(course);
+    }
     res.render('vwCourses/paidCourse', {
+        course: paidCourseDetail,
+        page_numbers,
+        empty: paidCoursesID.length === 0
     });
 })
 
 
 router.get('/learn/:CourseID', async function (req, res, next) {           //chuyển đến trang để học
-    const curVideoID = await processModel.getProcess(req.params.CourseID,req.session.authUser.ID);
+    const curVideoID = await processModel.getProcess(req.params.CourseID, req.session.authUser.ID);
     console.log(curVideoID);
     res.redirect(`/course/learn/${req.params.CourseID}/${curVideoID}`);
 })
@@ -236,7 +270,7 @@ router.get('/learn/:CourseID/:VideoID', async function (req, res, next) {       
     const categoryname = await courseModel.getCategeryName(cateandsub.CategoryID)
     const subcategoryname = await courseModel.getSubCategeryName(cateandsub.SubCategoryID)
     const teacher = (await getTeacherOfCourse(req.params.CourseID))[0];
-    
+
     let curVideoLink = "";
     const course = {
         CategoryID: cateandsub.CategoryID,
@@ -250,15 +284,15 @@ router.get('/learn/:CourseID/:VideoID', async function (req, res, next) {       
         Price: detailcourse.Price,
         IsFinished: detailcourse.IsFinished === 1,
         LastUpdate: detailcourse.LastUpdate.toString(),
-        teacher:teacher,
+        teacher: teacher,
         allSection: []
     }
     // save to proces
-    const CurVideoId =  req.params.VideoID;
-    const process = await processModel.getProcess(course.courseID,req.session.authUser.ID);
+    const CurVideoId = req.params.VideoID;
+    const process = await processModel.getProcess(course.courseID, req.session.authUser.ID);
 
     console.log(process)
-    processModel.saveProcess(process,CurVideoId);
+    processModel.saveProcess(process, CurVideoId);
 
     for (var i = 0; i < allSection.length; i++) {
         let section = {
@@ -271,14 +305,14 @@ router.get('/learn/:CourseID/:VideoID', async function (req, res, next) {       
         for (var j = 0; j < allVideo.length; j++) {
             let video = {
                 link: await courseModel.getLinkVideo(req.params.CourseID, allSection[i].CourseSectionID, allVideo[j].VideoId),
-                videoIndex:j + 1,
+                videoIndex: j + 1,
                 videoname: allVideo[j].Name,
                 videoid: allVideo[j].VideoId,
                 courseID: detailcourse.CoursesID,
                 CourseSectionID: allSection[i].CourseSectionID,
             }
 
-            if(video.videoid == req.params.VideoID){
+            if (video.videoid == req.params.VideoID) {
                 curVideoLink = video.link;
             }
             section.allVideo.push(video);
@@ -286,12 +320,14 @@ router.get('/learn/:CourseID/:VideoID', async function (req, res, next) {       
         course.allSection.push(section);
     }
 
-    
+
 
     res.render('vwCourses/learn', {
-        Course:course,
+        Course: course,
         CurVideo: curVideoLink
     });
 })
+
+
 
 module.exports = router;
