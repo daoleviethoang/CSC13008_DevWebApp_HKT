@@ -26,8 +26,10 @@ module.exports = function(app) {
     app.use('/account/', require('./../controllers/account.route'));
     app.use('/course/', require('./../controllers/course.route')); //dùng để sửa đổi course cho admin
     app.use('/', require('./../controllers/home.route'));
+    app.use('/search/', require('./../controllers/search.route'));
     app.use('/courses/', require('../controllers/courses-fe.route')); //lấy từng course để show ra
-    app.use('/cart/', auth, require('../controllers/cart.route'));      //handle cart
+    app.use('/cart/', auth, require('../controllers/cart.route')); //handle cart
+    app.use('/user/', auth, require('./../controllers/user.route'));
 
     app.get('/err', function(req, res) {
         throw new Error('Error!');

@@ -93,8 +93,8 @@
 					</div>
 					<div class="col-4">
 						<div>
-							<form action="/home/about" method="POST">
-								<input type="text" class="searchTerm w-100" placeholder="What are you searching for?">
+							<form action="/search/list" method="POST" id = "frmSearch">
+								<input type="text" class="searchTerm w-100" placeholder="What are you searching for?" id ="txtSearch" name = "searchText">
 								<button type="submit" class="searchButton"><i class="icon-search3"></i></button>
 							</form>
 						</div>
@@ -126,12 +126,13 @@
 										{{authUser.username}}
 								</a>
 								<ul class="dropdown">
-									<li><a href="/User/Profile">Profile</a></li>
+									<li><a href="/user/profile/{{authUser.username}}">Profile</a></li>
 									<form id="frmLogout" action="/account/logout" method="POST"></form>
 									<li><a href="javascript: $('#frmLogout').submit();">Sign out</a></li>
 								</ul>
 							</li>
 							{{else}}
+
 							<a href="/account/login"><button type="button"
 									class="btn btn-outline-info border rounded">Login</button></a>
 							<a href="/account/register"><button type="button" class="btn btn-info rounded">Sign

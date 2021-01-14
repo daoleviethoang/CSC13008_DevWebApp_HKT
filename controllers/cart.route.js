@@ -23,30 +23,30 @@ router.get('/', async function (req, res) {                                     
   });
 })
 
-router.post('/add', async function (req, res) {                                         //khi bấm nút + add trong courses/detail
-  const item = {
-    id: +req.body.id,
-  }
+router.post('/add', async function(req, res) { //khi bấm nút + add trong courses/detail
+    const item = {
+        id: +req.body.id,
+    }
 
-  cartModel.add(req.session.cart, item);
-  await req.session.save(err => {
-    res.redirect(`/courses/detail/${req.body.id}`);                                                    //giữ nguyên trang hiện tại
-  })
+    cartModel.add(req.session.cart, item);
+    await req.session.save(err => {
+        res.redirect(`/courses/detail/${req.body.id}`); //giữ nguyên trang hiện tại
+    })
 })
 
-router.post('/remove', async function (req, res) {
-  cartModel.remove(req.session.cart, +req.body.id);
-  res.redirect(req.headers.referer);
+router.post('/remove', async function(req, res) {
+    cartModel.remove(req.session.cart, +req.body.id);
+    res.redirect(req.headers.referer);
 })
 
-router.post('/checkout', async function (req, res) {
-  let total = 0;
+router.post('/checkout', async function(req, res) {
+    let total = 0;
 
-  const details = [];
-  for (const ci of req.session.cart) {
-    const course = await courseModel.single(ci.id);
-    const amount = course.Price;
-    total += amount;
+    const details = [];
+    for (const ci of req.session.cart) {
+        const course = await courseModel.single(ci.id);
+        const amount = course.Price;
+        total += amount;
 
     details.push({                                                                  //detail từng course đã mua
       CoursesID: course.CoursesID,
