@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Education &mdash; Free Website Template, Free HTML5 Template by freehtml5.co</title>
+  <title>Education &mdash; Website Academy by HKT</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Free HTML5 Website Template by freehtml5.co" />
   <meta name="keywords"
@@ -19,84 +19,12 @@
   <meta name="twitter:image" content="" />
   <meta name="twitter:url" content="" />
   <meta name="twitter:card" content="" />
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <style>
-    body {
-      font-size: 18px;
-    }
 
-    .stars-container {
-      position: relative;
-      display: inline-block;
-      color: transparent;
-    }
-
-    .stars-container:before {
-      position: absolute;
-      top: 0;
-      left: 0;
-      content: '★★★★★';
-      color: lightgray;
-    }
-
-    .stars-container:after {
-      position: absolute;
-      top: 0;
-      left: 0;
-      content: '★★★★★';
-      color: gold;
-      overflow: hidden;
-    }
-
-    .stars-0:after {
-      width: 0%;
-    }
-
-    .stars-5:after {
-      width: 10%;
-    }
-
-    .stars-10:after {
-      width: 20%;
-    }
-
-    .stars-15:after {
-      width: 30%;
-    }
-
-    .stars-20:after {
-      width: 40%;
-    }
-
-    .stars-25:after {
-      width: 50%;
-    }
-
-    .stars-30:after {
-      width: 60%;
-    }
-
-    .stars-35:after {
-      width: 70%;
-    }
-
-    .stars-40:after {
-      width: 80%;
-    }
-
-    .stars-45:after {
-      width: 90%;
-    }
-
-    .stars-50:after {
-      width: 100;
-    }
   </style>
 
   <!-- Animate.css -->
@@ -123,89 +51,320 @@
 
 <body>
   <hr class="my-4">
-  <div>
-    <div class="container">
-      <div class="container">
-        <div>
-          <h4 style="margin: 0 0 10px 0;"><b>{{{total}}} results for {{{search_text}}}</b> </h4>
-        </div>
+  <div class="container">
+    <nav>
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
+          aria-controls="nav-home" aria-selected="true">Search</a>
+        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
+          aria-controls="nav-profile" aria-selected="false">Filter by Rating</a>
+        <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab"
+          aria-controls="nav-contact" aria-selected="false">Filter by Price</a>
       </div>
-  <hr>
-      <div class="card-body">
-        {{#if this.empty}}
-        <h5 class="card-title">Không có dữ liệu!</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        {{else}}
-        <div class="col">
-          {{#each this.course}}
-          <a href="/courses/detail/{{CoursesID}}">
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
 
-            <div class="row">
-              <div class="col-3">
-                <img style=" border-radius: 8px; border: 1px solid darkgrey;"
-                  src="/imgs/Courses/{{CoursesID}}/main_thumbs.jpg" alt="{{Name}}" title="{{Name}}"
-                  class="card-img-top">
-              </div>
-              <div class="col-8">
-                <div class="card-body">
-                  <h5 class="card-title"><b>{{Name}}</b></h5>
-                  <p class="card-text" style="margin-bottom:0%; color:black">{{TinyDes}}</p>
-                  <p class="card-text" style="font-size: 13px; margin-bottom:5px">{{namegv}}</p>
-                  {{#if rat}}
-                  <div class="row" style="margin-left:0px; margin-right:5px">
-                    <h6 class="text-danger" style="align-items:center;"><b>{{T}}</b></h5>
-                      <span class="stars-container stars-{{rat}}">★★★★★</span>
-                      <p> ({{count}})</p>
-                  </div>
+      <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+        <div class="tab-content">
+          <div>
+            <h4 style="margin: 0 0 10px 0;"><b>{{this.subCatName}}</b> </h4>
+          </div>
+          <div class="alert alert-dark" role="alert" style="margin: 0 0 0px 0;">
+            <h5 style="margin: 0px 0 0px 0px;"> <i class="fa fa-bell" aria-hidden="true"></i><b>Search with keyword:
+                "{{this.keysearch}}"</b></h5>
+          </div>
+        </div>
+        <hr>
+        <div class="card-body">
+          {{#if this.empty}}
+          <h5 class="card-title">Không có dữ liệu!</h5>
+          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+          {{else}}
+          <div class="col">
+            {{#each this.course}}
+            <a href="/courses/detail/{{CoursesID}}">
+
+              <div class="row">
+                <div class="col-3">
+                  {{#if Bestseller}}
+                  <img style=" border-radius: 8px; border: 3px solid rgb(255, 217, 0);"
+                    src="/design/images/course_{{CoursesID}}.jpg" alt="{{Name}}" title="{{Name}}" class="card-img-top">
                   {{else}}
-                  <div class="row" style="margin-left:0px">
-                    <span class="stars-container stars-0">★★★★★</span>
-                    <p> (0)</p>
-                  </div>
+                  <img style=" border-radius: 8px; border: 1px solid darkgrey;"
+                    src="/design/images/course_{{CoursesID}}.jpg" alt="{{Name}}" title="{{Name}}" class="card-img-top">
                   {{/if}}
-
+                </div>
+                <div class="col-8">
+                  <div class="card-body">
+                    <h5 class="card-title"><b>{{Name}}</b></h5>
+                    <p class="card-text" style="margin-bottom:0%; color:black">{{TinyDes}}</p>
+                    <p class="card-text" style="font-size: 13px; margin-bottom:0%; color:green">{{namegv}}</p>
+                    <p class="card-text" style="font-size: 14px; margin-bottom:0%; color:coral">{{NameSubcategories}}
+                    </p>
+                    {{#if rat}}
+                    <div class="row" style="margin-left:0px; margin-right:5px">
+                      <h6 class="text-danger" style="margin-top: 1%; margin-right: 1%;"><b>{{T}}</b></h5>
+                        <span class="stars-container stars-{{rat}}">★★★★★</span>
+                        <p class="card-text" style="font-size: 14px; margin-top: 5px; margin-left: 1%; color:darkgray;">
+                          ({{count}})</p>
+                    </div>
+                    {{else}}
+                    <div class="row" style="margin-left:0px">
+                      <span class="stars-container stars-0">★★★★★</span>
+                      <p class="card-text" style="font-size: 14px; margin-top: 5px; margin-left: 1%;  color:darkgray;">
+                        (0)</p>
+                    </div>
+                    {{/if}}
+                    {{#if Bestseller}}
+                    <span class="btn-warning .badge"
+                      style="  border-radius: 2px; font-size:small; color:black">Bestseller</span>
+                    {{/if}}
+                  </div>
+                </div>
+                <div class="col-1" style="text-align: center; padding-top: 20px;">
+                  {{#if Sale}}
+                  <h5 class="card-title text-danger"><b>{{format_number Sale}}</b></h5>
+                  <h5 class="card-title text-danger" style="text-decoration-line:line-through"><b>{{format_number
+                      Price}}</b></h5>
+                  {{else}}
+                  <h5 class="card-title text-danger"><b>{{format_number Price}}</b></h5>
+                  {{/if}}
                 </div>
               </div>
-              <div class="col-1" style="text-align: center; padding-top: 20px;">
-                {{#if Sale}}
-                <h5 class="card-title text-danger"><b>{{format_number Sale}}</b></h5>
-                <h5 class="card-title text-danger" style="text-decoration-line:line-through"><b>{{format_number
-                    Price}}</b></h5>
-                {{else}}
-                <h5 class="card-title text-danger"><b>{{format_number Price}}</b></h5>
-                {{/if}}
-              </div>
-            </div>
-          </a>
+            </a>
 
-          <hr>
-          {{/each}}
-          {{!-- </!--div> --}}
-          <nav>
-            <ul class="pagination">
-              {{!-- <li class="page-item disabled">
-                <span class="page-link">Previous</span>
-              </li> --}}
-              {{#each this.page_numbers}}
-              {{#if isCurrentPage}}
-              <li class="page-item active">
-                <a class="page-link" href="javascript:;">{{value}}</a>
-              </li>
-              {{else}}
-              <li class="page-item">
-                <a class="page-link" href="?searchText={{../search_text}}&page={{value}}">{{value}}</a>
-              </li>
-              {{/if}}
-              {{/each}}
-              {{!-- <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-              </li> --}}
-            </ul>
-          </nav>
-          {{/if}}
+            <hr>
+            {{/each}}
+            {{!-- </!--div> --}}
+            <nav style="text-align: center;">
+              <ul class="pagination">
+                <li class="page-item disabled">
+                  <span class="page-link"><i class="fa fa-chevron-left "></i></span>
+                </li>
+                {{#each this.page_numbers}}
+                {{#if isCurrentPage}}
+                <li class="page-item active">
+                  <a class="page-link" href="javascript:;">{{value}}</a>
+                </li>
+                {{else}}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{value}}">{{value}}</a>
+                </li>
+                {{/if}}
+                {{/each}}
+                <li class="page-item">
+                  <a class="page-link" href="#"><i class="fa fa-chevron-right "></i></a>
+                </li>
+              </ul>
+            </nav>
+            {{/if}}
+          </div>
+        </div>
+        <div>
+
+        </div>
+      </div>
+      <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+        <div class="tab-content">
+          <div>
+            <h4 style="margin: 0 0 10px 0;"><b>{{{this.subCatName}}}</b> </h4>
+          </div>
+          <div class="alert alert-dark" role="alert" style="margin: 0 0 0px 0;">
+            <h5 style="margin: 0px 0 0px 0px;"> <i class="fa fa-bell" aria-hidden="true"></i><b>Result: Filter by
+                ratting</b></h5>
+          </div>
+        </div>
+        <hr>
+        <div class="card-body">
+          {{#if this.empty}}
+          <h5 class="card-title">Không có dữ liệu!</h5>
+          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+          {{else}}
+          <div class="col">
+            {{#each this.course1}}
+            <a href="/courses/detail/{{CoursesID}}">
+
+              <div class="row">
+                <div class="col-3">
+                  {{#if Bestseller}}
+                  <img style=" border-radius: 8px; border: 3px solid rgb(255, 217, 0);"
+                    src="/design/images/course_{{CoursesID}}.jpg" alt="{{Name}}" title="{{Name}}" class="card-img-top">
+                  {{else}}
+                  <img style=" border-radius: 8px; border: 1px solid darkgrey;"
+                    src="/design/images/course_{{CoursesID}}.jpg" alt="{{Name}}" title="{{Name}}" class="card-img-top">
+                  {{/if}}
+                </div>
+                <div class="col-8">
+                  <div class="card-body">
+                    <h5 class="card-title"><b>{{Name}}</b></h5>
+                    <p class="card-text" style="margin-bottom:0%; color:black">{{TinyDes}}</p>
+                    <p class="card-text" style="font-size: 13px; margin-bottom:0%; color:green">{{namegv}}</p>
+                    <p class="card-text" style="font-size: 14px; margin-bottom:0%; color:coral">{{NameSubcategories}}
+                    </p>
+                    {{#if rat}}
+                    <div class="row" style="margin-left:0px; margin-right:5px">
+                      <h6 class="text-danger" style="margin-top: 1%; margin-right: 1%;"><b>{{T}}</b></h5>
+                        <span class="stars-container stars-{{rat}}">★★★★★</span>
+                        <p class="card-text" style="font-size: 14px; margin-top: 5px; margin-left: 1%; color:darkgray;">
+                          ({{count}})</p>
+                    </div>
+                    {{else}}
+                    <div class="row" style="margin-left:0px">
+                      <span class="stars-container stars-0">★★★★★</span>
+                      <p class="card-text" style="font-size: 14px; margin-top: 5px; margin-left: 1%;  color:darkgray;">
+                        (0)</p>
+                    </div>
+                    {{/if}}
+                    {{#if Bestseller}}
+                    <span class="btn-warning .badge"
+                      style="  border-radius: 2px; font-size:small; color:black">Bestseller</span>
+                    {{/if}}
+                  </div>
+                </div>
+                <div class="col-1" style="text-align: center; padding-top: 20px;">
+                  {{#if Sale}}
+                  <h5 class="card-title text-danger"><b>{{format_number Sale}}</b></h5>
+                  <h5 class="card-title text-danger" style="text-decoration-line:line-through"><b>{{format_number
+                      Price}}</b></h5>
+                  {{else}}
+                  <h5 class="card-title text-danger"><b>{{format_number Price}}</b></h5>
+                  {{/if}}
+                </div>
+              </div>
+            </a>
+
+            <hr>
+            {{/each}}
+            {{!-- </!--div> --}}
+            <nav style="text-align: center;">
+              <ul class="pagination">
+                <li class="page-item disabled">
+                  <span class="page-link"><i class="fa fa-chevron-left "></i></span>
+                </li>
+                {{#each this.page_numbers1}}
+                {{#if isCurrentPage}}
+                <li class="page-item active">
+                  <a class="page-link" href="javascript:;">{{value1}}</a>
+                </li>
+                {{else}}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{value1}}">{{value1}}</a>
+                </li>
+                {{/if}}
+                {{/each}}
+                <li class="page-item">
+                  <a class="page-link" href="#"><i class="fa fa-chevron-right "></i></a>
+                </li>
+              </ul>
+            </nav>
+            {{/if}}
+          </div>
+        </div>
+        <div>
+
+        </div>
+      </div>
+      <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+        <div class="tab-content">
+          <div>
+            <h4 style="margin: 0 0 10px 0;"><b>{{{this.subCatName}}}</b> </h4>
+          </div>
+          <div class="alert alert-dark" role="alert" style="margin: 0 0 0px 0;">
+            <h5 style="margin: 0px 0 0px 0px;"> <i class="fa fa-bell" aria-hidden="true"></i><b>Result: Filter by
+                price</b></h5>
+          </div>
+        </div>
+        <hr>
+        <div class="card-body">
+          {{#if this.empty}}
+          <h5 class="card-title">Không có dữ liệu!</h5>
+          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+          {{else}}
+          <div class="col">
+            {{#each this.course2}}
+            <a href="/courses/detail/{{CoursesID}}">
+
+              <div class="row">
+                <div class="col-3">
+                  {{#if Bestseller}}
+                  <img style=" border-radius: 8px; border: 3px solid rgb(255, 217, 0);"
+                    src="/design/images/course_{{CoursesID}}.jpg" alt="{{Name}}" title="{{Name}}" class="card-img-top">
+                  {{else}}
+                  <img style=" border-radius: 8px; border: 1px solid darkgrey;"
+                    src="/design/images/course_{{CoursesID}}.jpg" alt="{{Name}}" title="{{Name}}" class="card-img-top">
+                  {{/if}}
+                </div>
+                <div class="col-8">
+                  <div class="card-body">
+                    <h5 class="card-title"><b>{{Name}}</b></h5>
+                    <p class="card-text" style="margin-bottom:0%; color:black">{{TinyDes}}</p>
+                    <p class="card-text" style="font-size: 13px; margin-bottom:0%; color:green">{{namegv}}</p>
+                    <p class="card-text" style="font-size: 14px; margin-bottom:0%; color:coral">{{NameSubcategories}}
+                    </p>
+                    {{#if rat}}
+                    <div class="row" style="margin-left:0px; margin-right:5px">
+                      <h6 class="text-danger" style="margin-top: 1%; margin-right: 1%;"><b>{{T}}</b></h5>
+                        <span class="stars-container stars-{{rat}}">★★★★★</span>
+                        <p class="card-text" style="font-size: 14px; margin-top: 5px; margin-left: 1%; color:darkgray;">
+                          ({{count}})</p>
+                    </div>
+                    {{else}}
+                    <div class="row" style="margin-left:0px">
+                      <span class="stars-container stars-0">★★★★★</span>
+                      <p class="card-text" style="font-size: 14px; margin-top: 5px; margin-left: 1%;  color:darkgray;">
+                        (0)</p>
+                    </div>
+                    {{/if}}
+                    {{#if Bestseller}}
+                    <span class="btn-warning .badge"
+                      style="  border-radius: 2px; font-size:small; color:black">Bestseller</span>
+                    {{/if}}
+                  </div>
+                </div>
+                <div class="col-1" style="text-align: center; padding-top: 20px;">
+                  {{#if Sale}}
+                  <h5 class="card-title text-danger"><b>{{format_number Sale}}</b></h5>
+                  <h5 class="card-title text-danger" style="text-decoration-line:line-through"><b>{{format_number
+                      Price}}</b></h5>
+                  {{else}}
+                  <h5 class="card-title text-danger"><b>{{format_number Price}}</b></h5>
+                  {{/if}}
+                </div>
+              </div>
+            </a>
+
+            <hr>
+            {{/each}}
+            <nav style="text-align: center;">
+              <ul class="pagination">
+                <li class="page-item disabled">
+                  <span class="page-link"><i class="fa fa-chevron-left "></i></span>
+                </li>
+                {{#each this.page_numbers1}}
+                {{#if isCurrentPage}}
+                <li class="page-item active">
+                  <a class="page-link" href="javascript:;">{{value1}}</a>
+                </li>
+                {{else}}
+                <li class="page-item">
+                  <a class="page-link" href="?page2={{value1}}">{{value1}}</a>
+                </li>
+                {{/if}}
+                {{/each}}
+                <li class="page-item">
+                  <a class="page-link" href="#"><i class="fa fa-chevron-right "></i></a>
+                </li>
+              </ul>
+            </nav>
+            {{/if}}
+          </div>
+        </div>
+        <div>
+
         </div>
       </div>
     </div>
+  </div>
 </body>
 
 </html>

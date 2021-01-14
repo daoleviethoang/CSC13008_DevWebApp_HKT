@@ -51,5 +51,35 @@ module.exports = {
             return null;
         }
         return row[0];
+    },
+    async updateNameStudent(username, name) {
+        const sql = `UPDATE students
+        SET name = '${name}'
+        WHERE UID = (SELECT UID FROM users WHERE username = '${username}')`
+        await db.load(sql);
+    },
+    async updateNameTeacher(username, name) {
+        const sql = `UPDATE teachers
+        SET name = '${name}'
+        WHERE UID = (SELECT UID FROM users WHERE username = '${username}')`
+        await db.load(sql);
+    },
+    async updateEmailStudent(username, email) {
+        const sql = `UPDATE students
+        SET email = '${email}'
+        WHERE UID = (SELECT UID FROM users WHERE username = '${username}')`
+        await db.load(sql);
+    },
+    async updateEmailTeacher(username, email) {
+        const sql = `UPDATE teachers
+        SET email = '${email}'
+        WHERE UID = (SELECT UID FROM users WHERE username = '${username}')`
+        await db.load(sql);
+    },
+    async updatePassWord(username, pass) {
+        const sql = `UPDATE users
+        SET password = '${pass}'
+        WHERE username = '${username}'`
+        await db.load(sql);
     }
 };

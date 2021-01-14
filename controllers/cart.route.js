@@ -8,19 +8,19 @@ const processModel = require('../models/process.model')
 
 const router = express.Router();
 
-router.get('/', async function (req, res) {                                             //trang thanh toán
-  const items = [];
-  for (const ci of req.session.cart) {
-    const course = await courseModel.single(ci.id);
-    items.push({
-      course
-    })
-  }
+router.get('/', async function(req, res) { //trang thanh toán
+    const items = [];
+    for (const ci of req.session.cart) {
+        const course = await courseModel.single(ci.id);
+        items.push({
+            course
+        })
+    }
 
-  res.render('vwCart/index', {
-    items,
-    empty: items.length === 0
-  });
+    res.render('vwCart/index', {
+        items,
+        empty: items.length === 0
+    });
 })
 
 router.post('/add', async function(req, res) { //khi bấm nút + add trong courses/detail
@@ -48,36 +48,31 @@ router.post('/checkout', async function(req, res) {
         const amount = course.Price;
         total += amount;
 
-    details.push({                                                                  //detail từng course đã mua
-      CoursesID: course.CoursesID,
-      Price: course.Price,
-      OrderID: -1
-    });
-    const process = {
-      CourseID: course.CoursesID,
-      UserID: req.session.authUser.ID
+        details.push({ //detail từng course đã mua
+            CoursesID: course.CoursesID,
+            Price: course.Price,
+            OrderID: -1
+        });
+        const process = {
+            CourseID: course.CoursesID,
+            UserID: req.session.authUser.ID
+        }
+        const result = processModel.addProcess(process)
     }
-    const result = processModel.addProcess(process)
-  }
-  console.log(req.session.authUser);
-  const order = {
-    OrderDate: moment().format('YYYY-MM-DD HH:mm:ss'),
-    UID: req.session.authUser.ID,
-    Total: total
-  }
-  const rs = await orderModel.add(order);
-  for (const detail of details) {
-    detail.OrderID = rs.insertId;
-    await detailModel.add(detail);
-  }
+    console.log(req.session.authUser);
+    const order = {
+        OrderDate: moment().format('YYYY-MM-DD HH:mm:ss'),
+        UID: req.session.authUser.ID,
+        Total: total
+    }
+    const rs = await orderModel.add(order);
+    for (const detail of details) {
+        detail.OrderID = rs.insertId;
+        await detailModel.add(detail);
+    }
 
-
-
-  req.session.cart = [];
-  res.redirect(req.headers.referer);
-
-
-
+    req.session.cart = [];
+    res.redirect(req.headers.referer);
 })
 
 module.exports = router;
