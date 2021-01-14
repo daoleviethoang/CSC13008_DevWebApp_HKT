@@ -4,6 +4,7 @@ const cartModel = require('../models/cart.model');
 const courseModel = require('../models/course.model');
 const orderModel = require('../models/order.model');
 const detailModel = require('../models/detail.model');
+const processModel = require('../models/process.model')
 
 const router = express.Router();
 
@@ -12,7 +13,7 @@ router.get('/', async function (req, res) {                                     
   for (const ci of req.session.cart) {
     const course = await courseModel.single(ci.id);
     items.push({
-        course
+      course
     })
   }
 
@@ -29,7 +30,7 @@ router.post('/add', async function (req, res) {                                 
 
   cartModel.add(req.session.cart, item);
   await req.session.save(err => {
-    res.redirect(`/courses/detail/${req.body.id}` );                                                    //giữ nguyên trang hiện tại
+    res.redirect(`/courses/detail/${req.body.id}`);                                                    //giữ nguyên trang hiện tại
   })
 })
 
@@ -48,10 +49,15 @@ router.post('/checkout', async function (req, res) {
     total += amount;
 
     details.push({                                                                  //detail từng course đã mua
-      CoursesID: course.CoursesID, 
+      CoursesID: course.CoursesID,
       Price: course.Price,
       OrderID: -1
     });
+    const process = {
+      CourseID: course.CoursesID,
+      UserID: req.session.authUser.ID
+    }
+    const result = processModel.addProcess(process)
   }
   console.log(req.session.authUser);
   const order = {
@@ -65,11 +71,13 @@ router.post('/checkout', async function (req, res) {
     await detailModel.add(detail);
   }
 
+
+
   req.session.cart = [];
   res.redirect(req.headers.referer);
 
 
-  
+
 })
 
 module.exports = router;

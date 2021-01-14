@@ -170,5 +170,6 @@ module.exports = {
         const sql = `select Name from subcategories where SubCategoryID = ${SubCategoryID}`
         const [result, fields] = await db.load(sql);
         return result[0].Name;
-    }
+    },
+
 }

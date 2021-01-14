@@ -9,6 +9,7 @@ const userModel = require('../models/user.model');
 const { truncate } = require('fs');
 const studentModel = require('../models/student.model');
 const { getTeacherOfCourse } = require('../models/course.model');
+const processModel = require('../models/process.model');
 
 
 router.get('/create/1', function (req, res, next) {
@@ -217,12 +218,17 @@ router.get('/storage/paidCourse', async function (req, res, next) {           //
     const list = await courseModel.all();
     res.render('vwCourses/paidCourse', {
     });
-}).
+})
 
+
+router.get('/learn/:CourseID', async function (req, res, next) {           //chuyển đến trang để học
+    const curVideoID = await processModel.getProcess(req.params.CourseID,req.session.authUser.ID);
+    console.log(curVideoID);
+    res.redirect(`/course/learn/${req.params.CourseID}/${curVideoID}`);
+})
 
 
 router.get('/learn/:CourseID/:VideoID', async function (req, res, next) {           //chuyển đến trang để học
-
     const detailcourse = await courseModel.single(req.params.CourseID);
     const cateandsub = await courseModel.getCategoryAndSub(detailcourse.CoursesID);
     const allSection = await courseModel.getAllSection(req.params.CourseID);
@@ -230,6 +236,7 @@ router.get('/learn/:CourseID/:VideoID', async function (req, res, next) {       
     const categoryname = await courseModel.getCategeryName(cateandsub.CategoryID)
     const subcategoryname = await courseModel.getSubCategeryName(cateandsub.SubCategoryID)
     const teacher = (await getTeacherOfCourse(req.params.CourseID))[0];
+    
     let curVideoLink = "";
     const course = {
         CategoryID: cateandsub.CategoryID,
@@ -246,6 +253,13 @@ router.get('/learn/:CourseID/:VideoID', async function (req, res, next) {       
         teacher:teacher,
         allSection: []
     }
+    // save to proces
+    const CurVideoId =  req.params.VideoID;
+    const process = await processModel.getProcess(course.courseID,req.session.authUser.ID);
+
+    console.log(process)
+    processModel.saveProcess(process,CurVideoId);
+
     for (var i = 0; i < allSection.length; i++) {
         let section = {
             CourseSectionID: allSection[i].CourseSectionID,
@@ -272,15 +286,12 @@ router.get('/learn/:CourseID/:VideoID', async function (req, res, next) {       
         course.allSection.push(section);
     }
 
-    console.log(course);
+    
 
     res.render('vwCourses/learn', {
         Course:course,
         CurVideo: curVideoLink
     });
-})
-router.get('/learn/:CourseID', async function (req, res, next) {           //chuyển đến trang để học
-    // cần tabble process trước
 })
 
 module.exports = router;

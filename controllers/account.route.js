@@ -106,7 +106,7 @@ router.post('/login', async function(req, res, next) {
         userDetail = {
             username: user.username,
             Name: teacher.Name,
-            ID: teacher.TeaID,
+            ID: teacher.UID,
             permission: teacherModel.TEACHER_PROPERTIES.permission
         }
     }
@@ -116,7 +116,7 @@ router.post('/login', async function(req, res, next) {
         userDetail = {
             username: user.username,
             Name: student.Name,
-            ID: student.StuID,
+            ID: student.UID,
             permission: studentModel.STUDENT_PROPERTIES.permission
         }
     }
