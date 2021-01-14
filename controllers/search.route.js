@@ -79,8 +79,8 @@ router.post('/list', async function(req, res) { //dành cho khách
     const page = req.query.page || 1;                                       //lấy giá trị page require
     if (page < 1) page = 1;
 
-    await courseModel.createFullText();                                     //tạo full text search
-    await subcategoryModel.createFullText();                            
+    // await courseModel.createFullText();                                     //tạo full text search
+    // await subcategoryModel.createFullText();                            
 
     const search_part = search_text.split(" ");                             //tách từng từ
 
