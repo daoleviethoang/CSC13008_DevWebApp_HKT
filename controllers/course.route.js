@@ -9,6 +9,8 @@ const userModel = require('../models/user.model');
 const { truncate } = require('fs');
 const studentModel = require('../models/student.model');
 const { getTeacherOfCourse } = require('../models/course.model');
+const processModel = require('../models/process.model');
+const { paginate } = require('./../config/default.json');
 
 
 router.get('/create/1', function(req, res, next) {

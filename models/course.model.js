@@ -87,7 +87,7 @@ module.exports = {
 
     async addVideo(courseID, videoEntity) {
         const [result, field] = await db.add(videoEntity, 'video');
-        fs.writeFile(`video/${courseID}/${videoEntity.CourseSectionID}/${result.insertId}.txt`, '', function(err) {
+        fs.writeFile(`video/${courseID}/${videoEntity.CourseSectionID}/${result.insertId}.txt`, '', function (err) {
             if (err) throw err;
         });
         return result;
@@ -104,7 +104,7 @@ module.exports = {
 
     async setLinkVideo(courseID, CourseSectionID, VideoID, link) {
         const path = `video/${courseID}/${CourseSectionID}/${VideoID}.txt`;
-        fs.writeFile(path, link, function(err) {
+        fs.writeFile(path, link, function (err) {
             if (err) throw err;
         });
     },
@@ -159,14 +159,14 @@ module.exports = {
                     ON TB1.TeaID = TB2.TeaID
         WHERE TB2.CoursesID = ${CourseID}`;
         const [rows, fields] = await db.load(sql);
-        return rows;
+        return rows[0];
     },
     async createFullText() {
         const sql = 'ALTER TABLE courses ADD FULLTEXT(Name);'
         const [rows, fields] = await db.load(sql);
         return;
     },
-    async searchFullText(search_sql) {              
+    async searchFullText(search_sql) {
         const sql = `select courses.* 
         FROM courses left join subcategories ON courses.SubCategoryID = subcategories.SubCategoryID
         where
@@ -178,19 +178,53 @@ module.exports = {
     getNumberOfList(ListCourse) {
         let n = 0;
         for (const item of ListCourse) {
-          n += 1;
+            n += 1;
         }
         return n;
     },
 
-    async getCategeryName(CategoryID){
+    async getCategeryName(CategoryID) {
         const sql = `select Name from categories where CategoryID = ${CategoryID}`
         const [result, fields] = await db.load(sql);
         return result[0].Name;
     },
-    async getSubCategeryName(SubCategoryID){
+    async getSubCategeryName(SubCategoryID) {
         const sql = `select Name from subcategories where SubCategoryID = ${SubCategoryID}`
         const [result, fields] = await db.load(sql);
         return result[0].Name;
+    },
+    async getPaidCourse(UserID, offset) {
+        const sql = `select courses.CoursesID
+        from users join orders on orders.UID = users.UID
+        join orderdetails on orders.OrderID = orderdetails.OrderID
+        join courses on courses.CoursesID = orderdetails.CoursesID
+        where users.UID = '${UserID}' limit ${paginate.limit} offset ${offset}`;
+        const [result, fields] = await db.load(sql);
+        return result;
+    },
+    async getCourseFeedback(CourseID) {
+        const sql = `select *
+        from courses
+        join feedback on  feedback.CourseID = courses.CoursesID
+        where courses.CoursesID = '${CourseID}'`;
+        const [result, fields] = await db.load(sql);
+        return result;
+    },
+    async getCourseRating(CourseID) {
+        const sql = `SELECT AVG(feedback.Rating) as rating
+        FROM courses
+        join feedback on courses.CoursesID = feedback.CourseID
+        where CoursesID = ${CourseID}`;
+        const [result, fields] = await db.load(sql);
+        return result[0].rating;
+    },
+    async getCourseSale(CourseID) {
+        const sql = `select *
+        from courses
+        join coupon on courses.CoursesID = coupon.CourseID
+        where  courses.CoursesID = ${CourseID}`;
+        const [result, fields] = await db.load(sql);
+        if (result.length === 0) return null;
+        return result[0].Sale;
     }
 }

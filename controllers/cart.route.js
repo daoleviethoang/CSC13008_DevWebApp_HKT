@@ -4,6 +4,7 @@ const cartModel = require('../models/cart.model');
 const courseModel = require('../models/course.model');
 const orderModel = require('../models/order.model');
 const detailModel = require('../models/detail.model');
+const processModel = require('../models/process.model')
 
 const router = express.Router();
 
@@ -15,8 +16,8 @@ router.get('/', async function(req, res) { //trang thanh toán
             course
         })
     }
-    //sua cai nay lai index
-    res.render('vwCart/index1', {
+
+    res.render('vwCart/index', {
         items,
         empty: items.length === 0
     });
@@ -52,6 +53,11 @@ router.post('/checkout', async function(req, res) {
             Price: course.Price,
             OrderID: -1
         });
+        const process = {
+            CourseID: course.CoursesID,
+            UserID: req.session.authUser.ID
+        }
+        const result = processModel.addProcess(process)
     }
     console.log(req.session.authUser);
     const order = {

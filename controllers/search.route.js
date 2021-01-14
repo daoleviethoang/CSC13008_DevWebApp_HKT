@@ -7,15 +7,15 @@ const { paginate } = require('./../config/default.json');
 const router = express.Router();
 
 
-router.get('/list', async function(req, res) { //dành cho khách
+router.get('/list', async function(req, res) {                                      //handle pagination 
     const search_text = req.query.searchText;
 
     //pagination
     const page = Number(req.query.page) || 1;                                       //lấy giá trị page require
     if (page < 1) page = 1;
 
-    await courseModel.createFullText();                                     //tạo full text search
-    await subcategoryModel.createFullText();                            
+    // await courseModel.createFullText();                                     //tạo full text search
+    // await subcategoryModel.createFullText();                            
 
     const search_part = search_text.split(" ");                             //tách từng từ
 
@@ -71,7 +71,7 @@ router.get('/list', async function(req, res) { //dành cho khách
 })
 
 
-router.post('/list', async function(req, res) { //dành cho khách
+router.post('/list', async function(req, res) {                             //handle search form gửi từ bs4
     const search_text = req.body.searchText.toString();
 
 
@@ -79,8 +79,8 @@ router.post('/list', async function(req, res) { //dành cho khách
     const page = req.query.page || 1;                                       //lấy giá trị page require
     if (page < 1) page = 1;
 
-    await courseModel.createFullText();                                     //tạo full text search
-    await subcategoryModel.createFullText();                            
+    // await courseModel.createFullText();                                     //tạo full text search
+    // await subcategoryModel.createFullText();                            
 
     const search_part = search_text.split(" ");                             //tách từng từ
 
@@ -119,8 +119,10 @@ router.post('/list', async function(req, res) { //dành cho khách
     //     }
     //     console.log(list[i]);
     // }
-    for(var i = 0;i < paginate.limit; i++){
-        listCourse.push(c_total[page * offset + i]);
+    for(var i = 0;i < total - (page-1)*offset; i++){
+        if ((page - 1) * offset < total) {
+            listCourse.push(c_total[(page-1) * offset + i ]);
+        }
     }
     res.render('vwSearch/byList', {
         course: listCourse,
