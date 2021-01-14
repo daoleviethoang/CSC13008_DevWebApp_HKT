@@ -161,5 +161,26 @@ module.exports = {
         const [rows, fields] = await db.load(sql);
         return rows;
     },
+    async createFullText() {
+        const sql = 'ALTER TABLE courses ADD FULLTEXT(Name);'
+        const [rows, fields] = await db.load(sql);
+        return;
+    },
+    async searchFullText(search_sql) {              
+        const sql = `select courses.* 
+        FROM courses left join subcategories ON courses.SubCategoryID = subcategories.SubCategoryID
+        where
+            MATCH (courses.Name) 
+            AGAINST ('${search_sql}');`
+        const [rows, fields] = await db.load(sql);
+        return rows;
+    },
+    getNumberOfList(ListCourse) {
+        let n = 0;
+        for (const item of ListCourse) {
+          n += 1;
+        }
+        return n;
+    },
 
 }

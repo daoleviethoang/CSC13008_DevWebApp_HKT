@@ -93,12 +93,13 @@
 					</div>
 					<div class="col-sm-4">
 						<div>
-							<form action="/home/about" method="POST">
-								<input type="text" class="searchTerm w-100" placeholder="What are you searching for?">
+							<form action="/search/list" method="POST" id = "frmSearch">
+								<input type="text" class="searchTerm w-100" placeholder="What are you searching for?" id ="txtSearch" name = "searchText">
 								<button type="submit" class="searchButton"><i class="icon-search3"></i></button>
 							</form>
 						</div>
 					</div>
+					
 					<div class="col-sm-6 menu-1 w-100" >
 						<ul class="ml-5">
 							<li class="has-dropdown">
