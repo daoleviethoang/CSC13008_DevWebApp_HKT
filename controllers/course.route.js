@@ -207,17 +207,17 @@ router.get('/', async function (req, res, next) {           //chuyển đến tr
     });
 })
 
-router.get('/learning', async function (req, res, next) {           //chuyển đến trang chứa toàn bộ các courses
-    const list = await courseModel.all();
-    res.render('vwCourses/mylearning', {
-    });
-})
-
-router.get('/learning/paidCourse', async function (req, res, next) {           //chuyển đến trang chứa toàn bộ các courses
+router.get('/storage', async function (req, res, next) {           //chuyển đến trang chứa toàn bộ các courses
     const list = await courseModel.all();
     res.render('vwCourses/paidCourse', {
     });
 })
+
+router.get('/storage/paidCourse', async function (req, res, next) {           //chuyển đến trang chứa toàn bộ các courses
+    const list = await courseModel.all();
+    res.render('vwCourses/paidCourse', {
+    });
+}).
 
 
 
