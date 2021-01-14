@@ -11,14 +11,14 @@ const studentModel = require('../models/student.model');
 const { getTeacherOfCourse } = require('../models/course.model');
 
 
-router.get('/create/1', function (req, res, next) {
-    res.render('vwCourses/create_1', {
-        layout: false,
+router.get('/create/1', function(req, res, next) {
+        res.render('vwCourses/create_1', {
+            layout: false,
+        })
     })
-})
-//Lay quyen student: studentModel.STUDENT_PROPERTIES.permission
-//teacher: teacherModel.TEACHER_PROPERTIES.permission
-router.post('/create/1', function (req, res, next) {
+    //Lay quyen student: studentModel.STUDENT_PROPERTIES.permission
+    //teacher: teacherModel.TEACHER_PROPERTIES.permission
+router.post('/create/1', function(req, res, next) {
     res.redirect(url.format({
         pathname: '/course/create/2/',
         query: {
@@ -26,7 +26,7 @@ router.post('/create/1', function (req, res, next) {
         }
     }));
 })
-router.get('/create/2', async function (req, res, next) {
+router.get('/create/2', async function(req, res, next) {
     const courseName = req.query.courseName;
     const allCategories = await categoryModel.all();
     res.render('vwCourses/create_2', {
@@ -36,7 +36,7 @@ router.get('/create/2', async function (req, res, next) {
     })
 })
 
-router.post('/create/2', function (req, res, next) {
+router.post('/create/2', function(req, res, next) {
     console.log(req.body);
     res.redirect(url.format({
         pathname: '/course/create/3/',
@@ -47,7 +47,7 @@ router.post('/create/2', function (req, res, next) {
     }));
 })
 
-router.get('/create/3', async function (req, res, next) {
+router.get('/create/3', async function(req, res, next) {
     const courseName = req.query.courseName;
     const categoryID = req.query.categoryID;
     const allSubCategories = await subcategoryModel.all(categoryID);
@@ -59,7 +59,7 @@ router.get('/create/3', async function (req, res, next) {
     })
 })
 
-router.post('/create/3', async function (req, res, next) {
+router.post('/create/3', async function(req, res, next) {
 
     console.log(res.locals.authUser);
     const course = {
@@ -73,7 +73,7 @@ router.post('/create/3', async function (req, res, next) {
 })
 
 
-router.get('/edit/:courseID', async function (req, res, next) {
+router.get('/edit/:courseID', async function(req, res, next) {
     const detailcourse = await courseModel.single(req.params.courseID);
     const cateandsub = await courseModel.getCategoryAndSub(detailcourse.CoursesID);
     const allSection = await courseModel.getAllSection(req.params.courseID);
@@ -132,7 +132,7 @@ router.get('/edit/:courseID', async function (req, res, next) {
 })
 
 
-router.post('/edit/:courseID/addvideo/', async function (req, res, next) {
+router.post('/edit/:courseID/addvideo/', async function(req, res, next) {
     const courseID = req.params.courseID
     const video = {
         CourseSectionID: req.body.CourseSectionID,
@@ -144,7 +144,7 @@ router.post('/edit/:courseID/addvideo/', async function (req, res, next) {
 });
 
 
-router.post('/edit/:courseID/addsection/', async function (req, res, next) {
+router.post('/edit/:courseID/addsection/', async function(req, res, next) {
     const coursesection = {
         CourseID: req.params.courseID,
         Name: req.body.newsectionname
@@ -155,7 +155,7 @@ router.post('/edit/:courseID/addsection/', async function (req, res, next) {
 });
 
 
-router.post('/edit/:CourseID/updatevideo/:CourseSectionID/:VideoID', async function (req, res, next) {
+router.post('/edit/:CourseID/updatevideo/:CourseSectionID/:VideoID', async function(req, res, next) {
     const video = {
         Name: req.body.videotitle,
         CourseSectionID: req.params.CourseSectionID
@@ -169,7 +169,7 @@ router.post('/edit/:CourseID/updatevideo/:CourseSectionID/:VideoID', async funct
     res.redirect(req.headers.referer);
 });
 
-router.post('/edit/:CourseID/basic', async function (req, res, next) {
+router.post('/edit/:CourseID/basic', async function(req, res, next) {
     console.log(req.body);
     const CourseID = req.params.CourseID;
     let IsFinished = 0;
@@ -188,18 +188,18 @@ router.post('/edit/:CourseID/basic', async function (req, res, next) {
     res.redirect(req.headers.referer);
 });
 
-router.post('/edit/:CourseID/:CourseSection/updatesection', async function (req, res, next) {
-    const CourseSection = {
-        CourseID: req.params.CourseID,
-        Name: req.body.SectionName,
-        IsPreview: 0
-    }
+// router.post('/edit/:CourseID/:CourseSection/updatesection', async function(req, res, next) {
+//     const CourseSection = {
+//         CourseID: req.params.CourseID,
+//         Name: req.body.SectionName,
+//         IsPreview: 0
+//     }
 
-    courseModel.updateSection(CourseSection, req.params.CourseSection)
-    res.redirect(req.headers.referer);
-});
+//     courseModel.updateSection(CourseSection, req.params.CourseSection)
+//     res.redirect(req.headers.referer);
+// });
 
-router.get('/', async function (req, res, next) {           //chuyển đến trang chứa toàn bộ các courses
+router.get('/', async function(req, res, next) { //chuyển đến trang chứa toàn bộ các courses
     const list = await courseModel.all();
     res.render('vwCourses/index', {
         products: list,
@@ -207,80 +207,78 @@ router.get('/', async function (req, res, next) {           //chuyển đến tr
     });
 })
 
-router.get('/storage', async function (req, res, next) {           //chuyển đến trang chứa toàn bộ các courses
+router.get('/storage', async function(req, res, next) { //chuyển đến trang chứa toàn bộ các courses
     const list = await courseModel.all();
-    res.render('vwCourses/paidCourse', {
-    });
+    res.render('vwCourses/paidCourse', {});
 })
 
-router.get('/storage/paidCourse', async function (req, res, next) {           //chuyển đến trang chứa toàn bộ các courses
+router.get('/storage/paidCourse', async function(req, res, next) { //chuyển đến trang chứa toàn bộ các courses
     const list = await courseModel.all();
-    res.render('vwCourses/paidCourse', {
-    });
-}).
-
-
-
-router.get('/learn/:CourseID/:VideoID', async function (req, res, next) {           //chuyển đến trang để học
-
-    const detailcourse = await courseModel.single(req.params.CourseID);
-    const cateandsub = await courseModel.getCategoryAndSub(detailcourse.CoursesID);
-    const allSection = await courseModel.getAllSection(req.params.CourseID);
-
-    const categoryname = await courseModel.getCategeryName(cateandsub.CategoryID)
-    const subcategoryname = await courseModel.getSubCategeryName(cateandsub.SubCategoryID)
-    const teacher = (await getTeacherOfCourse(req.params.CourseID))[0];
-    let curVideoLink = "";
-    const course = {
-        CategoryID: cateandsub.CategoryID,
-        Categoryname: categoryname,
-        SubCategoriesID: cateandsub.SubCategoryID,
-        Subcategoryname: subcategoryname,
-        courseName: detailcourse.Name,
-        courseID: detailcourse.CoursesID,
-        tinyDes: detailcourse.TinyDes,
-        fullDes: detailcourse.FullDes,
-        Price: detailcourse.Price,
-        IsFinished: detailcourse.IsFinished === 1,
-        LastUpdate: detailcourse.LastUpdate.toString(),
-        teacher:teacher,
-        allSection: []
-    }
-    for (var i = 0; i < allSection.length; i++) {
-        let section = {
-            CourseSectionID: allSection[i].CourseSectionID,
-            courseID: detailcourse.CoursesID,
-            Name: allSection[i].Name,
-            allVideo: []
-        };
-        let allVideo = await courseModel.getAllVideofSection(allSection[i].CourseSectionID);
-        for (var j = 0; j < allVideo.length; j++) {
-            let video = {
-                link: await courseModel.getLinkVideo(req.params.CourseID, allSection[i].CourseSectionID, allVideo[j].VideoId),
-                videoIndex:j + 1,
-                videoname: allVideo[j].Name,
-                videoid: allVideo[j].VideoId,
-                courseID: detailcourse.CoursesID,
-                CourseSectionID: allSection[i].CourseSectionID,
-            }
-
-            if(video.videoid == req.params.VideoID){
-                curVideoLink = video.link;
-            }
-            section.allVideo.push(video);
-        }
-        course.allSection.push(section);
-    }
-
-    console.log(course);
-
-    res.render('vwCourses/learn', {
-        Course:course,
-        CurVideo: curVideoLink
-    });
+    res.render('vwCourses/paidCourse', {});
 })
-router.get('/learn/:CourseID', async function (req, res, next) {           //chuyển đến trang để học
-    // cần tabble process trước
-})
+
+
+
+// router.get('/learn/:CourseID/:VideoID', async function(req, res, next) { //chuyển đến trang để học
+
+//         const detailcourse = await courseModel.single(req.params.CourseID);
+//         const cateandsub = await courseModel.getCategoryAndSub(detailcourse.CoursesID);
+//         const allSection = await courseModel.getAllSection(req.params.CourseID);
+
+//         const categoryname = await courseModel.getCategeryName(cateandsub.CategoryID)
+//         const subcategoryname = await courseModel.getSubCategeryName(cateandsub.SubCategoryID)
+//         const teacher = (await getTeacherOfCourse(req.params.CourseID))[0];
+//         let curVideoLink = "";
+//         const course = {
+//             CategoryID: cateandsub.CategoryID,
+//             Categoryname: categoryname,
+//             SubCategoriesID: cateandsub.SubCategoryID,
+//             Subcategoryname: subcategoryname,
+//             courseName: detailcourse.Name,
+//             courseID: detailcourse.CoursesID,
+//             tinyDes: detailcourse.TinyDes,
+//             fullDes: detailcourse.FullDes,
+//             Price: detailcourse.Price,
+//             IsFinished: detailcourse.IsFinished === 1,
+//             LastUpdate: detailcourse.LastUpdate.toString(),
+//             teacher: teacher,
+//             allSection: []
+//         }
+//         for (var i = 0; i < allSection.length; i++) {
+//             let section = {
+//                 CourseSectionID: allSection[i].CourseSectionID,
+//                 courseID: detailcourse.CoursesID,
+//                 Name: allSection[i].Name,
+//                 allVideo: []
+//             };
+//             let allVideo = await courseModel.getAllVideofSection(allSection[i].CourseSectionID);
+//             for (var j = 0; j < allVideo.length; j++) {
+//                 let video = {
+//                     link: await courseModel.getLinkVideo(req.params.CourseID, allSection[i].CourseSectionID, allVideo[j].VideoId),
+//                     videoIndex: j + 1,
+//                     videoname: allVideo[j].Name,
+//                     videoid: allVideo[j].VideoId,
+//                     courseID: detailcourse.CoursesID,
+//                     CourseSectionID: allSection[i].CourseSectionID,
+//                 }
+
+//                 if (video.videoid == req.params.VideoID) {
+//                     curVideoLink = video.link;
+//                 }
+//                 section.allVideo.push(video);
+//             }
+//             course.allSection.push(section);
+//         }
+
+//         console.log(course);
+
+//         res.render('vwCourses/learn', {
+//             Course: course,
+//             CurVideo: curVideoLink
+//         });
+//     })
+//     router.get('/learn/:CourseID', async function (req, res, next) {           //chuyển đến trang để học
+//         // cần tabble process trước
+//     })
 
 module.exports = router;

@@ -59,7 +59,6 @@ router.post('/register', async function(req, res, next) {
         permission: permission,
         UID: UID
     }
-
     await userModel.add(user);
     res.redirect('/account/login');
 })
