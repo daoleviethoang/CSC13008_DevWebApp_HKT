@@ -8,6 +8,7 @@ const courseModel = require('../models/course.model');
 const userModel = require('../models/user.model');
 const { truncate } = require('fs');
 const studentModel = require('../models/student.model');
+const { getTeacherOfCourse } = require('../models/course.model');
 
 
 router.get('/create/1', function (req, res, next) {
@@ -206,35 +207,43 @@ router.get('/', async function (req, res, next) {           //chuyển đến tr
     });
 })
 
-router.get('/learning', async function (req, res, next) {           //chuyển đến trang chứa toàn bộ các courses
-    const list = await courseModel.all();
-    res.render('vwCourses/mylearning', {
-    });
-})
-
-router.get('/learning/paidCourse', async function (req, res, next) {           //chuyển đến trang chứa toàn bộ các courses
+router.get('/storage', async function (req, res, next) {           //chuyển đến trang chứa toàn bộ các courses
     const list = await courseModel.all();
     res.render('vwCourses/paidCourse', {
     });
 })
 
-router.get('/learn/:CourseID', async function (req, res, next) {           //chuyển đến trang để học
+router.get('/storage/paidCourse', async function (req, res, next) {           //chuyển đến trang chứa toàn bộ các courses
+    const list = await courseModel.all();
+    res.render('vwCourses/paidCourse', {
+    });
+}).
+
+
+
+router.get('/learn/:CourseID/:VideoID', async function (req, res, next) {           //chuyển đến trang để học
 
     const detailcourse = await courseModel.single(req.params.CourseID);
-    console.log(detailcourse)
     const cateandsub = await courseModel.getCategoryAndSub(detailcourse.CoursesID);
-    console.log(cateandsub)
     const allSection = await courseModel.getAllSection(req.params.CourseID);
+
+    const categoryname = await courseModel.getCategeryName(cateandsub.CategoryID)
+    const subcategoryname = await courseModel.getSubCategeryName(cateandsub.SubCategoryID)
+    const teacher = (await getTeacherOfCourse(req.params.CourseID))[0];
+    let curVideoLink = "";
     const course = {
         CategoryID: cateandsub.CategoryID,
+        Categoryname: categoryname,
         SubCategoriesID: cateandsub.SubCategoryID,
+        Subcategoryname: subcategoryname,
         courseName: detailcourse.Name,
         courseID: detailcourse.CoursesID,
         tinyDes: detailcourse.TinyDes,
         fullDes: detailcourse.FullDes,
         Price: detailcourse.Price,
         IsFinished: detailcourse.IsFinished === 1,
-        LastUpdate: detailcourse.LastUpdate,
+        LastUpdate: detailcourse.LastUpdate.toString(),
+        teacher:teacher,
         allSection: []
     }
     for (var i = 0; i < allSection.length; i++) {
@@ -254,18 +263,24 @@ router.get('/learn/:CourseID', async function (req, res, next) {           //chu
                 courseID: detailcourse.CoursesID,
                 CourseSectionID: allSection[i].CourseSectionID,
             }
-            console.log(video);
+
+            if(video.videoid == req.params.VideoID){
+                curVideoLink = video.link;
+            }
             section.allVideo.push(video);
         }
         course.allSection.push(section);
     }
 
-
+    console.log(course);
 
     res.render('vwCourses/learn', {
         Course:course,
-        CurVideo: "https://www.youtube.com/embed/-MfGnmeWrBw"
+        CurVideo: curVideoLink
     });
+})
+router.get('/learn/:CourseID', async function (req, res, next) {           //chuyển đến trang để học
+    // cần tabble process trước
 })
 
 module.exports = router;
