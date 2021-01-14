@@ -161,5 +161,14 @@ module.exports = {
         const [rows, fields] = await db.load(sql);
         return rows;
     },
-
+    async getCategeryName(CategoryID){
+        const sql = `select Name from categories where CategoryID = ${CategoryID}`
+        const [result, fields] = await db.load(sql);
+        return result[0].Name;
+    },
+    async getSubCategeryName(SubCategoryID){
+        const sql = `select Name from subcategories where SubCategoryID = ${SubCategoryID}`
+        const [result, fields] = await db.load(sql);
+        return result[0].Name;
+    }
 }
