@@ -1,4 +1,5 @@
 const db = require('../utils/db');
+const userModel = require('../models/user.model');
 
 const USER_PROPERTIES = {
     table_name: "users",
@@ -33,6 +34,18 @@ module.exports = {
     },
     async singleByUserName(username) {
         const sql = `select * from ${USER_PROPERTIES.table_name} where username = '${username}'`;
+        const [row, fields] = await db.load(sql);
+        if (row.length === 0) {
+            return null;
+        }
+        return row[0];
+    },
+    async getUserByUserName(username) {
+        const sql = `SELECT *
+        FROM (SELECT * FROM students) as A 
+        INNER JOIN 
+                    (SELECT ID, UID as UID1, username, password, permission FROM users WHERE username = '${username}') as B
+        ON A.UID = B.UID1`;
         const [row, fields] = await db.load(sql);
         if (row.length === 0) {
             return null;

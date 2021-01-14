@@ -43,7 +43,7 @@ router.post('/register', async function(req, res, next) {
     } else if (req.body.userType === 'TEACHER') {
         permission = teacherModel.TEACHER_PROPERTIES.permission;
         UID = `Tea${await teacherModel.largest_ID() + 1}`;
-        console.log(UID);
+        //console.log(UID);
         user_Detail = {
             name: req.body.fullname,
             email: req.body.email,
@@ -112,7 +112,7 @@ router.post('/login', async function(req, res, next) {
     }
     if (user.permission === studentModel.STUDENT_PROPERTIES.permission) {
         const student = await studentModel.singleFromUID(user.UID);
-        console.log(student)
+        //console.log(student)
         userDetail = {
             username: user.username,
             Name: student.Name,
@@ -120,21 +120,22 @@ router.post('/login', async function(req, res, next) {
             permission: studentModel.STUDENT_PROPERTIES.permission
         }
     }
-    console.log(userDetail)
+    //console.log(userDetail)
     req.session.auth = true;
     req.session.authUser = userDetail;
     const url = '/';
     res.redirect(url)
 })
 router.post('/logout', async function(req, res) {
-    console.log("logout")
+    //console.log("logout")
     req.session.auth = false;
     req.session.authUser = null;
     req.session.retUrl = null;
-    req.session.cart=[];
+    req.session.cart = [];
 
     const url = req.headers.referer || '/';
     res.redirect(url);
 })
+
 
 module.exports = router;

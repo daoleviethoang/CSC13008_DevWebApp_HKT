@@ -2006,3 +2006,184 @@ body {
 .stars-50:after {
     width: 100;
 }
+
+.intro-content,
+.detail-content {
+    margin: 0 !important;
+    width: 100%;
+    margin: auto !important;
+}
+
+.intro-course {
+    background-color: #000;
+    color: #fff;
+}
+
+.course-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.short-des {
+    font-size: 1.2rem;
+    font-size: none;
+}
+
+.rating--number-student {
+    display: flex;
+    flex-direction: row;
+}
+
+.create-by>a,
+.teach-by>a {
+    color: #8ed1dc !important;
+    text-decoration: underline !important;
+}
+
+.detail-course {
+    padding: 1rem 0;
+}
+
+.title {
+    color: #283657;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.title-secsion {
+    padding: 0.5rem 0;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.ul-preview {
+    padding: 0;
+}
+
+.li-preview {
+    margin: 1rem 0;
+    list-style-type: none;
+    background-color: #f8f8f8;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+}
+
+.li-preview:hover {
+    cursor: pointer;
+}
+
+.li-name {
+    color: black;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.li-preview .content {
+    padding: 1rem;
+}
+
+.li-preview .content {
+    display: none;
+}
+
+#form-write-rate {
+    display: none;
+}
+
+.form-rate .btn-write-rate,
+.form-rate .send-rate {
+    margin: 0.5rem 0;
+    color: #f26101;
+    background-color: white;
+    border-radius: 0;
+    border: solid 1px #f26101;
+}
+
+textarea {
+    resize: none !important;
+}
+
+.form-rate label {
+    color: black;
+    font-size: 0.9rem;
+}
+
+.form-rate .send-rate {
+    justify-self: flex-end;
+    align-self: flex-end;
+}
+
+.form-rate .btn-write-rate:hover,
+.form-rate .send-rate:hover {
+    color: white;
+    background-color: black;
+    border-radius: 0;
+    border: solid 1px black;
+}
+
+.panel-course {
+    background-color: #f8f8f8;
+    padding: 0.5rem;
+}
+
+.price-secsion {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.price-secsion {
+    padding: 0.8rem 2rem;
+    padding-bottom: 0;
+}
+
+.price {
+    color: #283657;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.old-price {
+    text-decoration: line-through;
+    color: #73726c;
+    font-size: 0.9rem;
+}
+
+.sale-percent {
+    color: #f26101;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.panel-course .short-des {
+    text-align: center;
+    font-size: 1rem;
+}
+
+.add-to-cart {
+    width: 80% !important;
+    margin: 0.5rem auto;
+    font-size: 1.1rem;
+    background-color: #a41d19;
+    color: white;
+}
+
+.add-to-cart:hover {
+    background-color: #f02b25;
+    color: white;
+}
+
+.number-student {
+    text-align: center;
+}
+
+a.see-feedback {
+    display: block;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+a.see-feedback:hover {
+    text-decoration: none;
+}

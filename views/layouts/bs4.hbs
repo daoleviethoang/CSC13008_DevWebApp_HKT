@@ -126,12 +126,13 @@
 										{{authUser.username}}
 								</a>
 								<ul class="dropdown">
-									<li><a href="/User/Profile">Profile</a></li>
+									<li><a href="/user/profile/{{authUser.username}}">Profile</a></li>
 									<form id="frmLogout" action="/account/logout" method="POST"></form>
 									<li><a href="javascript: $('#frmLogout').submit();">Sign out</a></li>
 								</ul>
 							</li>
 							{{else}}
+
 							<a href="/account/login"><button type="button"
 									class="btn btn-outline-info border rounded">Login</button></a>
 							<a href="/account/register"><button type="button" class="btn btn-info rounded">Sign
