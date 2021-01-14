@@ -67,6 +67,9 @@ router.post('/checkout', async function(req, res) {
 
     req.session.cart = [];
     res.redirect(req.headers.referer);
+
+
+
 })
 
 module.exports = router;

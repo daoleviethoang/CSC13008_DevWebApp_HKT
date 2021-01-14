@@ -1,0 +1,211 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Education &mdash; Free Website Template, Free HTML5 Template by freehtml5.co</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Free HTML5 Website Template by freehtml5.co" />
+  <meta name="keywords"
+    content="free website templates, free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
+  <meta name="author" content="freehtml5.co" />
+  <meta property="og:title" content="" />
+  <meta property="og:image" content="" />
+  <meta property="og:url" content="" />
+  <meta property="og:site_name" content="" />
+  <meta property="og:description" content="" />
+  <meta name="twitter:title" content="" />
+  <meta name="twitter:image" content="" />
+  <meta name="twitter:url" content="" />
+  <meta name="twitter:card" content="" />
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <style>
+    body {
+      font-size: 18px;
+    }
+
+    .stars-container {
+      position: relative;
+      display: inline-block;
+      color: transparent;
+    }
+
+    .stars-container:before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      content: '★★★★★';
+      color: lightgray;
+    }
+
+    .stars-container:after {
+      position: absolute;
+      top: 0;
+      left: 0;
+      content: '★★★★★';
+      color: gold;
+      overflow: hidden;
+    }
+
+    .stars-0:after {
+      width: 0%;
+    }
+
+    .stars-5:after {
+      width: 10%;
+    }
+
+    .stars-10:after {
+      width: 20%;
+    }
+
+    .stars-15:after {
+      width: 30%;
+    }
+
+    .stars-20:after {
+      width: 40%;
+    }
+
+    .stars-25:after {
+      width: 50%;
+    }
+
+    .stars-30:after {
+      width: 60%;
+    }
+
+    .stars-35:after {
+      width: 70%;
+    }
+
+    .stars-40:after {
+      width: 80%;
+    }
+
+    .stars-45:after {
+      width: 90%;
+    }
+
+    .stars-50:after {
+      width: 100;
+    }
+  </style>
+
+  <!-- Animate.css -->
+  <link rel="stylesheet" href="/design/css/animate.css">
+  <!-- Icomoon Icon Fonts-->
+  <link rel="stylesheet" href="/design/css/icomoon.css">
+  <!-- Bootstrap  -->
+  <link rel="stylesheet" href="/design/css/bootstrap.css">
+  <!-- Magnific Popup -->
+  <link rel="stylesheet" href="/design/css/magnific-popup.css">
+  <!-- Owl Carousel  -->
+  <link rel="stylesheet" href="/design/css/owl.carousel.min.css">
+  <link rel="stylesheet" href="/design/css/owl.theme.default.min.css">
+  <!-- Flexslider  -->
+  <link rel="stylesheet" href="/design/css/flexslider.css">
+  <!-- Pricing -->
+  <link rel="stylesheet" href="/design/css/pricing.css">
+  <!-- Theme style  -->
+  <link rel="stylesheet" href="/design/css/style.css">
+  <!-- Modernizr JS -->
+  <script src="/design/js/modernizr-2.6.2.min.js"></script>
+  {{{_sections.css}}}
+</head>
+
+<body>
+  <hr class="my-4">
+  <div>
+    <div class="container">
+      <div class="container">
+        <div>
+          <h4 style="margin: 0 0 10px 0;"><b>{{{total}}} results for {{{search_text}}}</b> </h4>
+        </div>
+      </div>
+  <hr>
+      <div class="card-body">
+        {{#if this.empty}}
+        <h5 class="card-title">Không có dữ liệu!</h5>
+        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        {{else}}
+        <div class="col">
+          {{#each this.course}}
+          <a href="/courses/detail/{{CoursesID}}">
+
+            <div class="row">
+              <div class="col-3">
+                <img style=" border-radius: 8px; border: 1px solid darkgrey;"
+                  src="/imgs/Courses/{{CoursesID}}/main_thumbs.jpg" alt="{{Name}}" title="{{Name}}"
+                  class="card-img-top">
+              </div>
+              <div class="col-8">
+                <div class="card-body">
+                  <h5 class="card-title"><b>{{Name}}</b></h5>
+                  <p class="card-text" style="margin-bottom:0%; color:black">{{TinyDes}}</p>
+                  <p class="card-text" style="font-size: 13px; margin-bottom:5px">{{namegv}}</p>
+                  {{#if rat}}
+                  <div class="row" style="margin-left:0px; margin-right:5px">
+                    <h6 class="text-danger" style="align-items:center;"><b>{{T}}</b></h5>
+                      <span class="stars-container stars-{{rat}}">★★★★★</span>
+                      <p> ({{count}})</p>
+                  </div>
+                  {{else}}
+                  <div class="row" style="margin-left:0px">
+                    <span class="stars-container stars-0">★★★★★</span>
+                    <p> (0)</p>
+                  </div>
+                  {{/if}}
+
+                </div>
+              </div>
+              <div class="col-1" style="text-align: center; padding-top: 20px;">
+                {{#if Sale}}
+                <h5 class="card-title text-danger"><b>{{format_number Sale}}</b></h5>
+                <h5 class="card-title text-danger" style="text-decoration-line:line-through"><b>{{format_number
+                    Price}}</b></h5>
+                {{else}}
+                <h5 class="card-title text-danger"><b>{{format_number Price}}</b></h5>
+                {{/if}}
+              </div>
+            </div>
+          </a>
+
+          <hr>
+          {{/each}}
+          {{!-- </!--div> --}}
+          <nav>
+            <ul class="pagination">
+              {{!-- <li class="page-item disabled">
+                <span class="page-link">Previous</span>
+              </li> --}}
+              {{#each this.page_numbers}}
+              {{#if isCurrentPage}}
+              <li class="page-item active">
+                <a class="page-link" href="javascript:;">{{value}}</a>
+              </li>
+              {{else}}
+              <li class="page-item">
+                <a class="page-link" href="?searchText={{../search_text}}&page={{value}}">{{value}}</a>
+              </li>
+              {{/if}}
+              {{/each}}
+              {{!-- <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+              </li> --}}
+            </ul>
+          </nav>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+</body>
+
+</html>

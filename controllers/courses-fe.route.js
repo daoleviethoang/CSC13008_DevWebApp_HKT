@@ -45,7 +45,7 @@ router.get('/bySubCat/:id', async function(req, res, next) { //dành cho khách
     });
 })
 
-router.get('/detail/:id', async function(req, res, next) { //trang chứa detail của từng course
+router.get('/detail/:id', async function(req, res) { //trang chứa detail của từng course
     const couId = +req.params.id;
     const course = await courseModel.single(couId);
     let value = course.AccessNumber + 1;
