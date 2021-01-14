@@ -16,7 +16,11 @@ module.exports = {
         const [rows, fields] = await db.load(sql);
         return rows[0].total;
     },
-
+    async count1() {
+        const sql = `select count(*) as total from courses`;
+        const [rows, fields] = await db.load(sql);
+        return rows[0].total;
+    },
     async pageByCat(subCatId, offset) {
         const sql = `SELECT *
         FROM (SELECT *
@@ -87,7 +91,7 @@ module.exports = {
 
     async addVideo(courseID, videoEntity) {
         const [result, field] = await db.add(videoEntity, 'video');
-        fs.writeFile(`video/${courseID}/${videoEntity.CourseSectionID}/${result.insertId}.txt`, '', function (err) {
+        fs.writeFile(`video/${courseID}/${videoEntity.CourseSectionID}/${result.insertId}.txt`, '', function(err) {
             if (err) throw err;
         });
         return result;
@@ -104,7 +108,7 @@ module.exports = {
 
     async setLinkVideo(courseID, CourseSectionID, VideoID, link) {
         const path = `video/${courseID}/${CourseSectionID}/${VideoID}.txt`;
-        fs.writeFile(path, link, function (err) {
+        fs.writeFile(path, link, function(err) {
             if (err) throw err;
         });
     },
