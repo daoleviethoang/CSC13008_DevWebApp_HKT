@@ -107,6 +107,7 @@ router.post('/login', async function(req, res, next) {
             username: user.username,
             Name: teacher.Name,
             ID: teacher.UID,
+            TeaID: teacher.TeaID,
             permission: teacherModel.TEACHER_PROPERTIES.permission
         }
     }
@@ -117,6 +118,7 @@ router.post('/login', async function(req, res, next) {
             username: user.username,
             Name: student.Name,
             ID: student.UID,
+            StuID: student.StuID,
             permission: studentModel.STUDENT_PROPERTIES.permission
         }
     }
