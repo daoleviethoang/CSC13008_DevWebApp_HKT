@@ -9,13 +9,15 @@
 {{/section}}
 
 <div class="card">
-  <div class="card-header">
-    <h4>Your Shopping Cart</h4>
+  <div class="card-header mx-auto w-100">
+    Your Shopping Cart
   </div>
   <div class="card-body">
     {{#if this.empty}}
     <h5 class="card-title">Không có dữ liệu!</h5>
     <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+
+
     {{else}}
     <form id="frmRemoveItem" action="/cart/remove" method="POST">
       <input type="hidden" id="txtProId" name="id">
@@ -40,7 +42,7 @@
           <td class="text-right">
             <a data-id="{{course.CoursesID}}" class="btn btn-sm btn-outline-danger removeItem" title="Remove Item"
               href="javascript:;" role="button">
-              <i class="fa fa-trash-o" aria-hidden="true"></i>
+              <i class="fa fa-trash" aria-hidden="true"></i>
             </a>
           </td>
         </tr>

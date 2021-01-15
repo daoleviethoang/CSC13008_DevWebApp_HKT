@@ -60,6 +60,7 @@ router.get('/detail/:CourseID', async function (req, res) { //trang chứa detai
     const instructionInfo = (await courseModel.getInstructionInfro(teaUID)).Info;
     const feedbacks = await courseModel.getAllFeedback(courseID);
     const isPaid = await courseModel.checkPaid(courseID,req.session.authUser.ID);
+    
     for(var i = 0 ;i< feedbacks.length;i++){
         feedbacks[i].student = await studentModel.single(req.session.authUser.StuID);
     }
@@ -78,6 +79,7 @@ router.get('/detail/:CourseID', async function (req, res) { //trang chứa detai
         wishlisted: wishlisted,
         instructionInfo:instructionInfo,
         feedbacks:feedbacks,
+        isPaid:isPaid,
         allSection: []
     }
     for (var i = 0; i < allSection.length; i++) {
