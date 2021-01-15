@@ -141,50 +141,50 @@
         <form method="POST" action="/courses/detail/{{this.Course.courseID}}/unwishlist">
           <button class="btn btn-outline-primary rounded border" type="submit" style="color: white;">
             Remove from wishlist</button>
-          <form action="/cart/add" method="POST">
-            <div class="row form-group">
-              <div class="col-sm-4">
-                <div class="input-group">
-                  <input type="hidden" value="{{CoursesID}}" name="id">
-                  <div class="input-group-append">
-                    {{#if../check}}
-                    {{else}}
-                    <button class="btn btn-outline-warning rounded" type="submit" id="BtnSubmit">
-                      <i class="fa fa-plus" aria-hidden="true"></i>
-                      Add to cart
-                    </button>
-                    {{/if}}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </form>
         </form>
-
         {{else}}
         <form method="POST" action="/courses/detail/{{this.Course.courseID}}/addwishlist">
           <button class="btn btn-outline-primary rounded border" type="submit" style="color: white;">
             <i class="fas fa-heart    "></i>
             Add to wishlist</button>
         </form>
-        <form action="/cart/add" method="POST">
+        {{/if}}
+
+        {{#if this.Course.isPaid}}
+        <form action="/course/learn/{{this.Course.courseID}}" method="GET"></form>
           <div class="row form-group">
             <div class="col-sm-4">
               <div class="input-group">
                 <input type="hidden" value="{{this.Course.courseID}}" name="id">
                 <div class="input-group-append">
-                  {{#if../check}}
-                  {{else}}
-                  <button class="btn btn-outline-warning rounded" type="submit" id="BtnSubmit">
-                    <i class="fa fa-plus" aria-hidden="true"></i>
-                    Add to cart
+                  <a href="/course/learn/{{this.Course.courseID}}">
+                  <button class="btn btn-outline-warning rounded" type="button" id="BtnSubmit">
+                    <i class="fa fa-book" aria-hidden="true"></i>
+                    Learn
                   </button>
-                  {{/if}}
+                  </a>
                 </div>
               </div>
             </div>
           </div>
         </form>
+        {{else}}
+        <form action="/cart/add" method="POST">
+          <div class="row form-group">
+            <div class="col-sm-4">
+              <div class="input-group">
+                <input type="hidden" value="{{this.Course.courseID}}" name="id">
+                <div class="input-group-append">S
+                  <button class="btn btn-outline-warning rounded" type="submit" id="BtnSubmit">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    Add to cart
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+
         {{/if}}
       </div>
     </div>

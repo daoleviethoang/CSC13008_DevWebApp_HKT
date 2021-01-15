@@ -285,5 +285,11 @@ module.exports = {
         where courses.CoursesID = ${CourseID}`
         const [rows, fields] = await db.load(sql);
         return rows;
-    }
+    },
+    async checkPaid(CourseID, UserID) {
+        const sql = `select * from orderdetails join orders on orderdetails.ID = orders.OrderID
+         where UID = '${UserID}' and orderdetails.CoursesID = ${CourseID}`
+        const [result, fields] = await db.load(sql)
+        return result.length > 0;
+    },
 }
