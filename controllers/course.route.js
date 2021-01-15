@@ -216,7 +216,15 @@ router.get('/storage', async function(req, res, next) { //chuyển đến trang 
 
 router.get('/storage/paidCourse', async function(req, res, next) { //chuyển đến trang chứa toàn bộ các courses
     const list = await courseModel.all();
-    res.render('vwCourses/paidCourse', {});
+    res.render('vwCourses/paidCourse', {
+        course:list
+    });
+})
+router.get('/storage/wishlist', async function(req, res, next) { //chuyển đến trang chứa toàn bộ các courses
+    const list = await courseModel.getAllWish(req.session.authUser.ID);
+    res.render('vwCourses/wishCourse', {
+        course:list
+    });
 })
 
 
@@ -293,7 +301,5 @@ router.get('/learn/:CourseID/:VideoID', async function (req, res, next) {       
         CurVideo: curVideoLink
     });
 })
-
-
 
 module.exports = router;

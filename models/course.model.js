@@ -286,4 +286,12 @@ module.exports = {
         const [result, fields] = await db.load(sql)
         return result.length > 0;
     },
+
+    async getAllWish(userID){
+        const sql = `SELECT * FROM watchlist join courses on watchlist.CourseID = courses.CoursesID 
+        join users on users.UID = watchlist.UserID
+        where users.UID = '${userID}'`;
+        const [rows, fields] = await db.load(sql);
+        return rows;
+    }
 }
