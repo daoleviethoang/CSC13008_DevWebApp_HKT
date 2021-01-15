@@ -30,7 +30,7 @@ module.exports = function(app) {
     app.use('/courses/', require('../controllers/courses-fe.route')); //lấy từng course để show ra
     app.use('/cart/', auth, require('../controllers/cart.route')); //handle cart
     app.use('/user/', auth, require('./../controllers/user.route'));
-
+    //app.use('/admin/', auth, require('./../controllers/admin.route'));
     app.get('/err', function(req, res) {
         throw new Error('Error!');
     });
