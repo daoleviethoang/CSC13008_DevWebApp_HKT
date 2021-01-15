@@ -33,7 +33,7 @@ module.exports = {
         return result[0].total;
     },
     async singleByUserName(username) {
-        const sql = `select * from ${USER_PROPERTIES.table_name} where username = '${username}'`;
+        const sql = `select * from users where username = '${username}'`;
         const [row, fields] = await db.load(sql);
         if (row.length === 0) {
             return null;
@@ -81,5 +81,15 @@ module.exports = {
         SET password = '${pass}'
         WHERE username = '${username}'`
         await db.load(sql);
+    },
+    async getInforCate() {
+        const sql = `SELECT COUNT(*) as SLKH, SUM(AccessNumber) AS SLTC, subName, SID 
+        FROM (SELECT * FROM (SELECT SubCategoryID as SID, subcategories.Name as subName FROM subcategories) as B INNER JOIN courses ON B.SID = courses.SubCategoryID) as A
+        GROUP BY SID`
+        const [row, fields] = await db.load(sql);
+        if (row.length === 0) {
+            return null;
+        }
+        return row[0];
     }
 };

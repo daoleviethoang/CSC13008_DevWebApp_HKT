@@ -231,55 +231,55 @@ module.exports = {
         if (result.length === 0) return null;
         return result[0].Sale;
     },
-    async addWishList(CourseID,UserID){
+    async addWishList(CourseID, UserID) {
         const wishlist = {
             UserID: UserID,
             CourseID: CourseID
         }
-        const [result, fields] = await db.add(wishlist,'watchlist');
+        const [result, fields] = await db.add(wishlist, 'watchlist');
         return result;
     },
-    async removeWishList(CourseID,UserID){
+    async removeWishList(CourseID, UserID) {
         const sql = `delete from watchlist where UserID = '${UserID}'  and   CourseID = ${CourseID}`;
         const [result, fields] = await db.load(sql);
         return result;
     },
-    async checkWishList(CourseID,UserID){
+    async checkWishList(CourseID, UserID) {
         const sql = `select * from watchlist where UserID = '${UserID}' and CourseID = ${CourseID}`
         const [result, fields] = await db.load(sql)
         return result.length > 0;
     },
-    async checkPaid(CourseID,UserID){
+    async checkPaid(CourseID, UserID) {
         const sql = `select * from orderdetails join orders on orderdetails.ID = orders.OrderID
          where UID = '${UserID}' and CourseID = ${CourseID}`
         const [result, fields] = await db.load(sql)
         return result.length > 0;
     },
-    async getInstructionInfro(UID){
-        const sql =   `SELECT *  FROM teacherinfo  where TeaID = '${UID}'`;
+    async getInstructionInfro(UID) {
+        const sql = `SELECT *  FROM teacherinfo  where TeaID = '${UID}'`;
         const [rows, fields] = await db.load(sql);
         return rows[0];
     },
-    async getTeacher(CourseID){
-        const sql =   `SELECT *
+    async getTeacher(CourseID) {
+        const sql = `SELECT *
         FROM teachers
         join courses on teachers.TeaID = courses.TeaID
         where courses.CoursesID = ${CourseID}`;
         const [rows, fields] = await db.load(sql);
         return rows[0];
     },
-    async addFeedback(StuID, Content,CourseID,Rating){
+    async addFeedback(StuID, Content, CourseID, Rating) {
         const feedback = {
             StuID: StuID,
             Content: Content,
             CourseID: CourseID,
             Rating: +Rating
         }
-        const [result, fields] = await db.add(feedback,'feedback');
+        const [result, fields] = await db.add(feedback, 'feedback');
         return result[0];
     },
-    async getAllFeedback(CourseID){
-        const sql =   `select *
+    async getAllFeedback(CourseID) {
+        const sql = `select *
         from feedback
         join courses on feedback.CourseID = courses.CoursesID 
         where courses.CoursesID = ${CourseID}`

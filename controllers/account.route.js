@@ -100,6 +100,12 @@ router.post('/login', async function(req, res, next) {
         });
     }
     let userDetail;
+    // if (user.permission === teacherModel.ADMIN_PROPERTIES.permission) {
+    //     res.render('vwAdmin/admin-dashboard', {
+    //         layout: false
+    //     });
+    //     return;
+    // }
     if (user.permission === teacherModel.TEACHER_PROPERTIES.permission) {
         const teacher = await teacherModel.singleFromUID(user.UID);
         userDetail = {

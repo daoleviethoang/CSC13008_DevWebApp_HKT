@@ -10,7 +10,7 @@ const { paginate } = require('./../config/default.json');
 const router = express.Router();
 
 
-router.get('/bySubCat/:id', async function (req, res, next) { //dành cho khách
+router.get('/bySubCat/:id', async function(req, res, next) { //dành cho khách
     const subCatId = +req.params.id;
 
     //pagination
@@ -48,7 +48,7 @@ router.get('/bySubCat/:id', async function (req, res, next) { //dành cho khách
     });
 })
 
-router.get('/detail/:CourseID', async function (req, res) { //trang chứa detail của từng course
+router.get('/detail/:CourseID', async function(req, res) { //trang chứa detail của từng course
     const courseID = req.params.CourseID;
     const detailcourse = await courseModel.single(courseID);
     const cateandsub = await courseModel.getCategoryAndSub(detailcourse.CoursesID);
@@ -59,8 +59,8 @@ router.get('/detail/:CourseID', async function (req, res) { //trang chứa detai
     const teaUID = (await courseModel.getTeacher(courseID)).UID;
     const instructionInfo = (await courseModel.getInstructionInfro(teaUID)).Info;
     const feedbacks = await courseModel.getAllFeedback(courseID);
-    const isPaid = await courseModel.checkPaid(courseID,req.session.authUser.ID);
-    for(var i = 0 ;i< feedbacks.length;i++){
+    // const isPaid = await courseModel.checkPaid(courseID,req.session.authUser.ID); lưu backup trc ik nha
+    for (var i = 0; i < feedbacks.length; i++) {
         feedbacks[i].student = await studentModel.single(req.session.authUser.StuID);
     }
     const course = {
@@ -76,8 +76,8 @@ router.get('/detail/:CourseID', async function (req, res) { //trang chứa detai
         LastUpdate: detailcourse.LastUpdate.toString(),
         Rating: rating,
         wishlisted: wishlisted,
-        instructionInfo:instructionInfo,
-        feedbacks:feedbacks,
+        instructionInfo: instructionInfo,
+        feedbacks: feedbacks,
         allSection: []
     }
     for (var i = 0; i < allSection.length; i++) {
@@ -122,14 +122,14 @@ router.get('/detail/:CourseID', async function (req, res) { //trang chứa detai
     });
 })
 
-router.post("/detail/:CourseID/addwishlist", async function (req, res) {
+router.post("/detail/:CourseID/addwishlist", async function(req, res) {
     const CourseID = req.params.CourseID;
     const UserID = req.session.authUser.ID;
     courseModel.addWishList(CourseID, UserID);
     res.redirect(`/courses/detail/${CourseID}`);
 
 })
-router.post("/detail/:CourseID/unwishlist", async function (req, res) {
+router.post("/detail/:CourseID/unwishlist", async function(req, res) {
     const CourseID = req.params.CourseID;
     const UserID = req.session.authUser.ID;
     courseModel.removeWishList(CourseID, UserID);
@@ -137,12 +137,12 @@ router.post("/detail/:CourseID/unwishlist", async function (req, res) {
 
 })
 
-router.post("/detail/:CourseID/addfeedback", async function (req, res) {
+router.post("/detail/:CourseID/addfeedback", async function(req, res) {
     const CourseID = req.params.CourseID;
-    const content  = req.body.feedback;
-    const rating  = +req.body.rate;
+    const content = req.body.feedback;
+    const rating = +req.body.rate;
     const StuID = req.session.authUser.StuID;
-    courseModel.addFeedback(StuID,content,CourseID,rating)
+    courseModel.addFeedback(StuID, content, CourseID, rating)
 
     res.redirect(`/courses/detail/${CourseID}`);
 

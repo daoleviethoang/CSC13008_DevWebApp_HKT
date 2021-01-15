@@ -1,5 +1,7 @@
 const db = require('../utils/db');
-
+const ADMIN_PROPERTIES = {
+    permission: 3,
+}
 const TEACHER_PROPERTIES = {
     table_name: "teachers",
     permission: 2,
@@ -8,6 +10,7 @@ const TEACHER_PROPERTIES = {
 
 module.exports = {
     TEACHER_PROPERTIES,
+    ADMIN_PROPERTIES,
     async all() {
         const sql = 'select * from teachers';
         const [rows, fields] = await db.load(sql);

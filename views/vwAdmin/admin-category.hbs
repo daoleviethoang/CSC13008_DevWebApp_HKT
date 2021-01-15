@@ -47,28 +47,28 @@
           </li>
 
           <li>
-            <a href="#">
+            <a href="/admin/categories">
               <i class="fab fa-leanpub"></i>
               <span class="nav-text"> Lĩnh vực </span>
             </a>
           </li>
 
           <li>
-            <a href="/admin/list-product">
+            <a href="/admin/courses">
               <i class="fa fa-list fa-2x"></i>
               <span class="nav-text"> Khoá học </span>
             </a>
           </li>
 
           <li>
-            <a href="/admin/list-bill">
+            <a href="/admin/teachers">
               <i class="fas fa-chalkboard-teacher"></i>
               <span class="nav-text"> Giảng viên </span>
             </a>
           </li>
 
           <li>
-            <a href="/admin/list-comment">
+            <a href="/admin/students">
               <i class="fas fa-graduation-cap"></i>
               <span class="nav-text"> Học viên </span>
             </a>
@@ -90,14 +90,14 @@
     <div class="body-area">
       <div class="body-content">
         <!-- Main Code Here -->
-        <h3 class="page-title">QUẢN LÝ DANH SÁCH LĨNH VỰC CATEGORY</h3>
+        <h3 class="page-title">MANAGEMENT CATEGORY</h3>
 
         <div class="search-bar">
           <input class="form-control" type="text" placeholder="Search ..." aria-label="Search">
         </div>
 
         <div class="add-category">
-          <button type="button" class="btn btn add-category-btn" data-toggle='modal' data-target='#form-model'>Thêm lĩnh vực</button>
+          <button type="button" class="btn btn add-category-btn" data-toggle='modal' data-target='#form-model'>ADD</button>
         </div>
       
 
@@ -105,23 +105,26 @@
           <table class="table table-hover" >
             <thead class="thead-dark">
               <tr class="d-flex">
-                <th class="col-lg-3">ID Lĩnh vực</th>
-                <th class="col-lg-4">Tên lĩnh vực</th>
-                <th class="col-lg-2">Số lượng khoá học</th>
-                <th class="col-lg-3">Thao tác</th>
+                <th class="col-lg-1">ID</th>
+                <th class="col-lg-2">Name</th>
+                <th class="col-lg-3">Number of Course</th>
+                <th class="col-lg-4">Number of Acess</th>
+                <th class="col-lg-5">Manipulation</th>
               </tr>
 
               <tbody>
-
+                {{#each this.db}}
                 <tr class="d-flex">
-                    <td class="col-lg-3 id">ID001</td>
-                    <td class="col-lg-4 name">Lĩnh vực 01</td>
-                    <td class="col-lg-2 number-course">10</td>
-                    <td class="col-lg-3 act">
+                    <td class="col-lg-1 id">{{db.SID}}</td>
+                    <td class="col-lg-2 name">{{db.subName}}</td>
+                    <td class="col-lg-3 number-course">{{db.SLKH}}</td>
+                    <td class="col-lg-4 number-course">{{db.SLTC}}</td>
+                    <td class="col-lg-5 act">
                         <button type="button" class="btn btn-primary btn-update" data-toggle='modal' data-target='#form-model'>Update</button>
                         <button type="button" class="btn btn-danger btn-delete">Delete</button>
                     </td>
                 </tr>
+                {{/each}}
               </tbody>
             </thead>
           </table>
