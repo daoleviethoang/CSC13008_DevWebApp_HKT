@@ -249,6 +249,12 @@ module.exports = {
         const [result, fields] = await db.load(sql)
         return result.length > 0;
     },
+    async checkPaid(CourseID,UserID){
+        const sql = `select * from orderdetails join orders on orderdetails.ID = orders.OrderID
+         where UID = '${UserID}' and CourseID = ${CourseID}`
+        const [result, fields] = await db.load(sql)
+        return result.length > 0;
+    },
     async getInstructionInfro(UID){
         const sql =   `SELECT *  FROM teacherinfo  where TeaID = '${UID}'`;
         const [rows, fields] = await db.load(sql);

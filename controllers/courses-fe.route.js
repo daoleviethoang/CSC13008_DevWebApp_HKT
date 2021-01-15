@@ -59,6 +59,7 @@ router.get('/detail/:CourseID', async function (req, res) { //trang chứa detai
     const teaUID = (await courseModel.getTeacher(courseID)).UID;
     const instructionInfo = (await courseModel.getInstructionInfro(teaUID)).Info;
     const feedbacks = await courseModel.getAllFeedback(courseID);
+    const isPaid = await courseModel.checkPaid(courseID,req.session.authUser.ID);
     for(var i = 0 ;i< feedbacks.length;i++){
         feedbacks[i].student = await studentModel.single(req.session.authUser.StuID);
     }

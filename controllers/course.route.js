@@ -221,66 +221,79 @@ router.get('/storage/paidCourse', async function(req, res, next) { //chuyển đ
 
 
 
-// router.get('/learn/:CourseID/:VideoID', async function(req, res, next) { //chuyển đến trang để học
+router.get('/learn/:CourseID', async function (req, res, next) {           //chuyển đến trang để học
+    const curVideoID = await processModel.getProcess(req.params.CourseID, req.session.authUser.ID);
+    console.log(curVideoID);
+    res.redirect(`/course/learn/${req.params.CourseID}/${curVideoID}`);
+})
 
-//         const detailcourse = await courseModel.single(req.params.CourseID);
-//         const cateandsub = await courseModel.getCategoryAndSub(detailcourse.CoursesID);
-//         const allSection = await courseModel.getAllSection(req.params.CourseID);
 
-//         const categoryname = await courseModel.getCategeryName(cateandsub.CategoryID)
-//         const subcategoryname = await courseModel.getSubCategeryName(cateandsub.SubCategoryID)
-//         const teacher = (await getTeacherOfCourse(req.params.CourseID))[0];
-//         let curVideoLink = "";
-//         const course = {
-//             CategoryID: cateandsub.CategoryID,
-//             Categoryname: categoryname,
-//             SubCategoriesID: cateandsub.SubCategoryID,
-//             Subcategoryname: subcategoryname,
-//             courseName: detailcourse.Name,
-//             courseID: detailcourse.CoursesID,
-//             tinyDes: detailcourse.TinyDes,
-//             fullDes: detailcourse.FullDes,
-//             Price: detailcourse.Price,
-//             IsFinished: detailcourse.IsFinished === 1,
-//             LastUpdate: detailcourse.LastUpdate.toString(),
-//             teacher: teacher,
-//             allSection: []
-//         }
-//         for (var i = 0; i < allSection.length; i++) {
-//             let section = {
-//                 CourseSectionID: allSection[i].CourseSectionID,
-//                 courseID: detailcourse.CoursesID,
-//                 Name: allSection[i].Name,
-//                 allVideo: []
-//             };
-//             let allVideo = await courseModel.getAllVideofSection(allSection[i].CourseSectionID);
-//             for (var j = 0; j < allVideo.length; j++) {
-//                 let video = {
-//                     link: await courseModel.getLinkVideo(req.params.CourseID, allSection[i].CourseSectionID, allVideo[j].VideoId),
-//                     videoIndex: j + 1,
-//                     videoname: allVideo[j].Name,
-//                     videoid: allVideo[j].VideoId,
-//                     courseID: detailcourse.CoursesID,
-//                     CourseSectionID: allSection[i].CourseSectionID,
-//                 }
+router.get('/learn/:CourseID/:VideoID', async function (req, res, next) {           //chuyển đến trang để học
+    const detailcourse = await courseModel.single(req.params.CourseID);
+    const cateandsub = await courseModel.getCategoryAndSub(detailcourse.CoursesID);
+    const allSection = await courseModel.getAllSection(req.params.CourseID);
 
-//                 if (video.videoid == req.params.VideoID) {
-//                     curVideoLink = video.link;
-//                 }
-//                 section.allVideo.push(video);
-//             }
-//             course.allSection.push(section);
-//         }
+    const categoryname = await courseModel.getCategeryName(cateandsub.CategoryID)
+    const subcategoryname = await courseModel.getSubCategeryName(cateandsub.SubCategoryID)
+    const teacher = (await getTeacherOfCourse(req.params.CourseID))[0];
 
-//         console.log(course);
+    let curVideoLink = "";
+    const course = {
+        CategoryID: cateandsub.CategoryID,
+        Categoryname: categoryname,
+        SubCategoriesID: cateandsub.SubCategoryID,
+        Subcategoryname: subcategoryname,
+        courseName: detailcourse.Name,
+        courseID: detailcourse.CoursesID,
+        tinyDes: detailcourse.TinyDes,
+        fullDes: detailcourse.FullDes,
+        Price: detailcourse.Price,
+        IsFinished: detailcourse.IsFinished === 1,
+        LastUpdate: detailcourse.LastUpdate.toString(),
+        teacher: teacher,
+        allSection: []
+    }
+    // save to proces
+    const CurVideoId = req.params.VideoID;
+    const process = await processModel.getProcess(course.courseID, req.session.authUser.ID);
 
-//         res.render('vwCourses/learn', {
-//             Course: course,
-//             CurVideo: curVideoLink
-//         });
-//     })
-//     router.get('/learn/:CourseID', async function (req, res, next) {           //chuyển đến trang để học
-//         // cần tabble process trước
-//     })
+    console.log(process)
+    processModel.saveProcess(process, CurVideoId);
+
+    for (var i = 0; i < allSection.length; i++) {
+        let section = {
+            CourseSectionID: allSection[i].CourseSectionID,
+            courseID: detailcourse.CoursesID,
+            Name: allSection[i].Name,
+            allVideo: []
+        };
+        let allVideo = await courseModel.getAllVideofSection(allSection[i].CourseSectionID);
+        for (var j = 0; j < allVideo.length; j++) {
+            let video = {
+                link: await courseModel.getLinkVideo(req.params.CourseID, allSection[i].CourseSectionID, allVideo[j].VideoId),
+                videoIndex: j + 1,
+                videoname: allVideo[j].Name,
+                videoid: allVideo[j].VideoId,
+                courseID: detailcourse.CoursesID,
+                CourseSectionID: allSection[i].CourseSectionID,
+            }
+
+            if (video.videoid == req.params.VideoID) {
+                curVideoLink = video.link;
+            }
+            section.allVideo.push(video);
+        }
+        course.allSection.push(section);
+    }
+
+
+
+    res.render('vwCourses/learn', {
+        Course: course,
+        CurVideo: curVideoLink
+    });
+})
+
+
 
 module.exports = router;

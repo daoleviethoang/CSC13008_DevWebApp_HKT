@@ -141,6 +141,24 @@
         <form method="POST" action="/courses/detail/{{this.Course.courseID}}/unwishlist">
           <button class="btn btn-outline-primary rounded border" type="submit" style="color: white;">
             Remove from wishlist</button>
+          <form action="/cart/add" method="POST">
+            <div class="row form-group">
+              <div class="col-sm-4">
+                <div class="input-group">
+                  <input type="hidden" value="{{CoursesID}}" name="id">
+                  <div class="input-group-append">
+                    {{#if../check}}
+                    {{else}}
+                    <button class="btn btn-outline-warning rounded" type="submit" id="BtnSubmit">
+                      <i class="fa fa-plus" aria-hidden="true"></i>
+                      Add to cart
+                    </button>
+                    {{/if}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
         </form>
 
         {{else}}
@@ -148,6 +166,24 @@
           <button class="btn btn-outline-primary rounded border" type="submit" style="color: white;">
             <i class="fas fa-heart    "></i>
             Add to wishlist</button>
+        </form>
+        <form action="/cart/add" method="POST">
+          <div class="row form-group">
+            <div class="col-sm-4">
+              <div class="input-group">
+                <input type="hidden" value="{{this.Course.courseID}}" name="id">
+                <div class="input-group-append">
+                  {{#if../check}}
+                  {{else}}
+                  <button class="btn btn-outline-warning rounded" type="submit" id="BtnSubmit">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    Add to cart
+                  </button>
+                  {{/if}}
+                </div>
+              </div>
+            </div>
+          </div>
         </form>
         {{/if}}
       </div>
@@ -234,7 +270,7 @@
     <div class="input-group mb-3">
       <form method="POST" action="/courses/detail/{{this.Course.courseID}}/addfeedback">
         <input type="text" class="form-control" placeholder="Enter your feedback" aria-label="Recipient's username"
-          aria-describedby="basic-addon2" name = "feedback">
+          aria-describedby="basic-addon2" name="feedback">
         <div class="text-right">
           <div class="rate w-100">
             <input type="radio" id="star5" name="rate" value="5" />
@@ -255,16 +291,16 @@
     {{!-- get star and feedback --}}
     <div>
       {{#each this.Course.feedbacks}}
-        <hr>
-        <div>
-          <strong>
-           {{student.name}}
-          </strong>
-        </div>
-        <div>
-          {{Content}}
-        </div>
-        <hr>
+      <hr>
+      <div>
+        <strong>
+          {{student.name}}
+        </strong>
+      </div>
+      <div>
+        {{Content}}
+      </div>
+      <hr>
       {{/each}}
     </div>
   </div>
