@@ -67,7 +67,7 @@ router.post('/create/3', async function(req, res, next) {
     const course = {
         Name: req.body.courseName,
         SubCategoryID: req.body.subcategoryID,
-        TeaID: res.locals.authUser.ID
+        TeaID: res.locals.authUser.TeaID
     };
     const result = await courseModel.addCourse(course);
     console.log(result);
