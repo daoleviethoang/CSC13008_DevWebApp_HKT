@@ -1,4 +1,5 @@
 const auth = require('./auth.mdw');
+const bodyparser = require("body-parser");                                  //lấy data form từ req.body
 module.exports = function(app) {
     // app.get('/', function(req, res) {
     //     res.render('index');
@@ -22,6 +23,11 @@ module.exports = function(app) {
     app.get('/blog', function(req, res) {
         res.render('blog');
     })
+
+    //dành cho OTP
+    app.use(bodyparser.urlencoded({ extended: false }));
+    app.use(bodyparser.json());
+
 
     app.use('/account/', require('./../controllers/account.route'));
     app.use('/course/', require('./../controllers/course.route')); //dùng để sửa đổi course cho admin
