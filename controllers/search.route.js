@@ -7,9 +7,9 @@ const { paginate } = require('./../config/default.json');
 const router = express.Router();
 
 
-router.get('/list', async function(req, res) { //handle pagination 
-    const search_text = req.query.searchText;
-
+router.get('/list', async function(req, res) { //handle pagination gửi từ byList
+    const search_text = req.query.searchText;           //lỗi do nó ko đọc dc cái searchText á H            
+    // console.log(req.body.searchText);
     //pagination
     const page = Number(req.query.page) || 1; //lấy giá trị page require
     if (page < 1) page = 1;
@@ -23,10 +23,22 @@ router.get('/list', async function(req, res) { //handle pagination
 
     const course_total = await courseModel.searchFullText(search_sql); //chứa list các course hợp lệ
     const subCat_total = await subcategoryModel.searchFullText(search_sql); //chứa list các course hợp lệ
-    const c_total = course_total.concat(subCat_total);
-    console.log(c_total);
-
-    // console.log(course_total);
+    const c_total = [];                             //chứa các course hợp lệ
+    for (i = 0; i < (course_total.length + subCat_total.length); i++) {
+        if (i < course_total.length) { //add course_total vào c_total
+            c_total.push(course_total[i]);
+        } else {
+            let flag = false;
+            for (j = 0; j < course_total.length; j++) { //duyệt qua từng phần tử trong course_total
+                if (course_total[j].CoursesID === subCat_total[i - course_total.length].CoursesID) { //kiểm tra nếu trùng ID
+                    flag = true;
+                    break;
+                } 
+            }
+            if (flag === false)
+                c_total.push(subCat_total[i - j - 1]);
+        }
+    }
 
     // res.redirect(req.headers.referer);
 
@@ -74,7 +86,7 @@ router.get('/list', async function(req, res) { //handle pagination
 })
 
 
-router.post('/list', async function(req, res) { //handle search form gửi từ bs4
+router.post('/list', async function(req, res) {  //handle search form gửi từ bs4
     const search_text = req.body.searchText.toString();
 
     const keysearch = search_text;
@@ -83,8 +95,8 @@ router.post('/list', async function(req, res) { //handle search form gửi từ 
     const page = req.query.page || 1; //lấy giá trị page require
     if (page < 1) page = 1;
 
-    // await courseModel.createFullText();                                     //tạo full text search
-    // await subcategoryModel.createFullText();                            
+    await courseModel.createFullText();                                     //tạo full text search
+    await subcategoryModel.createFullText();                            
 
     const search_part = search_text.split(" "); //tách từng từ
     const search_sql = search_part.join(', '); //gộp lại cách nhau bởi dấu phẩy
@@ -93,7 +105,25 @@ router.post('/list', async function(req, res) { //handle search form gửi từ 
     const subCat_total = await subcategoryModel.searchFullText(search_sql); //chứa list các course hợp lệ
     const filterRatting = await subcategoryModel.filterByRatting();
     const filterPrice = await subcategoryModel.filterByPrice();
-    const c_total = course_total.concat(subCat_total);
+    // const c_total = course_total.concat(subCat_total);
+    const c_total = [];                             //chứa các course hợp lệ
+    for(i = 0; i < (course_total.length + subCat_total.length); i++)
+    {
+        if(i < course_total.length){ //add course_total vào c_total
+            c_total.push(course_total[i]);
+        }
+        else {
+            let flag = false;
+            for(j = 0; j < course_total.length; j++){ //duyệt qua từng phần tử trong course_total
+                if(course_total[j].CoursesID === subCat_total[i - course_total.length].CoursesID) {             //kiểm tra nếu trùng ID
+                    flag = true;
+                    break;
+                }
+            }
+            if(flag === false)
+                c_total.push(subCat_total[i - j - 1]);
+        }
+    }
 
     const page1 = req.query.page1 || 1; //lấy giá trị page require
     if (page1 < 1) page1 = 1;
@@ -150,7 +180,7 @@ router.post('/list', async function(req, res) { //handle search form gửi từ 
                 Object.assign(listCourse[i], { Bestseller: true });
             }
         }
-        console.log(listCourse[i]);
+        // console.log(listCourse[i]);
     }
     for (var i = 0 in filterRatting) {
         if (filterRatting[i].T != null) {
@@ -162,7 +192,7 @@ router.post('/list', async function(req, res) { //handle search form gửi từ 
                 Object.assign(filterRatting[i], { Bestseller: true });
             }
         }
-        console.log(filterRatting[i]);
+        // console.log(filterRatting[i]);
     }
     for (var i = 0 in filterPrice) {
         if (filterPrice[i].T != null) {
@@ -174,7 +204,7 @@ router.post('/list', async function(req, res) { //handle search form gửi từ 
                 Object.assign(filterPrice[i], { Bestseller: true });
             }
         }
-        console.log(filterPrice[i]);
+        // console.log(filterPrice[i]);
     }
     //console.log(listCourse);
     res.render('vwSearch/byList', {
@@ -186,9 +216,10 @@ router.post('/list', async function(req, res) { //handle search form gửi từ 
         search_text,
         total,
         keysearch: keysearch,
+        page_numbers,
         course1: filterRatting,
         course2: filterPrice,
-        page_numbers1,
+        page_numbers1, 
         empty1: filterRatting.length === 0
 
     });

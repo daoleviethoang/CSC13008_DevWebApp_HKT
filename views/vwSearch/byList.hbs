@@ -141,14 +141,14 @@
                 <li class="page-item disabled">
                   <span class="page-link"><i class="fa fa-chevron-left "></i></span>
                 </li>
-                {{#each this.page_numbers}}
+                {{#each this.page_numbers}}  <!--pagination của Kiệt-->
                 {{#if isCurrentPage}}
                 <li class="page-item active">
                   <a class="page-link" href="javascript:;">{{value}}</a>
                 </li>
                 {{else}}
                 <li class="page-item">
-                  <a class="page-link" href="?page={{value}}">{{value}}</a>
+                  <a class="page-link" href="?searchText={{../search_text}}&page={{value}}">{{value}}</a>
                 </li>
                 {{/if}}
                 {{/each}}
