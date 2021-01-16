@@ -20,6 +20,7 @@ module.exports = function(app) {
     });
     app.use(async function (req, res, next) {
         res.locals.lcCategories = await categoryModel.allSubCategories();
+        res.locals.MainCategories = await categoryModel.allCategories();
         next();
     });
 }

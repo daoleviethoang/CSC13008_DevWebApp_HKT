@@ -58,6 +58,7 @@
 	<script src="/design/js/modernizr-2.6.2.min.js"></script>
 
 
+	<link rel="stylesheet" href="/design/css/dropdown.css" />
 	{{{_sections.css}}}
 </head>
 
@@ -102,13 +103,22 @@
 					<div class="col-5 menu-1 w-100 row" >
 						<ul class="ml-5">
 							<li class="has-dropdown">
-								<a href="#">Courses</a>
-								<ul class="dropdown">
-									{{#each lcCategories}}
-									<li><a href="/courses/bySubCat/{{SubCategoryID}}">{{Name}}</a></li>
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Courses</a>
+								<ul class="dropdown-menu multi-level">
+									{{#each MainCategories}}			{{! MainCategories: Categories}}
+									<li class="dropdown-submenu">
+										<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{Name}}</a>
+										<ul class="dropdown-menu">
+											{{#each ../lcCategories}}			{{! lcCategories: subCategories}}
+											<li><a href="/courses/bySubCat/{{SubCategoryID}}">{{Name}}</a></li>
+											{{/each}}
+										</ul>
+									</li>
 									{{/each}}
 								</ul>
 							</li>
+						</ul>
+
 
 							{{#if auth}}
 							<li><a href="/course/storage/paidCourse">My learning </a></li>
