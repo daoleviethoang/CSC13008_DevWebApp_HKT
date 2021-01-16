@@ -7,6 +7,16 @@ module.exports = {
     return rows;
   },
 
+  async allCategories() {
+    const sql = `
+      select cat.*
+      from categories cat join subcategories sc on cat.CategoryID = sc.CategoryID left join courses c on sc.SubCategoryID = c.SubCategoryID
+      GROUP BY cat.Name
+    `;
+    const [rows, fields] = await db.load(sql);
+    return rows;
+  },
+
   async allSubCategories() {
     const sql = `
       select sc.*, count(c.CoursesID) as ProductCount
