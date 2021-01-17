@@ -10,6 +10,7 @@ const router = express.Router();
 const nodemailer = require("nodemailer");                                   //gửi mail
 
 
+
 const transporter = nodemailer.createTransport({                    //cấu hình mail server
 	host: "smtp.gmail.com",
 	port: 465,
@@ -29,44 +30,56 @@ router.get('/register', async function(req, res, next) {
         layout: false
     });
 })
-router.post('/otp', function(req, res) {                                        //nhận data từ file register.hbs
-    let otp = parseInt((Math.random() * 1000000).toString());                   //tạo otp random
-	let email = req.body.email;
 
-	// send mail with defined transport object
-	var mailOptions = {
-		to: req.body.email,
-		subject: "Otp for registration is: ",
-		html:
-			"<h3>OTP for account verification is </h3>" +
-			"<h1 style='font-weight:bold;'>" +
-			otp +
-			"</h1>", // html body
-	};
-
-	transporter.sendMail(mailOptions, (error, info) => {                                //gửi mail
-		if (error) {
-			return console.log(error);
-		}
-		console.log("Message sent: %s", info.messageId);
-		console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-
-		// OTP page will take email as a query statement for it POST methods
-		emailAndOtp[email] = otp;
-		res.render("vwAccounts/verify", {                                                         //xác minh
-            Data: { 
-                fullname: req.body.fullname,
-                username: req.body.username,
-                password: req.body.password,
-                confirm: req.body.confirm,
-                email: email,
-                dob: req.body.dob,
-                gender: req.body.gender,
-                userType: req.body.userType
-            }, 
-            layout: false
+router.post('/otp', async function(req, res) {                                        //nhận data từ file register.hbs
+    let username = req.body.username;
+    const check_username = await userModel.getUserByUserName(username);               //trả về null nếu ko có
+    if(check_username !== null) {                                               //nếu có r thì dk lại
+        res.render('vwAccounts/register', {
+            layout: false, 
+            msg: "Username existed"
         });
-	});
+    }
+    else{
+        let otp = parseInt((Math.random() * 1000000).toString());                   //tạo otp random
+        let email = req.body.email;
+
+        // send mail with defined transport object
+        var mailOptions = {
+            to: req.body.email,
+            subject: "Otp for registration is: ",
+            html:
+                "<h3>OTP for account verification is </h3>" +
+                "<h1 style='font-weight:bold;'>" +
+                otp +
+                "</h1>", // html body
+        };
+
+        transporter.sendMail(mailOptions, (error, info) => {                                //gửi mail
+            if (error) {
+                return console.log(error);
+            }
+            console.log("Message sent: %s", info.messageId);
+            console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+
+            // OTP page will take email as a query statement for it POST methods
+            emailAndOtp[email] = otp;
+            res.render("vwAccounts/verify", {                                                         //xác minh
+                Data: {  
+                    fullname: req.body.fullname,
+                    username: req.body.username,
+                    password: req.body.password,
+                    confirm: req.body.confirm,
+                    email: email,
+                    dob: req.body.dob,
+                    gender: req.body.gender,
+                    userType: req.body.userType
+                }, 
+                layout: false
+            });
+        });
+    }
+
 })
 
 router.post("/resend", function (req, res) {                                   //giống send
@@ -110,7 +123,7 @@ router.post("/resend", function (req, res) {                                   /
 router.post("/verify", async function (req, res) {                            //xác minh OTP
 	let email = req.body.email;                         //lấy email để so sánh trong emailAndOtp
 	let otp = emailAndOtp[email];
-    delete emailAndOtp[email]; 
+    // delete emailAndOtp[email]; 
 	if (req.body.otp == otp) {                          //OTP đúng
         const hashedPass = bcryptjs.hashSync(req.body.password, 12);
         const dob = await moment(req.body.dob, 'DD/MM/YYYY').format('YYYY-MM-DD');

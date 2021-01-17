@@ -70,7 +70,7 @@ router.post('/create/3', async function(req, res, next) {
         TeaID: res.locals.authUser.TeaID
     };
     const result = await courseModel.addCourse(course);
-    console.log(result);
+    // console.log(result);
     res.redirect(`/course/edit/${result.insertId}`);
 })
 
@@ -126,7 +126,7 @@ router.get('/edit/:courseID', async function(req, res, next) {
             });
         }
     }
-    console.log(course)
+    // console.log(course)
     return res.render('vwCourses/edit', {
         Course: course,
         Categories: categories
@@ -172,7 +172,7 @@ router.post('/edit/:CourseID/updatevideo/:CourseSectionID/:VideoID', async funct
 });
 
 router.post('/edit/:CourseID/basic', async function(req, res, next) {
-    console.log(req.body);
+    // console.log(req.body);
     const CourseID = req.params.CourseID;
     let IsFinished = 0;
     if (req.body.IsFinished === 'on') IsFinished = 1
@@ -184,7 +184,7 @@ router.post('/edit/:CourseID/basic', async function(req, res, next) {
         Price: parseFloat(req.body.Price),
         IsFinished: IsFinished,
     }
-    console.log(course);
+    // console.log(course);
 
     courseModel.updateCourse(course, CourseID)
     res.redirect(req.headers.referer);
@@ -231,7 +231,7 @@ router.get('/storage/wishlist', async function(req, res, next) { //chuyển đ�
 
 router.get('/learn/:CourseID', async function (req, res, next) {           //chuyển đến trang để học
     const curVideoID = await processModel.getProcess(req.params.CourseID, req.session.authUser.ID);
-    console.log(curVideoID);
+    // console.log(curVideoID);
     res.redirect(`/course/learn/${req.params.CourseID}/${curVideoID}`);
 })
 
@@ -265,7 +265,7 @@ router.get('/learn/:CourseID/:VideoID', async function (req, res, next) {       
     const CurVideoId = req.params.VideoID;
     const process = await processModel.getProcess(course.courseID, req.session.authUser.ID);
 
-    console.log(process)
+    // console.log(process)
     processModel.saveProcess(process, CurVideoId);
 
     for (var i = 0; i < allSection.length; i++) {

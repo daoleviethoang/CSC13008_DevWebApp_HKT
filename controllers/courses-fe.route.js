@@ -38,7 +38,7 @@ router.get('/bySubCat/:id', async function(req, res, next) { //dành cho khách
             var rating = ((Math.round(list[i].T * 2) / 2).toFixed(1)) * 10;
             Object.assign(list[i], { rat: "" + rating });
         }
-        console.log(list[i]);
+        // console.log(list[i]);
     }
     res.render('vwCourse-fe/byCat', {
         course: list,
@@ -115,7 +115,7 @@ router.get('/detail/:CourseID', async function(req, res) { //trang chứa detail
             });
         }
     }
-    console.log(course)
+    // console.log(course)
     return res.render('vwCourse-fe/detail', {
         Course: course,
         Categories: categories

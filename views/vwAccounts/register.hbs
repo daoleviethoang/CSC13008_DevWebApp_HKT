@@ -36,6 +36,7 @@
                 <div class="card-heading"></div>
                 <div class="card-body">
                     <h2 class="title">Registration Info</h2>
+                    <h4>{{msg}}</h4>                                                        {{!tin nhắn từ /otp}}
                     <form id="frmRegister" method="POST" action="otp">                      {{! gửi form tới otp}}
                         <div class="alert alert-danger" role="alert">
                             <strong></strong>
@@ -76,18 +77,9 @@
                                 </div>
                             </div>
                         </div>
-                        {{!-- <div class="input-group">
-                            <div class="rs-select2 js-select-simple select--no-search">
-                                <select name="class">
-                                    <option disabled="disabled" selected="selected">CLASS</option>
-                                    <option>Class 1</option>
-                                    <option>Class 2</option>
-                                    <option>Class 3</option>
-                                </select>
-                                <div class="select-dropdown"></div>
-                            </div>
-                        </div> --}}
-                        <div class="row row-space">
+                        <input type="hidden" class="input--style-1"  id="txtUserType" name = "userType" value= "STUDENT">
+                        
+                        {{!-- <div class="row row-space">
                             <div class="col-2">
                                 <div class="input-group">
                                     <div class="rs-select2 js-select-simple select--no-search">
@@ -100,7 +92,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="p-t-20">
                             <button class="btn btn--radius btn--green" type="submit">REGISTER</button>
                         </div>

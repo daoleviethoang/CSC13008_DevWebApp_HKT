@@ -23,7 +23,7 @@ router.get('/courses', async function(req, res) {
 })
 router.get('/categories', async function(req, res) {
     const db = await userModel.getInforCate();
-    console.log(db);
+    // console.log(db);
     res.render('vwAdmin/admin-category', {
         layout: false,
         db: db
