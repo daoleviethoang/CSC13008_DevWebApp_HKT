@@ -52,6 +52,18 @@ module.exports = {
         }
         return row[0];
     },
+
+    async getUserByEmail(email) {
+        const sql = `select *
+        from users u join students s on u.UID = s.UID
+        where s.email = '${email}'`;
+        const [row, fields] = await db.load(sql);
+        if (row.length === 0) {
+            return null;
+        }
+        return row[0];
+    },
+
     async updateNameStudent(username, name) {
         const sql = `UPDATE students
         SET name = '${name}'

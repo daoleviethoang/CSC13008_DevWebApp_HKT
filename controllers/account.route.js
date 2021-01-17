@@ -33,11 +33,19 @@ router.get('/register', async function(req, res, next) {
 
 router.post('/otp', async function(req, res) {                                        //nhận data từ file register.hbs
     let username = req.body.username;
+    let email = req.body.email;
     const check_username = await userModel.getUserByUserName(username);               //trả về null nếu ko có
+    const check_email =  await userModel.getUserByEmail(email)
     if(check_username !== null) {                                               //nếu có r thì dk lại
         res.render('vwAccounts/register', {
             layout: false, 
             msg: "Username existed"
+        });
+    }
+    else if(check_email !== null) {
+        res.render('vwAccounts/register', {
+            layout: false, 
+            msg: "Email existed"
         });
     }
     else{
