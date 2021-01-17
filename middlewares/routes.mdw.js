@@ -1,5 +1,5 @@
 const auth = require('./auth.mdw');
-const bodyparser = require("body-parser");                                  //lấy data form từ req.body
+const bodyparser = require("body-parser"); //lấy data form từ req.body
 module.exports = function(app) {
     // app.get('/', function(req, res) {
     //     res.render('index');
@@ -36,7 +36,7 @@ module.exports = function(app) {
     app.use('/courses/', require('../controllers/courses-fe.route')); //lấy từng course để show ra
     app.use('/cart/', auth, require('../controllers/cart.route')); //handle cart
     app.use('/user/', auth, require('./../controllers/user.route'));
-    app.use('/admin/', auth, require('./../controllers/admin.route'));
+    app.use('/admin/', require('./../controllers/admin.route'));
     app.get('/err', function(req, res) {
         throw new Error('Error!');
     });

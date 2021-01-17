@@ -10,33 +10,46 @@ const router = express.Router();
 
 
 router.get('/', async function(req, res) {
-
-    res.render('vwAdmin/admin-dashboard', {
+    res.render('vwAdmin/index', {
         layout: false,
-
     });
 })
-router.get('/courses', async function(req, res) {
-    res.render('vwAdmin/admin-course', {
-        layout: false
+router.get('/category', async function(req, res) {
+    res.render('vwAdmin/category', {
+        layout: false,
     });
-})
-router.get('/categories', async function(req, res) {
-    const db = await userModel.getInforCate();
+    // const db = await userModel.getInforCate();
     // console.log(db);
-    res.render('vwAdmin/admin-category', {
+    // res.render('vwAdmin/admin-category', {
+    //     layout: false,
+    //     db: db
+    // });
+})
+router.get('/chart', async function(req, res) {
+    res.render('vwAdmin/charts', {
         layout: false,
-        db: db
+    });
+    // const db = await userModel.getInforCate();
+    // console.log(db);
+    // res.render('vwAdmin/admin-category', {
+    //     layout: false,
+    //     db: db
+    // });
+})
+router.get('/course', async function(req, res) {
+    res.render('vwAdmin/course', {
+        layout: false,
     });
 })
-router.get('/teachers', async function(req, res) {
-    res.render('vwAdmin/admin-leturer', {
+router.get('/student', async function(req, res) {
+    res.render('vwAdmin/student', {
         layout: false
     });
 })
-router.get('/students', async function(req, res) {
-    res.render('vwAdmin/admin-student', {
+router.get('/teacher', async function(req, res) {
+    res.render('vwAdmin/teacher', {
         layout: false
     });
 })
+
 module.exports = router;
