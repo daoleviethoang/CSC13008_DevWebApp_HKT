@@ -102,12 +102,12 @@
 					</div>
 					<div class="col-5 menu-1 w-100 row" >
 						<ul class="ml-5">
-							<li class="has-dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Courses</a>
-								<ul class="dropdown-menu multi-level">
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Courses</a>
+								<ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
 									{{#each MainCategories}}			{{! MainCategories: Categories}}
 									<li class="dropdown-submenu">
-										<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{Name}}</a>
+										<a href="#" class="dropdown-item" data-toggle="dropdown">{{Name}}</a>
 										<ul class="dropdown-menu">
 											{{#each ../lcCategories}}			{{! lcCategories: subCategories}}
 											<li><a href="/courses/bySubCat/{{SubCategoryID}}">{{Name}}</a></li>
