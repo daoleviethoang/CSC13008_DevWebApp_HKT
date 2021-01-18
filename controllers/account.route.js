@@ -73,6 +73,7 @@ router.post('/otp', async function(req, res) {                                  
             // OTP page will take email as a query statement for it POST methods
             emailAndOtp[email] = otp;
             res.render("vwAccounts/verify", {                                                         //xác minh
+                msg: "An OTP has been sent to your email",
                 Data: {  
                     fullname: req.body.fullname,
                     username: req.body.username,
@@ -112,7 +113,7 @@ router.post("/resend", function (req, res) {                                   /
 		console.log("Message sent: %s", info.messageId);
 		console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
 		res.render("vwAccounts/verify", { 
-            msg: "OTP has been sent" ,
+            msg: "OTP has been resent" ,
             Data: { 
                 fullname: req.body.fullname,
                 username: req.body.username,
