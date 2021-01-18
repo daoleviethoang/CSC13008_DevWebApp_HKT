@@ -77,4 +77,15 @@ router.get('/student/delete/:id', async function(req, res) {
     var url = req.url.split("/");
     res.send(url[url.length - 1]);
 })
+router.get('/student/edit/:id', async function(req, res) {
+    // var newStudentData = await adminModel.deleteStudent(UID);
+    var url = req.url.split("/");
+    res.send(url[url.length - 1]);
+})
+router.get('/student/block/:id', async function(req, res) {
+    // var newStudentData = await adminModel.deleteStudent(UID);
+    var url = req.url.split("/");
+    res.send(url[url.length - 1]);
+})
+
 module.exports = router;
