@@ -13,11 +13,11 @@ module.exports = {
         return rows;
     },
     async getStudent() {
-        const sql = `SELECT count(OrderID) as CountOID, A.UID,SUM(total) as SumTotal, StuID, name, dob, email, gender, username
+        const sql = `SELECT count(OrderID) as CountOID, A.UID,SUM(total) as SumTotal, StuID, name, dob, email, gender, username, block
         FROM (				SELECT * 
 				FROM (SELECT * FROM students) as A
 				INNER JOIN
-				(SELECT username, UID as UIDD FROM users) as B
+				(SELECT username, UID as UIDD, block FROM users) as B
 				ON A.UID = B.UIDD) as A
         LEFT JOIN 
         (SELECT * FROM orders) as B
@@ -49,6 +49,7 @@ module.exports = {
         const [rows, fields] = await db.load(sql);
         return rows;
     },
+
     async getCourse() {
         const sql = `SELECT * FROM courses`;
         const [rows, fields] = await db.load(sql);
@@ -67,6 +68,20 @@ module.exports = {
     },
     async delStudentInUsers(UID) {
         const sql = `DELETE FROM users WHERE UID = '${UID}'`
+        const [result, fields] = await db.load(sql);
+        return result;
+    },
+    async blockStudent(UID, block) {
+        const sql = `UPDATE users
+        SET block = ${block}
+        WHERE UID = '${UID}'`;
+        const [result, fields] = await db.load(sql);
+        return result;
+    },
+    async editStudent(UID, name, DOB, Gender) {
+        const sql = `UPDATE students
+        SET name = '${name}', dob = '${DOB}', gender = '${Gender}'
+        WHERE UID = '${UID}'`;
         const [result, fields] = await db.load(sql);
         return result;
     }
