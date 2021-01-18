@@ -5,11 +5,6 @@
         $('#mainpage').children().remove();
         var content = $("#overview").show().html();
         $('#mainpage').html(content);
-    };
-    function appeareReview() {
-        $('#mainpage').children().remove();
-        var content = $("#review").show().html();
-        $('#mainpage').html(content);
     }
 
 
@@ -21,7 +16,7 @@
         <strong>
             <p class="text-left font-weight-bolder" style="color: #00587a;">{{this.Course.courseName}}</p>
         </strong>
-        <p class="text-left" style="color:#00587a; font-size: medium;">with {{this.Course.teacherName}}</p>
+        <p class="text-left" style="color:#00587a; font-size: medium;">with {{this.Course.teacher.name}}</p>
     </h2>
 </div>
 <hr>
@@ -43,7 +38,7 @@
                     <a class="nav-link" onclick="appeareOverview()">Overview</a>
                 </li>
                 <li class="nav-item-3">
-                    <a class="nav-link" onclick="appeareReview()">Rating and feedback</a>
+                    <a class="nav-link">Rating and feedback</a>
                 </li>
             </ul>
         </div>
@@ -95,7 +90,7 @@
 
 
 
-<div id="overview" class="w-100" hidden>
+<div id="overview" class="w-100">
     <div class="ml-5 w-100">
         <h2>
             About this course
@@ -151,52 +146,5 @@
             </div>
         </div>
         <hr class="w-75">
-    </div>
-</div>
-
-<div id="review" class="w-100"hidden>
-
-    <div class="h2">
-        Student feedback
-    </div>
-    {{#if this.isAuth}}
-    {{!-- get star and feedback --}}
-    <hr>
-    <div class="input-group mb-3">
-        <form method="POST" action="/courses/detail/{{this.Course.courseID}}/addfeedback">
-            <input type="text" class="form-control" placeholder="Enter your feedback" aria-label="Recipient's username"
-                aria-describedby="basic-addon2" name="feedback">
-            <div class="text-right">
-                <div class="rate w-100">
-                    <input type="radio" id="star5" name="rate" value="5" />
-                    <label for="star5" title="text">5 stars</label>
-                    <input type="radio" id="star4" name="rate" value="4" />
-                    <label for="star4" title="text">4 stars</label>
-                    <input type="radio" id="star3" name="rate" value="3" />
-                    <label for="star3" title="text">3 stars</label>
-                    <input type="radio" id="star2" name="rate" value="2" />
-                    <label for="star2" title="text">2 stars</label>
-                    <input type="radio" id="star1" name="rate" value="1" />
-                    <label for="star1" title="text">1 star</label>
-                </div>
-                <button class="btn btn-outline-info rounded-0 border" type="submit">Send feedback</button>
-            </div>
-        </form>
-    </div>
-    {{/if}}
-    {{!-- get star and feedback --}}
-    <div>
-        {{#each this.Course.feedbacks}}
-        <hr>
-        <div>
-            <strong>
-                {{student.name}}
-            </strong>
-        </div>
-        <div>
-            {{Content}}
-        </div>
-        <hr>
-        {{/each}}
     </div>
 </div>

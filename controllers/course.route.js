@@ -274,7 +274,7 @@ router.get('/learn/:CourseID/:VideoID', async function (req, res, next) {       
         Price: detailcourse.Price,
         IsFinished: detailcourse.IsFinished === 1,
         LastUpdate: detailcourse.LastUpdate.toString(),
-        teacherName: teacher.name,
+        teacher: teacher,
         allSection: []
     }
     // save to proces
