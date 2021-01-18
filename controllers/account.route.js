@@ -242,18 +242,6 @@ router.post("/verify", async function (req, res) {                            //
 
 
 
-//not use yet
-router.get('/is-available', async function(req, res) {
-    const username = req.query.user;
-    const user = await userModel.singleByUserName(username);
-    if (user === null) {
-        return res.json(true);
-    }
-
-    res.json(false);
-})
-
-
 router.get('/login', async function(req, res) {
     res.render('vwAccounts/login', {
         layout: false

@@ -299,5 +299,6 @@ module.exports = {
         where users.UID = '${userID}'`;
         const [rows, fields] = await db.load(sql);
         return rows;
-    }
+    },
+    
 }
