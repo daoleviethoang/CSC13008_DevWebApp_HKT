@@ -55,13 +55,24 @@ router.get('/detail/:CourseID', async function(req, res) { //trang chứa detail
     const allSection = await courseModel.getAllSection(courseID);
     const rating = await courseModel.getCourseRating(courseID) || 2;
     const teacherName = (await courseModel.getTeacherOfCourse(courseID)).name;
-    const wishlisted = await courseModel.checkWishList(courseID, req.session.authUser.ID);
     const teaUID = (await courseModel.getTeacher(courseID)).UID;
     const instructionInfo = (await courseModel.getInstructionInfro(teaUID)).Info;
     const feedbacks = await courseModel.getAllFeedback(courseID);
-    // const isPaid = await courseModel.checkPaid(courseID,req.session.authUser.ID); lưu backup trc ik nha
+    
+    let wishlisted = null;
+    let isPaid = null;
+    //check if logged 
+    if(req.session.authUser !== null ){
+        // check if is a student
+        if(req.session.authUser.StuID !== undefined )
+        {
+            wishlisted = await courseModel.checkWishList(courseID, req.session.authUser.ID);
+            isPaid = await courseModel.checkPaid(courseID,req.session.authUser.ID); 
+        }
+    }
+   
     for (var i = 0; i < feedbacks.length; i++) {
-        feedbacks[i].student = await studentModel.single(req.session.authUser.StuID);
+        feedbacks[i].student = await studentModel.single(feedbacks[i].StuID)
     }
     const course = {
         CategoryID: cateandsub.CategoryID,
@@ -115,10 +126,18 @@ router.get('/detail/:CourseID', async function(req, res) { //trang chứa detail
             });
         }
     }
+    
+    let isStudent = false;
+    if (req.session.auth === true){
+        isStudent = (req.session.authUser.permission === studentModel.STUDENT_PROPERTIES.permission);
+    }
     // console.log(course)
     return res.render('vwCourse-fe/detail', {
         Course: course,
-        Categories: categories
+        Categories: categories,
+        isAuth: req.session.auth,
+        isPaid:isPaid,
+        isStudent: isStudent
     });
 })
 
