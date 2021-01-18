@@ -15,7 +15,7 @@ module.exports = {
     const [row, fields] = await db.load(sql);
     return row[0];
   },
-  async saveProcess(process,CurVideoId) {
+  async saveProcess(process, CurVideoId) {
     const condition = {
       ProcessID: process.ProcessID,
     }
@@ -23,9 +23,19 @@ module.exports = {
       VideoID: CurVideoId
     }
     console.log(condition);
-    const [result,fields] = await db.patch(newprocess,condition,'process');
+    const [result, fields] = await db.patch(newprocess, condition, 'process');
     console.log(result);
+  },
+  async getFirstVideo(CourseID) {
+    const sql = `select  video.VideoId
+    from courses 
+    join coursesection 
+    on courses.CoursesID = coursesection.CourseID
+    join video 
+    on video.CourseSectionID = coursesection.CourseSectionID
+    where courses.CoursesID = ${CourseID } limit 1`;
+    const [row, fields] = await db.load(sql);
+    return row[0].VideoId;
   }
-
 
 };
