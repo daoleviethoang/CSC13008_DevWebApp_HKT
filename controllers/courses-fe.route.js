@@ -59,6 +59,7 @@ router.get('/detail/:CourseID', async function(req, res) { //trang chứa detail
     const instructionInfo = (await courseModel.getInstructionInfro(teaUID)).Info;
     const feedbacks = await courseModel.getAllFeedback(courseID);
     
+    let isTeacherOfCourse = false;
     let wishlisted = null;
     let isPaid = null;
     //check if logged 
@@ -68,6 +69,8 @@ router.get('/detail/:CourseID', async function(req, res) { //trang chứa detail
         {
             wishlisted = await courseModel.checkWishList(courseID, req.session.authUser.ID);
             isPaid = await courseModel.checkPaid(courseID,req.session.authUser.ID); 
+        }else{
+            isTeacherOfCourse = (req.session.authUser.ID === teaUID);
         }
     }
    
@@ -131,13 +134,14 @@ router.get('/detail/:CourseID', async function(req, res) { //trang chứa detail
     if (req.session.auth === true){
         isStudent = (req.session.authUser.permission === studentModel.STUDENT_PROPERTIES.permission);
     }
-    // console.log(course)
+    
     return res.render('vwCourse-fe/detail', {
         Course: course,
         Categories: categories,
         isAuth: req.session.auth,
         isPaid:isPaid,
-        isStudent: isStudent
+        isStudent: isStudent,
+        isTeacherOfCourse:isTeacherOfCourse
     });
 })
 
