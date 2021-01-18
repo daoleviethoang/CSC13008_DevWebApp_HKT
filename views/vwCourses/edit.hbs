@@ -62,8 +62,8 @@
 
 <hr>
 <div class="w-75 mx-auto">
-  <div class="border mt-4">
-    <h1 class="h1 ml-3 mt-3 text-center font-weight-bold uppercase">Basic setting up</h1>
+  <div class="border">
+    <h2 class="ml-3 mt-3 s">Basic setting up</h2>
     <form class="w-75 mx-auto mt-3" action="/course/edit/{{this.Course.courseID}}/basic" method="POST">
       <div class="form-group">
         <label for="Coursename">
@@ -151,14 +151,14 @@
         <label class="custom-control-label" for="customCheck1">Has this courses is all finished yet?</label>
       </div>
       <div class="w-50 mx-auto">
-        <button type="submit" class="btn btn-primary btn-md w-100 mb-5">Save</button>
+        <button type="submit" class="btn btn-primary w-100">Save</button>
       </div>
     </form>
 
 
   </div>
-
-  <div class="w-100 border mt-5">
+  <hr>
+  <div class="w-100 border">
     <h2 class="ml-3 mt-3 s">Upload your course's avatar</h2>
     <div class="file-loading">
       <form action="/course/edit/{{this.Course.courseID}}/uploadImg" method="post" enctype="multipart/form-data">

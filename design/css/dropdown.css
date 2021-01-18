@@ -1,9 +1,6 @@
 
-.dropdown-item {
-    padding: auto !important;
-}
-
 .dropdown-submenu {
+    position: relative;
 }
 
 .dropdown-submenu>.dropdown-menu {
@@ -21,7 +18,7 @@
 }
 
 .dropdown-submenu>a:after {
-    display: block !important;
+    display: block;
     content: " ";
     float: right;
     width: 0;

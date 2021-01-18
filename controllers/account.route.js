@@ -299,15 +299,14 @@ router.post('/login', async function(req, res, next) {
     res.redirect(url)
 })
 router.post('/logout', async function(req, res) {
+    //console.log("logout")
     req.session.auth = false;
     req.session.authUser = null;
     req.session.retUrl = null;
     req.session.cart = [];
 
     const url = req.headers.referer || '/';
-    req.session.save((err) => {
-        res.redirect(url);
-    });
+    res.redirect(url);
 })
 
 
