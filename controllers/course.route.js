@@ -12,6 +12,7 @@ const { getTeacherOfCourse } = require('../models/course.model');
 const processModel = require('../models/process.model');
 const { paginate } = require('./../config/default.json');
 const multer = require('multer');
+const { route } = require('./account.route');
 
 const storage = multer.diskStorage({
     destination: function (req, file, callback) {
@@ -241,7 +242,7 @@ router.get('/learn/:CourseID', async function (req, res, next) {      //chuyển
     let curVideoID;
     if (req.session.authUser !== null) {
         curVideoID = await processModel.getProcess(req.params.CourseID, req.session.authUser.ID);
-        if (curVideoID === undefined) {
+        if (curVideoID === null) {
             curVideoID = await processModel.getFirstVideo(req.params.CourseID);
         }
     }
@@ -281,7 +282,7 @@ router.get('/learn/:CourseID/:VideoID', async function (req, res, next) {       
     const CurVideoId = req.params.VideoID;
     if (req.session.auth !== false) {
         let process = await processModel.getProcess(course.courseID, req.session.authUser.ID);
-        if(process === undefined){
+        if(process === null){
             process ={
                 UserID:req.session.authUser.ID,
                 CourseID:course.courseID,
@@ -331,4 +332,10 @@ router.get('/learn/:CourseID/:VideoID', async function (req, res, next) {       
     });
 })
 
+router.get('/storage/myCourse', async function (req, res, next) { //chuyển đến trang chứa toàn bộ các courses
+    const list = await courseModel.getAllMyCourse(req.session.authUser.TeaID);
+    res.render('vwCourses/mycourse', {
+        course: list
+    });
+})
 module.exports = router;

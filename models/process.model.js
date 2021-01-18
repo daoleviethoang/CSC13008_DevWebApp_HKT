@@ -13,7 +13,8 @@ module.exports = {
   async getProcess(courseID, userID) {
     const sql = `Select * from process where CourseID = ${courseID} and UserID = '${userID}'`;
     const [row, fields] = await db.load(sql);
-    return row[0].VideoId;
+    if(row.length === 0) return null;
+    return row[0].VideoID;
   },
   async saveProcess(process, CurVideoId) {
     const condition = {
@@ -32,7 +33,7 @@ module.exports = {
     join coursesection 
     on courses.CoursesID = coursesection.CourseID
     join video 
-    on video.CourseSectionID = coursesection.CourseSectionID
+    on video.CourseSectionID = coursesection.CourseSectionID  
     where courses.CoursesID = ${CourseID } limit 1`;
     const [row, fields] = await db.load(sql);
     return row[0].VideoId;

@@ -114,6 +114,7 @@
     width: 100;
   }
 </style>
+</style>
 
 {{/section}}
 <div class="w-100">
@@ -124,6 +125,8 @@
       <div class="h1 pt-5" style="color: white;">
         {{this.Course.courseName}}
       </div>
+      <hr>
+
       <div class="h4" style="color: white;">
         {{this.Course.tinyDes}}
       </div>
@@ -146,21 +149,22 @@
       <div class="h5" style="color:#ffdcb8;">
         Created by: {{this.Course.teacherName}}
       </div>
-      <div>
+      <div style="color: whitesmoke;">
         <i class="fa fa-info-circle" aria-hidden="true"></i>
         Last update: {{this.Course.LastUpdate}}
       </div>
-      <div>
+      <div style="color: whitesmoke;">
         <i class="fa fa-globe" aria-hidden="true"></i>
         Language: English
       </div>
-      <div>
+      <div style="color: whitesmoke;">
         <i class="fa fa-subscript" aria-hidden="true"></i>
         Subtitle:English
       </div>
-      <div>
+      <hr>
+      <div class="d-flex">
         {{!-- {{#if..this.Course.}} --}}
-        {{#if this.isAuth}}
+        {{#and this.isAuth this.isStudent }}
         {{#if this.Course.wishlisted}}
         <form method="POST" action="/courses/detail/{{this.Course.courseID}}/unwishlist">
           <button class="btn btn-outline-primary rounded border" type="submit" style="color: white;">
@@ -182,7 +186,7 @@
               <input type="hidden" value="{{this.Course.courseID}}" name="id">
               <div class="input-group-append">
                 <a href="/course/learn/{{this.Course.courseID}}">
-                  <button class="btn btn-outline-warning rounded" type="button" id="BtnSubmit">
+                  <button class="btn btn-outline btn-outline-warning rounded" type="button" id="BtnSubmit">
                     <i class="fa fa-book" aria-hidden="true"></i>
                     Learn
                   </button>
@@ -211,6 +215,7 @@
 
         {{/if}}
         {{else}}
+
         <form action="/course/learn/{{this.Course.courseID}}" method="GET"></form>
         <div class="row form-group">
           <div class="col-sm-4">
@@ -218,7 +223,7 @@
               <input type="hidden" value="{{this.Course.courseID}}" name="id">
               <div class="input-group-append">
                 <a href="/course/learn/{{this.Course.courseID}}">
-                  <button class="btn btn-outline-warning rounded" type="button" id="BtnSubmit">
+                  <button class="btn btn-outline btn-outline-warning rounded" type="button" id="BtnSubmit">
                     <i class="fa fa-book" aria-hidden="true"></i>
                     Preview
                   </button>
@@ -228,7 +233,7 @@
           </div>
         </div>
         </form>
-        {{/if}}
+        {{/and}}
       </div>
     </div>
     <div class="w-25 h-100 mx-auto mt-5">
@@ -242,7 +247,7 @@
 
   <div class="w-75 mx-auto">
     <div class="w-100 h2">
-      Decription
+      Description
     </div>
     <hr>
     <div class="w-50" style="font-size: small;">

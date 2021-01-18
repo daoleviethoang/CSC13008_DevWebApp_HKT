@@ -94,22 +94,24 @@
 					</div>
 					<div class="col-4">
 						<div>
-							<form action="/search/list" method="POST" id = "frmSearch">
-								<input type="text" class="searchTerm w-100" placeholder="What are you searching for?" id ="txtSearch" name = "searchText">
+							<form action="/search/list" method="POST" id="frmSearch">
+								<input type="text" class="searchTerm w-100" placeholder="What are you searching for?"
+									id="txtSearch" name="searchText">
 								<button type="submit" class="searchButton"><i class="icon-search3"></i></button>
 							</form>
 						</div>
 					</div>
-					<div class="col-5 menu-1 w-100 row" >
+					<div class="col-5 menu-1 w-100 row">
 						<ul class="ml-5">
 							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Courses</a>
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+									aria-expanded="false">Courses</a>
 								<ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
-									{{#each MainCategories}}			{{! MainCategories: Categories}}
+									{{#each MainCategories}} {{! MainCategories: Categories}}
 									<li class="dropdown-submenu">
 										<a href="#" class="dropdown-item" data-toggle="dropdown">{{Name}}</a>
 										<ul class="dropdown-menu">
-											{{#each ../lcCategories}}			{{! lcCategories: subCategories}}
+											{{#each ../lcCategories}} {{! lcCategories: subCategories}}
 											<li><a href="/courses/bySubCat/{{SubCategoryID}}">{{Name}}</a></li>
 											{{/each}}
 										</ul>
@@ -117,24 +119,34 @@
 									{{/each}}
 								</ul>
 							</li>
-						
+
+
+
+
+							{{#is authUser.permission 1}}
+							<li><a href="/course/storage/paidCourse">My learnings </a></li>
+							{{/is}}
+
+
+							{{#is authUser.permission 2}}
+							<li><a href="/course/storage/myCourse">My courses </a></li>
+							<!--chua co trang nay-->
+							{{/is}}
+
+
+							<a href="/cart" style="color: gray;">
+								<li class="icon-shopping-cart fa-lg mr-4 "></li>
+							</a>
 
 
 							{{#if auth}}
-							<li><a href="/course/storage/paidCourse">My learning </a></li>
-							{{!-- <li><a href="/course/storage/wishlist">My watchlist </a></li> --}}
-							{{/if}}
-
-							
-							<a href="/cart" style="color: gray;"><li class="icon-shopping-cart fa-lg mr-4 "></li></a>
-
-
-							{{#if auth}}
-							<a href="/course/storage/wishlist"><li class="icon-heart-outline fa-lg"></li></a>
+							<a href="/course/storage/wishlist">
+								<li class="icon-heart-outline fa-lg"></li>
+							</a>
 							<li class="has-dropdown">
 								<a href="#" style="font-size: larger;">
 									<i class="fa fa-user mb-2" aria-hidden="true"></i>
-										{{authUser.username}}
+									{{authUser.username}}
 								</a>
 								<ul class="dropdown">
 									<li><a href="/user/profile/{{authUser.username}}">Profile</a></li>

@@ -300,5 +300,14 @@ module.exports = {
         const [rows, fields] = await db.load(sql);
         return rows;
     },
+
+    async getAllMyCourse(TeaID){
+        const sql = `select *
+        from courses
+        join teachers on courses.TeaID = teachers.TeaID
+        where teachers.TeaID = ${TeaID}`;
+        const [rows,fields] = await db.load(sql);
+        return rows;
+    }
     
 }

@@ -126,12 +126,18 @@ router.get('/detail/:CourseID', async function(req, res) { //trang chứa detail
             });
         }
     }
+    
+    let isStudent = false;
+    if (req.session.auth === true){
+        isStudent = (req.session.authUser.permission === studentModel.STUDENT_PROPERTIES.permission);
+    }
     // console.log(course)
     return res.render('vwCourse-fe/detail', {
         Course: course,
         Categories: categories,
         isAuth: req.session.auth,
-        isPaid:isPaid
+        isPaid:isPaid,
+        isStudent: isStudent
     });
 })
 

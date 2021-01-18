@@ -300,13 +300,19 @@ router.post('/login', async function(req, res, next) {
 })
 router.post('/logout', async function(req, res) {
     //console.log("logout")
+    let url = req.headers.referer || '/';
+    if (req.session.authUser.permission === teacherModel.TEACHER_PROPERTIES.permission){
+        url = '/';
+    }
     req.session.auth = false;
     req.session.authUser = null;
     req.session.retUrl = null;
     req.session.cart = [];
-
-    const url = req.headers.referer || '/';
-    res.redirect(url);
+    
+    
+    req.session.save((err) => {
+        res.redirect(url);
+    });
 })
 
 
