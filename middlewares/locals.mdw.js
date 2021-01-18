@@ -14,6 +14,7 @@ module.exports = function(app) {
 
         res.locals.auth = req.session.auth;
         res.locals.authUser = req.session.authUser;
+        res.locals.isTeacher = (res.locals.authUser)
         console.log(req.session.authUser);
         res.locals.cartSummary = cartModel.getNumberOfItems(req.session.cart);
         next();
