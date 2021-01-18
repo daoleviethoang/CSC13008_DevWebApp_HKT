@@ -138,6 +138,7 @@ router.post("/verify", async function(req, res) { //xác minh OTP
         let user_Detail;
         let UID = "";
         let check = 0;
+        let block = 0;
 
         if (req.body.gender === "Male") gender = 1;
         else if (req.body.gender === "Female") gender = 2;
@@ -150,7 +151,7 @@ router.post("/verify", async function(req, res) { //xác minh OTP
                 email: req.body.email,
                 dob: dob,
                 gender: gender,
-                UID: UID
+                UID: UID,
             }
             check = 1;
         } else if (req.body.userType === 'TEACHER') {
@@ -170,7 +171,8 @@ router.post("/verify", async function(req, res) { //xác minh OTP
             username: req.body.username,
             password: hashedPass,
             permission: permission,
-            UID: UID
+            UID: UID,
+            block: block
         }
         await userModel.add(user);
         if (check == 1) {

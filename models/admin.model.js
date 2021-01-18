@@ -1,3 +1,4 @@
+const { del } = require('../utils/db');
 const db = require('../utils/db');
 const ADMIN_PROPERTIES = {
     table_name: "admin",
@@ -58,5 +59,15 @@ module.exports = {
         FROM coursesection`;
         const [rows, fields] = await db.load(sql);
         return rows;
+    },
+    async delStudentInStudent(UID) {
+        const sql = `DELETE FROM students WHERE UID = '${UID}'`
+        const [result, fields] = await db.load(sql);
+        return result;
+    },
+    async delStudentInUsers(UID) {
+        const sql = `DELETE FROM users WHERE UID = '${UID}'`
+        const [result, fields] = await db.load(sql);
+        return result;
     }
 }

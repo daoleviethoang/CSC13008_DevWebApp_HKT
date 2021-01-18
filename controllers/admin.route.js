@@ -75,7 +75,17 @@ router.get('/teacher', async function(req, res) {
 router.get('/student/delete/:id', async function(req, res) {
     // var newStudentData = await adminModel.deleteStudent(UID);
     var url = req.url.split("/");
-    res.send(url[url.length - 1]);
+    const UID = url[url.length - 1];
+    await adminModel.delStudentInStudent(UID);
+    await adminModel.delStudentInUsers(UID);
+    var dataStudent = await adminModel.getStudent();
+    for (var i = 0 in dataStudent) {
+        dataStudent[i].dob = formatDate(dataStudent[i].dob);
+    }
+    res.render('vwAdmin/student', {
+        dataStudent: dataStudent,
+        layout: false
+    });
 })
 router.get('/student/edit/:id', async function(req, res) {
     // var newStudentData = await adminModel.deleteStudent(UID);
@@ -85,7 +95,8 @@ router.get('/student/edit/:id', async function(req, res) {
 router.get('/student/block/:id', async function(req, res) {
     // var newStudentData = await adminModel.deleteStudent(UID);
     var url = req.url.split("/");
-    res.send(url[url.length - 1]);
+    const UID = url[url.length - 1];
+
 })
 
 module.exports = router;
