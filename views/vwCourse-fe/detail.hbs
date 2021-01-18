@@ -215,7 +215,14 @@
 
         {{/if}}
         {{else}}
-
+        {{#if isTeacherOfCourse}}
+        <a href="/course/edit/{{this.Course.courseID}}">
+          <button class="btn btn-light rounded" type="button" id="BtnSubmit">
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+            Edit
+          </button>
+        </a>
+        {{/if}}
         <form action="/course/learn/{{this.Course.courseID}}" method="GET"></form>
         <div class="row form-group">
           <div class="col-sm-4">
@@ -233,6 +240,7 @@
           </div>
         </div>
         </form>
+
         {{/and}}
       </div>
     </div>
