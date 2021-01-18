@@ -230,7 +230,7 @@ router.get('/storage/paidCourse', async function (req, res, next) { //chuyển �
 })
 router.get('/storage/wishlist', async function (req, res, next) { //chuyển đến trang chứa toàn bộ các courses
     const list = await courseModel.getAllWish(req.session.authUser.ID);
-    res.render('vwCourses/wishCourse', {
+    res.render('vwCourses/wishlist', {
         course: list
     });
 })
@@ -241,6 +241,9 @@ router.get('/learn/:CourseID', async function (req, res, next) {      //chuyển
     let curVideoID;
     if (req.session.authUser !== null) {
         curVideoID = await processModel.getProcess(req.params.CourseID, req.session.authUser.ID);
+        if (curVideoID === undefined) {
+            curVideoID = await processModel.getFirstVideo(req.params.CourseID);
+        }
     }
     else {
         curVideoID = await processModel.getFirstVideo(req.params.CourseID);
@@ -277,8 +280,18 @@ router.get('/learn/:CourseID/:VideoID', async function (req, res, next) {       
     // save to proces
     const CurVideoId = req.params.VideoID;
     if (req.session.auth !== false) {
-        const process = await processModel.getProcess(course.courseID, req.session.authUser.ID);
-        processModel.saveProcess(process, CurVideoId);
+        let process = await processModel.getProcess(course.courseID, req.session.authUser.ID);
+        if(process === undefined){
+            process ={
+                UserID:req.session.authUser.ID,
+                CourseID:course.courseID,
+                VideoID: CurVideoId,
+            }
+            processModel.addProcess(process);
+        }
+        else{
+            processModel.saveProcess(process, CurVideoId);
+        }
 
     }
 
@@ -307,7 +320,7 @@ router.get('/learn/:CourseID/:VideoID', async function (req, res, next) {       
             }
             section.allVideo.push(video);
         }
-        course. allSection.push(section);
+        course.allSection.push(section);
     }
 
 

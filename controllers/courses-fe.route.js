@@ -130,7 +130,8 @@ router.get('/detail/:CourseID', async function(req, res) { //trang chứa detail
     return res.render('vwCourse-fe/detail', {
         Course: course,
         Categories: categories,
-        isAuth: req.session.auth
+        isAuth: req.session.auth,
+        isPaid:isPaid
     });
 })
 

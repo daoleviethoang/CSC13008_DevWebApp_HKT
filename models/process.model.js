@@ -13,7 +13,7 @@ module.exports = {
   async getProcess(courseID, userID) {
     const sql = `Select * from process where CourseID = ${courseID} and UserID = '${userID}'`;
     const [row, fields] = await db.load(sql);
-    return row[0];
+    return row[0].VideoId;
   },
   async saveProcess(process, CurVideoId) {
     const condition = {
@@ -36,6 +36,7 @@ module.exports = {
     where courses.CoursesID = ${CourseID } limit 1`;
     const [row, fields] = await db.load(sql);
     return row[0].VideoId;
-  }
+  },
+  
 
 };
