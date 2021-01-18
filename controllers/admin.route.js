@@ -5,6 +5,7 @@ const moment = require('moment');
 const userModel = require('../models/user.model');
 const studentModel = require('../models/student.model');
 const teacherModel = require('../models/teacher.model');
+const adminModel = require('../models/admin.model');
 const auth = require('../middlewares/auth.mdw');
 const router = express.Router();
 
@@ -41,8 +42,28 @@ router.get('/course', async function(req, res) {
         layout: false,
     });
 })
+
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
 router.get('/student', async function(req, res) {
+    var dataStudent = await adminModel.getStudent();
+    for (var i = 0 in dataStudent) {
+        dataStudent[i].dob = formatDate(dataStudent[i].dob);
+    }
+    console.log(dataStudent);
     res.render('vwAdmin/student', {
+        dataStudent: dataStudent,
         layout: false
     });
 })
@@ -51,5 +72,9 @@ router.get('/teacher', async function(req, res) {
         layout: false
     });
 })
-
+router.get('/student/delete/:id', async function(req, res) {
+    // var newStudentData = await adminModel.deleteStudent(UID);
+    var url = req.url.split("/");
+    res.send(url[url.length - 1]);
+})
 module.exports = router;
