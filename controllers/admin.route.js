@@ -17,30 +17,35 @@ router.get('/', async function(req, res) {
     });
 })
 router.get('/category', async function(req, res) {
+    var dataCategory = await adminModel.getCategory();
+    console.log(dataCategory);
     res.render('vwAdmin/category', {
-        layout: false,
+        dataCategory: dataCategory,
+        layout: false
     });
-    // const db = await userModel.getInforCate();
-    // console.log(db);
-    // res.render('vwAdmin/admin-category', {
-    //     layout: false,
-    //     db: db
-    // });
+
 })
 router.get('/chart', async function(req, res) {
     res.render('vwAdmin/charts', {
         layout: false,
     });
-    // const db = await userModel.getInforCate();
-    // console.log(db);
-    // res.render('vwAdmin/admin-category', {
-    //     layout: false,
-    //     db: db
-    // });
 })
 router.get('/course', async function(req, res) {
+    var dataCourse = await adminModel.getCourse();
+    var matrixData = [];
+    for (var i = 0; i < dataCourse.length; i++) {
+        var dataSectionCourse = await adminModel.getSectionCourse(dataCourse[i].CoursesID);
+        matrixData[i] = new Array(dataCourse[i]);
+        matrixData[i].push(dataSectionCourse);
+    }
+    for (var i = 0 in matrixData) {
+        matrixData[i][0].LastUpdate = formatDate(matrixData[i][0].LastUpdate);
+        matrixData[i][0].DateCreated = formatDate(matrixData[i][0].DateCreated);
+    }
+    // res.send(matrixData[0][0]);
     res.render('vwAdmin/course', {
-        layout: false,
+        matrixData: matrixData,
+        layout: false
     });
 })
 
@@ -196,5 +201,64 @@ router.get('/teacher/block/:id', async function(req, res) {
     //     dataStudent: dataStudent,
     //     layout: false
     // });
+})
+router.get('/course/delete/:id', async function(req, res) {
+    // var newStudentData = await adminModel.deleteStudent(UID);
+    var url = req.url.split("/");
+    const CoursesID = url[url.length - 1];
+    await adminModel.delCourseInSection(CoursesID);
+    await adminModel.delCourseInCourse(CoursesID);
+    var dataCourse = await adminModel.getCourse();
+    var matrixData = [];
+    for (var i = 0; i < dataCourse.length; i++) {
+        var dataSectionCourse = await adminModel.getSectionCourse(dataCourse[i].CoursesID);
+        matrixData[i] = new Array(dataCourse[i]);
+        matrixData[i].push(dataSectionCourse);
+    }
+    for (var i = 0 in matrixData) {
+        matrixData[i][0].LastUpdate = formatDate(matrixData[i][0].LastUpdate);
+        matrixData[i][0].DateCreated = formatDate(matrixData[i][0].DateCreated);
+    }
+    res.render('vwAdmin/course', {
+        matrixData: matrixData,
+        layout: false
+    });
+})
+router.get('/course/block/:id', async function(req, res) {
+    // var newStudentData = await adminModel.deleteStudent(UID);
+    var url = req.url.split("/");
+    const CoursesID = url[url.length - 1];
+    let check = 0;
+    var dataCourse = await adminModel.getCourse();
+    for (var i = 0 in dataCourse) {
+        if (dataCourse[i].CoursesID == CoursesID) {
+            if (dataCourse[i].block == 1) {
+                await adminModel.blockCourse(CoursesID, 0);
+                dataCourse[i].block = 0;
+                check = 1;
+                break;
+            }
+        }
+    }
+    if (check == 0) {
+        await adminModel.blockCourse(CoursesID, 1);
+    }
+
+    var dataCourse = await adminModel.getCourse();
+    var matrixData = [];
+    for (var i = 0; i < dataCourse.length; i++) {
+        var dataSectionCourse = await adminModel.getSectionCourse(dataCourse[i].CoursesID);
+        matrixData[i] = new Array(dataCourse[i]);
+        matrixData[i].push(dataSectionCourse);
+    }
+    for (var i = 0 in matrixData) {
+        matrixData[i][0].LastUpdate = formatDate(matrixData[i][0].LastUpdate);
+        matrixData[i][0].DateCreated = formatDate(matrixData[i][0].DateCreated);
+    }
+    // res.render('vwAdmin/course', {
+    //     matrixData: matrixData,
+    //     layout: false
+    // });
+    res.redirect('/admin/course');
 })
 module.exports = router;
