@@ -4,6 +4,7 @@ const categoryModel = require('../models/category.model');
 const courseModel = require('../models/course.model');
 const studentModel = require('../models/student.model');
 const subcategoryModel = require('../models/subcategory.model');
+const processModel = require('../models/process.model');
 const db = require('../utils/db');
 const { paginate } = require('./../config/default.json');
 
@@ -135,13 +136,18 @@ router.get('/detail/:CourseID', async function(req, res) { //trang chứa detail
         isStudent = (req.session.authUser.permission === studentModel.STUDENT_PROPERTIES.permission);
     }
     
+    let message = null;
+    if (await processModel.getFirstVideo(courseID) === null){
+        message = "This course is not available yet!~"
+    }
     return res.render('vwCourse-fe/detail', {
         Course: course,
         Categories: categories,
         isAuth: req.session.auth,
         isPaid:isPaid,
         isStudent: isStudent,
-        isTeacherOfCourse:isTeacherOfCourse
+        isTeacherOfCourse:isTeacherOfCourse,
+        message:message
     });
 })
 

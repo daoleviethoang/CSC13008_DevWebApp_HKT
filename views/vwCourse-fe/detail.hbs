@@ -179,6 +179,11 @@
         {{/if}}
 
         {{#if this.isPaid}}
+        {{#if this.message}}
+        <div class="mt-3 ml-3 text-warning">
+          {{this.message}}
+        </div>
+        {{else}}
         <form action="/course/learn/{{this.Course.courseID}}" method="GET"></form>
         <div class="row form-group">
           <div class="col-sm-4">
@@ -196,6 +201,7 @@
           </div>
         </div>
         </form>
+        {{/if}}
         {{else}}
         <form action="/cart/add" method="POST">
           <div class="row form-group">
