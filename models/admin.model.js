@@ -28,7 +28,7 @@ module.exports = {
     },
     async getTeacher() {
         const sql = `SELECT * 
-        FROM (SELECT C.TeaID, C.nameTeacher, C.dob, C.gender, C.UID, SUM(IsFinished) as S_IsFinished, ROUND(SUM(TheMin),2) as SumPrice, COUNT(coursesID) as CID
+        FROM (SELECT C.TeaID, C.nameTeacher, C.dob, C.gender, C.UID,C.email, SUM(IsFinished) as S_IsFinished, ROUND(SUM(TheMin),2) as SumPrice, COUNT(coursesID) as CID
         FROM (SELECT *
         FROM (SELECT TeaID as TID, name as nameTeacher, dob, email,gender, UID FROM teachers) AS A
         LEFT JOIN
@@ -43,7 +43,7 @@ module.exports = {
         ) as D
         INNER JOIN
         (SELECT username, UID
-             as UIDD FROM users) as E
+             as UIDD, block FROM users) as E
         ON D.UID = E.UIDD
         `
         const [rows, fields] = await db.load(sql);
@@ -81,6 +81,30 @@ module.exports = {
     async editStudent(UID, name, DOB, Gender) {
         const sql = `UPDATE students
         SET name = '${name}', dob = '${DOB}', gender = '${Gender}'
+        WHERE UID = '${UID}'`;
+        const [result, fields] = await db.load(sql);
+        return result;
+    },
+    async delTeacherInTeacher(UID) {
+        const sql = `DELETE FROM teachers WHERE UID = '${UID}'`
+        const [result, fields] = await db.load(sql);
+        return result;
+    },
+    async delTeacherInUsers(UID) {
+        const sql = `DELETE FROM users WHERE UID = '${UID}'`
+        const [result, fields] = await db.load(sql);
+        return result;
+    },
+    async editTeacher(UID, name, DOB, Gender) {
+        const sql = `UPDATE teachers
+        SET name = '${name}', dob = '${DOB}', gender = '${Gender}'
+        WHERE UID = '${UID}'`;
+        const [result, fields] = await db.load(sql);
+        return result;
+    },
+    async blockTeacher(UID, block) {
+        const sql = `UPDATE users
+        SET block = ${block}
         WHERE UID = '${UID}'`;
         const [result, fields] = await db.load(sql);
         return result;

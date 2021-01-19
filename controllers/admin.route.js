@@ -69,30 +69,31 @@ router.get('/student', async function(req, res) {
     });
 })
 router.get('/teacher', async function(req, res) {
+    var dataTeacher = await adminModel.getTeacher();
+    for (var i = 0 in dataTeacher) {
+        dataTeacher[i].dob = formatDate(dataTeacher[i].dob);
+    }
+    console.log(dataTeacher);
     res.render('vwAdmin/teacher', {
+        dataTeacher: dataTeacher,
         layout: false
     });
 })
 router.get('/student/delete/:id', async function(req, res) {
-        // var newStudentData = await adminModel.deleteStudent(UID);
-        var url = req.url.split("/");
-        const UID = url[url.length - 1];
-        await adminModel.delStudentInStudent(UID);
-        await adminModel.delStudentInUsers(UID);
-        var dataStudent = await adminModel.getStudent();
-        for (var i = 0 in dataStudent) {
-            dataStudent[i].dob = formatDate(dataStudent[i].dob);
-        }
-        res.render('vwAdmin/student', {
-            dataStudent: dataStudent,
-            layout: false
-        });
-    })
-    // router.get('/student/edit/:id', async function(req, res) {
-    //     // var newStudentData = await adminModel.deleteStudent(UID);
-    //     var url = req.url.split("/");
-    //     res.send(url[url.length - 1]);
-    // })
+    // var newStudentData = await adminModel.deleteStudent(UID);
+    var url = req.url.split("/");
+    const UID = url[url.length - 1];
+    await adminModel.delStudentInStudent(UID);
+    await adminModel.delStudentInUsers(UID);
+    var dataStudent = await adminModel.getStudent();
+    for (var i = 0 in dataStudent) {
+        dataStudent[i].dob = formatDate(dataStudent[i].dob);
+    }
+    res.render('vwAdmin/student', {
+        dataStudent: dataStudent,
+        layout: false
+    });
+})
 router.post('/student/edit/:id', async function(req, res) {
     var url = req.url.split("/");
     const UID = url[url.length - 1];
@@ -137,5 +138,63 @@ router.get('/student/block/:id', async function(req, res) {
     //     layout: false
     // });
 })
-
+router.get('/teacher/delete/:id', async function(req, res) {
+    // var newStudentData = await adminModel.deleteStudent(UID);
+    var url = req.url.split("/");
+    const UID = url[url.length - 1];
+    await adminModel.delTeacherInTeacher(UID);
+    await adminModel.delTeacherInUsers(UID);
+    var dataTeacher = await adminModel.getTeacher();
+    for (var i = 0 in dataTeacher) {
+        dataTeacher[i].dob = formatDate(dataTeacher[i].dob);
+    }
+    res.render('vwAdmin/teacher', {
+        dataTeacher: dataTeacher,
+        layout: false
+    });
+})
+router.post('/teacher/edit/:id', async function(req, res) {
+    var url = req.url.split("/");
+    const UID = url[url.length - 1];
+    const name = req.body.sname;
+    const dob = req.body.sDOB;
+    const gender = req.body.sGender;
+    let gt = 0;
+    if (gender == "Male") {
+        gt = 1;
+    } else if (gender == "Female") {
+        gt = 0;
+    }
+    await adminModel.editTeacher(UID, name, dob, gt);
+    res.redirect('/admin/teacher');
+})
+router.get('/teacher/block/:id', async function(req, res) {
+    // var newStudentData = await adminModel.deleteStudent(UID);
+    var url = req.url.split("/");
+    const UID = url[url.length - 1];
+    let check = 0;
+    var dataTeacher = await adminModel.getTeacher();
+    for (var i = 0 in dataTeacher) {
+        if (dataTeacher[i].UID == UID) {
+            if (dataTeacher[i].block == 1) {
+                await adminModel.blockTeacher(UID, 0);
+                dataTeacher[i].block = 0;
+                check = 1;
+                break;
+            }
+        }
+    }
+    if (check == 0) {
+        await adminModel.blockTeacher(UID, 1);
+    }
+    var dataTeacher = await adminModel.getTeacher();
+    for (var i = 0 in dataTeacher) {
+        dataTeacher[i].dob = formatDate(dataTeacher[i].dob);
+    }
+    res.redirect('/admin/teacher');
+    // res.render('vwAdmin/student', {
+    //     dataStudent: dataStudent,
+    //     layout: false
+    // });
+})
 module.exports = router;
