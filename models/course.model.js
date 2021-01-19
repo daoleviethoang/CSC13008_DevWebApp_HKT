@@ -76,8 +76,17 @@ module.exports = {
     },
 
     async getLinkVideo(courseID, CourseSectionID, VideoID) {
-        const link = fs.readFileSync(`video/${courseID}/${CourseSectionID}/${VideoID}.txt`);
-        return link;
+        const path = `video/${courseID}/${CourseSectionID}/${VideoID}.txt`;
+        try {
+            if (fs.existsSync(path)) {
+                //file exists
+                const link = fs.readFileSync(path);
+                return link;
+            }
+        } catch (err) {
+            console.error(err)
+        }
+        return null;
     },
 
     async addCourse(courseEntity) {
@@ -198,11 +207,11 @@ module.exports = {
         return result[0].Name;
     },
     async getPaidCourse(UserID, offset) {
-        const sql = `select courses.CoursesID
+        const sql = `select *
         from users join orders on orders.UID = users.UID
         join orderdetails on orders.OrderID = orderdetails.OrderID
         join courses on courses.CoursesID = orderdetails.CoursesID
-        where users.UID = '${UserID}' limit ${paginate.limit} offset ${offset}`;
+        where users.UID = '${UserID}'`;
         const [result, fields] = await db.load(sql);
         return result;
     },
