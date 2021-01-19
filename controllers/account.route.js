@@ -276,9 +276,9 @@ router.post('/login', async function(req, res, next) {
     //     });
     //     return;
     // }
-    if(user.permission === 3){
-        return res.redirect('/admin');
-    } 
+    if (user.permission === 3) {
+        return res.redirect('/admin/');
+    }
     if (user.permission === teacherModel.TEACHER_PROPERTIES.permission) {
         const teacher = await teacherModel.singleFromUID(user.UID);
         userDetail = {
@@ -303,7 +303,7 @@ router.post('/login', async function(req, res, next) {
     //console.log(userDetail)
     req.session.auth = true;
     req.session.authUser = userDetail;
-    req.session.save(err=>{
+    req.session.save(err => {
         const url = '/';
         res.redirect(url)
     });
