@@ -26,7 +26,10 @@ app.use(function(err, req, res, next) { //render khi có lỗi trong code
     })
 })
 
-const PORT = 3000;
-app.listen(PORT, function() {
-    console.log(`E-Commerce app is listening at http://localhost:${PORT}`)
-})
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log(`App is listening on https://app-web-abc.herokuapp.com:${port}`);
+});
+// app.listen(port, () => {
+//     console.log(`App is listening on https://app-web-abc.herokuapp.com:${port}`);
+// });

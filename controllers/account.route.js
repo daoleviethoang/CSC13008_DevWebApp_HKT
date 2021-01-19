@@ -300,7 +300,7 @@ router.post('/login', async function(req, res, next) {
     //console.log(userDetail)
     req.session.auth = true;
     req.session.authUser = userDetail;
-    req.session.save(err=>{
+    req.session.save(err => {
         const url = '/';
         res.redirect(url)
     });
