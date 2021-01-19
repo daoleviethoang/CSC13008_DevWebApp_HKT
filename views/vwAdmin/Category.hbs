@@ -10,12 +10,103 @@
     <meta name="author" content="">
 
     <title>SB Admin 2 - Dashboard</title>
+
     <link href="/design/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
     <link href="/design/manage-css/sb-admin-2.min.css" rel="stylesheet">
     <link href="/design/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        /* Button used to open the contact form - fixed at the bottom of the page */
+        .open-button {
+            background-color: #555;
+            color: white;
+            padding: 16px 20px;
+            border: none;
+            cursor: pointer;
+            opacity: 0.8;
+            position: fixed;
+            bottom: 23px;
+            right: 28px;
+            width: 280px;
+        }
+
+        /* The popup form - hidden by default */
+        .form-popup {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            right: 15px;
+            border: 3px solid #f1f1f1;
+            z-index: 9;
+        }
+
+        /* Add styles to the form container */
+        .form-container {
+            max-width: 500px;
+            padding: 10px;
+            background-color: white;
+        }
+
+        /* Full-width input fields */
+        .form-container input[type=text],
+        .form-container input[type=password] {
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            border: none;
+            background: #f1f1f1;
+        }
+
+        /* When the inputs get focus, do something */
+        .form-container input[type=text]:focus,
+        .form-container input[type=password]:focus {
+            background-color: #ddd;
+            outline: none;
+        }
+
+        /* Set a style for the submit/login button */
+        .form-container .btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 16px 20px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 10px;
+            opacity: 0.8;
+        }
+
+        /* Add a red background color to the cancel button */
+        .form-container .cancel {
+            background-color: red;
+        }
+
+        /* Add some hover effects to buttons */
+        .form-container .btn:hover,
+        .open-button:hover {
+            opacity: 1;
+        }
+        .not-active {
+            pointer-events: none;
+            cursor: default;
+            text-decoration: none;
+            color: black;
+            }
+    </style>
 </head>
+
 
 <body id="page-top">
 
@@ -77,6 +168,11 @@
                 <a class="nav-link" href="category">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Categories</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="register">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Provide account</span></a>
             </li>
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -301,6 +397,7 @@
                                             <th>Access</th>
                                             <th>Register</th>
                                             <th>Price</th>
+                                            <th>Manage</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -313,6 +410,7 @@
                                             <th>Access</th>
                                             <th>Register</th>
                                             <th>Price</th>
+                                            <th>Manage</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -326,6 +424,42 @@
                                             <td>{{this.Access}}</td>
                                             <td>{{this.register}}</td>
                                             <td>{{this.Price}}</td>
+                                            <td>
+                                                {{#if this.CountCourse}}
+                                                <button style="background-color:white; border-radius:5px;"><a
+                                                        href="/admin/category/delete/{{this.SubCategoryID}}" class="not-active"><i
+                                                            class="fas fa-minus-square"
+                                                            style="color:black;" ></i></a></button>
+                                                {{else}}
+                                                <button style="background-color:white; border-radius:5px;"><a
+                                                        href="/admin/category/delete/{{this.SubCategoryID}}"><i
+                                                            class="fas fa-minus-square"
+                                                            style="color:black;" ></i></a></button>
+                                                {{/if}}
+                                                <button style="background-color:white; border-radius:5px;"
+                                                    value="{{this.SubCategoryID}}" onclick="openForm(this)"><i
+                                                        class="fas fa-pen-square" style="color: black;"></i></button>
+                                                        <div class="form-popup" id="myForm">
+                                                    <form action="" onsubmit="this.action=submitValue();" id="form"
+                                                        method="POST" class="form-container">
+                                                        <div class="col">
+                                                            <div class="form-group">
+                                                                <label>Name Category</label>
+                                                                <input type="text" class="form-control" name="namecate"
+                                                                    placeholder="Enter Name">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>Name SubCategory</label>
+                                                                <input type="text" class="form-control" name="namescate"
+                                                                    placeholder="Enter Name">
+                                                            </div>
+                                                            <button type="submit" class="btn">Edit</button>
+                                                            <button type="button" class="btn cancel"
+                                                                onclick="closeForm()">Close</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </td>
                                         </tr>
                                         {{/each}}
                                     </tbody>
@@ -386,6 +520,19 @@
     <script src="/design/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="/design/vendor/datatables/dataTables.bootstrap4.min.js"></script>
     <script src="/design/manage-js/demo/datatables-demo.js"></script>
+        <script>
+        var value = "";
+        function openForm(val) {
+            document.getElementById("myForm").style.display = "block";
+            value = "/admin/category/edit/" + val.value
+        }
+        function submitValue() {
+            return value;
+        }
+        function closeForm() {
+            document.getElementById("myForm").style.display = "none";
+        }
+    </script>
 </body>
 
 </html>

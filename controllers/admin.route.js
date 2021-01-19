@@ -9,7 +9,196 @@ const adminModel = require('../models/admin.model');
 const auth = require('../middlewares/auth.mdw');
 const { getLogger } = require('nodemailer/lib/shared');
 const router = express.Router();
+const nodemailer = require("nodemailer"); //gửi mail
 
+router.get('/register/', async function(req, res) {
+    res.render('vwAdmin/ProvideAccount', {
+        layout: false
+    });
+})
+
+const transporter = nodemailer.createTransport({ //cấu hình mail server
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    service: "Gmail",
+    auth: {
+        user: "kiethoang611@gmail.com",
+        pass: "Kiet6112000",
+    },
+});
+
+const emailAndOtp = {}; // Temporary save email and their otp here      //save dictionary với key là email, value là otp
+
+
+router.post('/otp', async function(req, res) { //nhận data từ file register.hbs
+    let username = req.body.username;
+    let email = req.body.email;
+    const check_username = await userModel.getUserByUserName(username); //trả về null nếu ko có
+    const check_email = await userModel.getUserByEmail(email)
+    if (check_username !== null) { //nếu có r thì dk lại
+        res.render('vwAdmin/ProvideAccount', {
+            layout: false,
+            msg: "Username existed"
+        });
+    } else if (check_email !== null) {
+        res.render('vwAdmin/ProvideAccount', {
+            layout: false,
+            msg: "Email existed"
+        });
+    } else {
+        let otp = parseInt((Math.random() * 1000000).toString()); //tạo otp random
+        let email = req.body.email;
+
+        // send mail with defined transport object
+        var mailOptions = {
+            to: req.body.email,
+            subject: "Otp for registration is: ",
+            html: "<h3>OTP for account verification is </h3>" +
+                "<h1 style='font-weight:bold;'>" +
+                otp +
+                "</h1>", // html body
+        };
+
+        transporter.sendMail(mailOptions, (error, info) => { //gửi mail
+            if (error) {
+                return console.log(error);
+            }
+            console.log("Message sent: %s", info.messageId);
+            console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+
+            // OTP page will take email as a query statement for it POST methods
+            emailAndOtp[email] = otp;
+            res.render("vwAdmin/verify", { //xác minh
+                msg: "An OTP has been sent to your email",
+                Data: {
+                    fullname: req.body.fullname,
+                    username: req.body.username,
+                    password: req.body.password,
+                    confirm: req.body.confirm,
+                    email: email,
+                    dob: req.body.dob,
+                    gender: req.body.gender,
+                    userType: req.body.userType
+                },
+                layout: false
+            });
+        });
+    }
+
+})
+
+router.post("/resend", function(req, res) { //giống send
+
+    let email = req.body.email;
+    let otp = emailAndOtp[email];
+
+    var mailOptions = {
+        to: email,
+        subject: "Otp for registration is: ",
+        html: "<h3>OTP for account verification is </h3>" +
+            "<h1 style='font-weight:bold;'>" +
+            otp +
+            "</h1>", // html body
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            return console.log(error);
+        }
+        console.log("Message sent: %s", info.messageId);
+        console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+        res.render("vwAdmin/verify", {
+            msg: "OTP has been resent",
+            Data: {
+                fullname: req.body.fullname,
+                username: req.body.username,
+                password: req.body.password,
+                confirm: req.body.confirm,
+                email: email,
+                dob: req.body.dob,
+                gender: req.body.gender,
+                userType: req.body.userType
+            },
+            layout: false
+        });
+    });
+});
+
+router.post("/verify", async function(req, res) { //xác minh OTP
+    let email = req.body.email; //lấy email để so sánh trong emailAndOtp
+    let otp = emailAndOtp[email];
+    // delete emailAndOtp[email]; 
+    if (req.body.otp == otp) { //OTP đúng
+        const hashedPass = bcryptjs.hashSync(req.body.password, 12);
+        // const dob = await moment(req.body.dob, 'MM/DD/YYYY').format('YYYY-MM-DD');
+        const dob = req.body.dob;
+        let gender;
+        let permission;
+        let user_Detail;
+        let UID = "";
+        let check = 0;
+        let block = 0;
+
+        if (req.body.gender === "Male") gender = 1;
+        else if (req.body.gender === "Female") gender = 2;
+        else gender = 3;
+        if (req.body.userType === 'STUDENT') {
+            permission = studentModel.STUDENT_PROPERTIES.permission;
+            UID = `St${await studentModel.largest_ID() + 1}`;
+            user_Detail = {
+                name: req.body.fullname,
+                email: req.body.email,
+                dob: dob,
+                gender: gender,
+                UID: UID,
+            }
+            check = 1;
+        } else if (req.body.userType === 'TEACHER') {
+            permission = teacherModel.TEACHER_PROPERTIES.permission;
+            UID = `Tea${await teacherModel.largest_ID() + 1}`;
+            //console.log(UID);
+            user_Detail = {
+                name: req.body.fullname,
+                email: req.body.email,
+                dob: dob,
+                gender: gender,
+                UID: UID
+            }
+            check = 2;
+        }
+        const user = {
+            username: req.body.username,
+            password: hashedPass,
+            permission: permission,
+            UID: UID,
+            block: block
+        }
+        await userModel.add(user);
+        if (check == 1) {
+            await studentModel.add(user_Detail, studentModel.STUDENT_PROPERTIES.table_name)
+        } else if (check == 2) {
+            await teacherModel.add(user_Detail, teacherModel.TEACHER_PROPERTIES.table_name);
+        }
+        res.redirect('/admin/teacher');
+
+    } else { //OTP sai
+        res.render("vwAdmin/verify", {
+            msg: "Your OTP is incorrect, please try again",
+            Data: {
+                fullname: req.body.fullname,
+                username: req.body.username,
+                password: req.body.password,
+                confirm: req.body.confirm,
+                email: email,
+                dob: req.body.dob,
+                gender: req.body.gender,
+                userType: req.body.userType
+            },
+            layout: false
+        });
+    }
+});
 
 router.get('/', async function(req, res) {
     res.render('vwAdmin/index', {
@@ -18,7 +207,7 @@ router.get('/', async function(req, res) {
 })
 router.get('/category', async function(req, res) {
     var dataCategory = await adminModel.getCategory();
-    console.log(dataCategory);
+    console.log(dataCategory[0].CountCourse);
     res.render('vwAdmin/category', {
         dataCategory: dataCategory,
         layout: false
@@ -261,4 +450,14 @@ router.get('/course/block/:id', async function(req, res) {
     // });
     res.redirect('/admin/course');
 })
+router.post('/category/edit/:id', async function(req, res) {
+    var url = req.url.split("/");
+    const SubCategoryID = url[url.length - 1];
+    const namecate = req.body.namecate;
+    const namescate = req.body.namescate;
+    await adminModel.editSubCategory(SubCategoryID, namescate);
+    await adminModel.editCategory(1, namecate);
+    res.redirect('/admin/category');
+})
+
 module.exports = router;

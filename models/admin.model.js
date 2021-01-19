@@ -28,7 +28,7 @@ module.exports = {
     },
     async getTeacher() {
         const sql = `SELECT * 
-        FROM (SELECT C.TeaID, C.nameTeacher, C.dob, C.gender, C.UID,C.email, SUM(IsFinished) as S_IsFinished, ROUND(SUM(TheMin),2) as SumPrice, COUNT(coursesID) as CID
+        FROM (SELECT C.TID, C.nameTeacher, C.dob, C.gender, C.UID,C.email, SUM(IsFinished) as S_IsFinished, ROUND(SUM(TheMin),2) as SumPrice, COUNT(coursesID) as CID
         FROM (SELECT *
         FROM (SELECT TeaID as TID, name as nameTeacher, dob, email,gender, UID FROM teachers) AS A
         LEFT JOIN
@@ -146,6 +146,20 @@ module.exports = {
         INNER JOIN
         (SELECT CategoryID as CataID, Name as Namecate FROM categories) as F
         ON E.CategoryID = F.CataID`;
+        const [result, fields] = await db.load(sql);
+        return result;
+    },
+    async editCategory(CategoryID, namecate) {
+        const sql = `UPDATE categories
+        SET Name = '${namecate}'
+        WHERE CategoryID = ${CategoryID}`;
+        const [result, fields] = await db.load(sql);
+        return result;
+    },
+    async editSubCategory(SubCategoryID, namescate) {
+        const sql = `UPDATE subcategories
+        SET Name = '${namescate}'
+        WHERE SubCategoryID = ${SubCategoryID}`;
         const [result, fields] = await db.load(sql);
         return result;
     }
