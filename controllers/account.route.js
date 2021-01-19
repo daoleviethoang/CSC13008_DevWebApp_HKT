@@ -270,15 +270,12 @@ router.post('/login', async function(req, res, next) {
         });
     }
     let userDetail;
-    // if (user.permission === teacherModel.ADMIN_PROPERTIES.permission) {
-    //     res.render('vwAdmin/admin-dashboard', {
-    //         layout: false
-    //     });
-    //     return;
-    // }
     if(user.permission === 3){
         return res.redirect('/admin');
     } 
+    if(user.block === 1){
+        return res.redirect('/');
+    }
     if (user.permission === teacherModel.TEACHER_PROPERTIES.permission) {
         const teacher = await teacherModel.singleFromUID(user.UID);
         userDetail = {
@@ -309,7 +306,6 @@ router.post('/login', async function(req, res, next) {
     });
 })
 router.post('/logout', async function(req, res) {
-    //console.log("logout")
     let url = req.headers.referer || '/';
     if (req.session.authUser.permission === teacherModel.TEACHER_PROPERTIES.permission) {
         url = '/';

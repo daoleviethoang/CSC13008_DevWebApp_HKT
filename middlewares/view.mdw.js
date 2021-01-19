@@ -15,8 +15,11 @@ module.exports = function(app) {
             section: hbs_sections(),
             format_number(val) {
                 return numeral(val).format('0,0[.]00 $');
-            }
+            },
+            format_rating(val) {
+                return numeral(val).format('0,0[.]0');
+            },
+            hbs_helpers
         },
-        hbs_helpers
     }));
 }

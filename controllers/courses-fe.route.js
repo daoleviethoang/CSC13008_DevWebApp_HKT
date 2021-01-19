@@ -57,7 +57,14 @@ router.get('/detail/:CourseID', async function(req, res) { //trang chứa detail
     const rating = await courseModel.getCourseRating(courseID) || 2;
     const teacherName = (await courseModel.getTeacherOfCourse(courseID)).name;
     const teaUID = (await courseModel.getTeacher(courseID)).UID;
-    const instructionInfo = (await courseModel.getInstructionInfro(teaUID)).Info;
+    
+    let instructionInfo = (await courseModel.getInstructionInfro(teaUID));
+    if(instructionInfo === null){
+        instructionInfo = "";
+    }
+    else{
+        instructionInfo = instructionInfo.Info;
+    }
     const feedbacks = await courseModel.getAllFeedback(courseID);
     
     let isTeacherOfCourse = false;

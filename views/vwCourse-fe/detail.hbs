@@ -13,7 +13,7 @@
 
   .rate:not(:checked)>input {
     position: absolute;
-    top: -9999px;
+
   }
 
   .rate:not(:checked)>label {
@@ -114,7 +114,6 @@
     width: 100;
   }
 </style>
-</style>
 
 {{/section}}
 <div class="w-100">
@@ -131,17 +130,17 @@
         {{this.Course.tinyDes}}
       </div>
       <div>
-        {{#if Rating}}
+        {{#if Course.Rating}}
         <div class="row" style="margin-left:0px; margin-right:5px">
           <h6 class="text-danger" style="margin-top: 1%; margin-right: 1%;"><b>{{T}}</b></h5>
             <span class="stars-45">★★★★★</span>
             <p class="card-text" style="font-size: 14px; margin-top: 5px; margin-left: 1%; color:darkgray;">
-              ({{count}})</p>
+              ({{format_rating Course.Rating}})</p>
         </div>
         {{else}}
         <div class="row" style="margin-left:0px">
           <span class="stars-container stars-50">★★★★★</span>
-          <p class="card-text" style="font-size: 14px; margin-top: 5px; margin-left: 1%;  color:darkgray;"> (1)
+          <p class="card-text" style="font-size: 14px; margin-top: 5px; margin-left: 1%;  color:darkgray;"> (0)
           </p>
         </div>
         {{/if}}
@@ -229,6 +228,11 @@
           </button>
         </a>
         {{/if}}
+        {{#if this.message}}
+        <div class="mt-3 ml-3 text-warning">
+          {{this.message}}
+        </div>
+        {{else}}
         <form action="/course/learn/{{this.Course.courseID}}" method="GET"></form>
         <div class="row form-group">
           <div class="col-sm-4">
@@ -246,7 +250,7 @@
           </div>
         </div>
         </form>
-
+        {{/if}}
         {{/and}}
       </div>
     </div>
@@ -328,7 +332,7 @@
     <div class="h2">
       Student feedback
     </div>
-    {{#if this.isAuth}}
+    {{#if this.isAuth    }}
     {{!-- get star and feedback --}}
     <hr>
     <div class="input-group mb-3">
@@ -337,15 +341,15 @@
           aria-describedby="basic-addon2" name="feedback">
         <div class="text-right">
           <div class="rate w-100">
-            <input type="radio" id="star5" name="rate" value="5" />
+            <input type="radio" id="star5" name="rate" value="5"  hidden>
             <label for="star5" title="text">5 stars</label>
-            <input type="radio" id="star4" name="rate" value="4" />
+            <input type="radio" id="star4" name="rate" value="4" hidden >
             <label for="star4" title="text">4 stars</label>
-            <input type="radio" id="star3" name="rate" value="3" />
+            <input type="radio" id="star3" name="rate" value="3" hidden>
             <label for="star3" title="text">3 stars</label>
-            <input type="radio" id="star2" name="rate" value="2" />
+            <input type="radio" id="star2" name="rate" value="2" hidden >
             <label for="star2" title="text">2 stars</label>
-            <input type="radio" id="star1" name="rate" value="1" />
+            <input type="radio" id="star1" name="rate" value="1" hidden>
             <label for="star1" title="text">1 star</label>
           </div>
           <button class="btn btn-outline-info rounded-0 border" type="submit">Send feedback</button>
@@ -361,6 +365,9 @@
         <strong>
           {{student.name}}
         </strong>
+      </div>
+      <div>
+        Rating: {{Rating}}
       </div>
       <div>
         {{Content}}

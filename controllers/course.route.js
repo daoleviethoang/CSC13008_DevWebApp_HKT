@@ -224,6 +224,9 @@ router.get('/storage', async function (req, res, next) { //chuyển đến trang
 })
 
 router.get('/storage/paidCourse', async function (req, res, next) { //chuyển đến trang chứa toàn bộ các courses
+    if(req.session.auth === false){
+        return res.redirect("/")
+    }
     const list = await courseModel.getPaidCourse(req.session.authUser.ID, 0);
 
     res.render('vwCourses/paidCourse', {

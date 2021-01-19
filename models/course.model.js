@@ -267,6 +267,7 @@ module.exports = {
     async getInstructionInfro(UID) {
         const sql = `SELECT *  FROM teacherinfo  where TeaID = '${UID}'`;
         const [rows, fields] = await db.load(sql);
+        if(rows.length ===0) return null;
         return rows[0];
     },
     async getTeacher(CourseID) {
